@@ -33,7 +33,7 @@ Commands:
 
 ### Continious Integration
 
-The repository does contain configuration for a GitHub Action which automatically runs `npm test` and reports any failed tests automatically in the GitHub UI (little green checks or red crosses beside the commit).
+The repository contains configuration for a GitHub Action which automatically runs `npm test` and reports any failed tests automatically in the GitHub UI (little green checks or red crosses beside the commit). Tests must also be passing before a pull request can be merged.
 
 ## Deployment
 
