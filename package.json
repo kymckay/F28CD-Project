@@ -1,0 +1,44 @@
+{
+    "name": "f28cd-project",
+    "version": "0.0.1",
+    "description": "Educational group project in creative design at Heriot-Watt",
+    "main": "server/server.js",
+    "scripts": {
+        "lint": "eslint server && eslint public/src",
+        "start": "npm run build && npm run start:server",
+        "start:server": "node server/server.js",
+        "test": "npm run lint",
+        "build": "rollup --config config/rollup.config.main.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/kymckay/f28cd-project.git"
+    },
+    "keywords": [
+        "f28cd",
+        "education"
+    ],
+    "author": "Group 4",
+    "license": "GPL-3.0",
+    "bugs": {
+        "url": "https://github.com/kymckay/f28cd-project/issues"
+    },
+    "homepage": "https://github.com/kymckay/f28cd-project#readme",
+    "devDependencies": {
+        "@babel/core": "^7.12.0",
+        "@babel/preset-env": "^7.12.0",
+        "@rollup/plugin-babel": "^5.2.1",
+        "@rollup/plugin-commonjs": "^15.1.0",
+        "@rollup/plugin-node-resolve": "^9.0.0",
+        "core-js": "^3.6.5",
+        "eslint": "^7.12.1",
+        "eslint-plugin-import": "^2.22.1",
+        "rollup": "^2.30.0"
+    },
+    "dependencies": {
+        "express": "^4.16.4"
+    },
+    "engines": {
+        "node": "12.x"
+    }
+}
