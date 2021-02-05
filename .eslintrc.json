@@ -10,5 +10,24 @@
         "eqeqeq": 2,
         "block-scoped-var": 2,
         "class-methods-use-this": 2
-    }
+    },
+    "overrides": [
+      {
+        "files": ["**/*.test.js"],
+        "extends": [
+          "plugin:jest/recommended"
+        ],
+        "env": { "jest": true }
+      },
+      {
+        "files": ["server/*.js"],
+        "env": { "node": true }
+      },
+      {
+        "files": [
+          "public/src/*.js"
+        ],
+        "env": { "browser": true }
+      }
+    ]
 }
