@@ -39,7 +39,7 @@ body {
   position: absolute;
   z-index: 1;
   top: 120%;
-  left: -120px;
+  left: -129px;
   margin-left: -60px;
 }
 
@@ -47,7 +47,7 @@ body {
   content: "";
   position: absolute;
   bottom: 100%;
-  left: 70%;
+  left: 71%;
   margin-left: 47px;
   border-width: 5px;
   border-style: solid;
