@@ -1,7 +1,12 @@
+const path = require('path');
 const { MongoClient } = require('mongodb');
 const candidates_in = require('./load_candidates');
+const elections_in = require('./load_elections');
 
 const uri = 'mongodb://localhost:27017?retryWrites=true&writeConcern=majority';
+
+const candidates_file = path.resolve(__dirname, 'candidates-all.csv')
+const elections_file = path.resolve(__dirname, 'election-results.xlsx')
 
 const client = new MongoClient(uri, { useUnifiedTopology: true });
 async function run() {
@@ -30,4 +35,5 @@ async function run() {
 }
 run().catch(console.dir);
 
-candidates_in.test();
+// candidates_in.readfile(candidates_file);
+// elections_in.readfile(elections_file);

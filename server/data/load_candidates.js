@@ -1,9 +1,8 @@
 const fs = require('fs');
-const path = require('path');
 const csv = require('@fast-csv/parse');
 
-exports.test = function() {
-  fs.createReadStream(path.resolve(__dirname, 'candidates-all.csv'))
+exports.readFile = function(filename) {
+  fs.createReadStream(filename)
     .pipe(csv.parse({ headers: true }))
     .on('error', error => console.error(error))
     .on('data', row => console.log(row))
