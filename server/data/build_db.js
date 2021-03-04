@@ -24,6 +24,8 @@ async function main() {
     console.log(`Processed ${people.length} person records`);
     await addCollection("candidates", candidates);
     console.log(`Processed ${candidates.length} candidate records`);
+  } catch (error) {
+    console.dir(error);
   } finally {
     // Ensures that the client will close when you finish/error
     await client.close();
