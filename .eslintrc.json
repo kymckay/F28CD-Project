@@ -24,13 +24,13 @@
       },
       {
         "files": ["server/**/*.js"],
-        "env": { "node": true }
+        "env": { "node": true, "es6": true }
       },
       {
         "files": [
           "public/src/*.js"
         ],
-        "env": { "browser": true }
+        "env": { "browser": true, "es6": true }
       }
     ]
 }
