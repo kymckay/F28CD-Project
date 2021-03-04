@@ -1,4 +1,5 @@
 const { MongoClient } = require('mongodb');
+const candidates_in = require('./load_candidates');
 
 const uri = 'mongodb://localhost:27017?retryWrites=true&writeConcern=majority';
 
@@ -28,3 +29,5 @@ async function run() {
   }
 }
 run().catch(console.dir);
+
+candidates_in.test();
