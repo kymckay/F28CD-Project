@@ -4,8 +4,9 @@
   <meta content="text/html" charset="utf-8" />
   <title>UK Election Data</title>
   <link rel="stylesheet" type="text/css" href="css/main.css">
-  <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="css/info.css">
+  <link rel="stylesheet" type="text/css" href="css/dropdown.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link href='https://fonts.googleapis.com/css?family=Fjalla One' rel='stylesheet'>
   <script src="dist/main.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
@@ -13,12 +14,9 @@
 <body>
 <header class="header">
   <a href="index.html">
-    <!-- The logo isn't in great quality atm, looks fine on my computer but might look a bit crap on higher resolution displays -->
-    <!-- If that's the case could be improved, maybe -->
     <img src="src/logo.png" alt="logo" class="logo">
   </a>
-
-    <!-- dropdown menu -->
+  <!-- dropdown menu for election year selection -->
   <div class="dropdown">
     <select>
       <option value="0">Select year</option>
@@ -31,89 +29,7 @@
     </select>
   </div>
 
-  <!-- Reference: https://www.w3schools.com/howto/howto_custom_select.asp -->
-  <!-- will need to be moved to a .js file -->
-  <!-- This is essentially copy pasted from w3schools which is a bit worrying? -->
-  <script>
-  var x, i, j, l, ll, selElmnt, a, b, c;
-  /*look for any elements with the class "dropdown":*/
-  x = document.getElementsByClassName("dropdown");
-  l = x.length;
-  for (i = 0; i < l; i++) {
-    selElmnt = x[i].getElementsByTagName("select")[0];
-    ll = selElmnt.length;
-   /*for each element, create a new DIV that will act as the selected item:*/
-    a = document.createElement("DIV");
-  a.setAttribute("class", "select-selected");
-   a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
-   x[i].appendChild(a);
-   /*for each element, create a new DIV that will contain the option list:*/
-    b = document.createElement("DIV");
-   b.setAttribute("class", "select-items select-hide");
-  for (j = 1; j < ll; j++) {
-    /*for each option in the original select element,
-    create a new DIV that will act as an option item:*/
-    c = document.createElement("DIV");
-    c.innerHTML = selElmnt.options[j].innerHTML;
-    c.addEventListener("click", function(e) {
-        /*when an item is clicked, update the original select box,
-        and the selected item:*/
-        var y, i, k, s, h, sl, yl;
-        s = this.parentNode.parentNode.getElementsByTagName("select")[0];
-        sl = s.length;
-        h = this.parentNode.previousSibling;
-        for (i = 0; i < sl; i++) {
-          if (s.options[i].innerHTML == this.innerHTML) {
-            s.selectedIndex = i;
-            h.innerHTML = this.innerHTML;
-            y = this.parentNode.getElementsByClassName("same-as-selected");
-            yl = y.length;
-            for (k = 0; k < yl; k++) {
-              y[k].removeAttribute("class");
-            }
-            this.setAttribute("class", "same-as-selected");
-            break;
-          }
-        }
-        h.click();
-    });
-    b.appendChild(c);
-  }
-  x[i].appendChild(b);
-  a.addEventListener("click", function(e) {
-      /*when the select box is clicked, close any other select boxes,
-      and open/close the current select box:*/
-      e.stopPropagation();
-      closeAllSelect(this);
-      this.nextSibling.classList.toggle("select-hide");
-      this.classList.toggle("select-arrow-active");
-    });
-}
-function closeAllSelect(elmnt) {
-  /*a function that will close all select boxes in the document,
-  except the current select box:*/
-  var x, y, i, xl, yl, arrNo = [];
-  x = document.getElementsByClassName("select-items");
-  y = document.getElementsByClassName("select-selected");
-  xl = x.length;
-  yl = y.length;
-  for (i = 0; i < yl; i++) {
-    if (elmnt == y[i]) {
-      arrNo.push(i)
-    } else {
-      y[i].classList.remove("select-arrow-active");
-    }
-  }
-  for (i = 0; i < xl; i++) {
-    if (arrNo.indexOf(i)) {
-      x[i].classList.add("select-hide");
-    }
-  }
-}
-/*if the user clicks anywhere outside the select box,
-then close all select boxes:*/
-document.addEventListener("click", closeAllSelect);
-</script>
+ <script src="dist/dropdown.js"></script>
 
   <!-- Info button -->
   <div class="info">
@@ -131,128 +47,14 @@ document.addEventListener("click", closeAllSelect);
     <h1>The Map</h1>
   </section>
   <div class="graph ">
-    <aside style="height: 400px">
+    <!-- ideally height will adjust with different window sizes, to be figured out -->
+    <section style="height: 400px">
       <!-- Breakdown graph -->
       <!-- The current chart format isn't great, will adjust it if time allows -->
       <div id="container" style="width: 90%; height: 90%">
-        <canvas id="canvas"></canvas>
+        <canvas id="canvas" onload="function()"></canvas>
       </div>
-
-      <!-- Reference: https://www.chartjs.org/docs/latest/ -->
-      <script>
-      // x axis labels
-var barChartData = {
-  labels: [
-    "Actual",
-    "Predicted"
-  ],
-
-  datasets: [
-    {
-      label: "Conservatives",
-      backgroundColor: "lightblue",
-      borderColor: "blue",
-      borderWidth: 1,
-      data: [40, 50]
-    },
-    {
-      label: "Labour",
-      backgroundColor: "pink",
-      borderColor: "red",
-      borderWidth: 1,
-      data: [10, 20]
-    },
-    {
-      label: "SNP",
-      backgroundColor: "yellow",
-      borderColor: "orange",
-      borderWidth: 1,
-      data: [15, 22]
-    },
-    {
-      label: "Lib Dem",
-      backgroundColor: "orange",
-      borderColor: "brown",
-      borderWidth: 1,
-      data: [5, 10]
-    },
-    {
-      label: "DUP",
-      backgroundColor: "purple",
-      borderColor: "blue",
-      borderWidth: 1,
-     data: [17, 22]
-    },
-    {
-      label: "Sinn Fein",
-      backgroundColor: "green",
-      borderColor: "blue",
-      borderWidth: 1,
-      data: [17, 22]
-    },
-    {
-      label: "Plaid Cymru",
-      backgroundColor: "darkgreen",
-      borderColor: "blue",
-      borderWidth: 1,
-      data: [3, 2]
-    },
-    {
-      label: "SDLP",
-      backgroundColor: "darkgreen",
-      borderColor: "green",
-      borderWidth: 1,
-      data: [3, 2]
-    },
-    {
-      label: "Green",
-      backgroundColor: "lightgreen",
-      borderColor: "green",
-      borderWidth: 1,
-      data: [13, 12]
-    },
-    {
-      label: "Alliance",
-      backgroundColor: "lightyellow",
-      borderColor: "yellow",
-      borderWidth: 1,
-      data: [3, 2]
-    }
-  ]
-};
-
-var chartOptions = {
-  responsive: true,
-  aspectRatio: 1.15,
-  legend: {
-    display: false
-  },
-  title: {
-    fontColor: '#000000',
-    fontSize: 14,
-    fontFamily: 'Arial',
-    display: true,
-    text: "Seats per Party: Actual vs Predicted",
-
-  },
-  scales: {
-    yAxes: [{
-      ticks: {
-        beginAtZero: true
-      }
-    }]
-  }
-}
-
-window.onload = function() {
-  var ctx = document.getElementById("canvas").getContext("2d");
-  window.myBar = new Chart(ctx, {
-    type: "bar",
-    data: barChartData,
-    options: chartOptions
-  });
-};
-</script>
+      <script src="dist/graph.js"></script>
 
       <!-- Prediction data dropdown menu -->
       <div class="dropdown-data">
@@ -265,97 +67,17 @@ window.onload = function() {
           <option value="5">BBC</option>
         </select>
       </div>
-      <!-- Reference: https://www.w3schools.com/howto/howto_custom_select.asp -->
-      <!-- Same as .css code, essentially copy-pasted from the year dropdown, probably is a way to reuse the code? -->
-      <script>
-  var x, i, j, l, ll, selElmnt, a, b, c;
-  /*look for any elements with the class "dropdown-data":*/
-  x = document.getElementsByClassName("dropdown-data");
-  l = x.length;
-  for (i = 0; i < l; i++) {
-    selElmnt = x[i].getElementsByTagName("select")[0];
-    ll = selElmnt.length;
-   /*for each element, create a new DIV that will act as the selected item:*/
-    a = document.createElement("DIV");
-  a.setAttribute("class", "select-selected");
-   a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
-   x[i].appendChild(a);
-   /*for each element, create a new DIV that will contain the option list:*/
-    b = document.createElement("DIV");
-   b.setAttribute("class", "select-items select-hide");
-  for (j = 1; j < ll; j++) {
-    /*for each option in the original select element,
-    create a new DIV that will act as an option item:*/
-    c = document.createElement("DIV");
-    c.innerHTML = selElmnt.options[j].innerHTML;
-    c.addEventListener("click", function(e) {
-        /*when an item is clicked, update the original select box,
-        and the selected item:*/
-        var y, i, k, s, h, sl, yl;
-        s = this.parentNode.parentNode.getElementsByTagName("select")[0];
-        sl = s.length;
-        h = this.parentNode.previousSibling;
-        for (i = 0; i < sl; i++) {
-          if (s.options[i].innerHTML == this.innerHTML) {
-            s.selectedIndex = i;
-            h.innerHTML = this.innerHTML;
-            y = this.parentNode.getElementsByClassName("same-as-selected");
-            yl = y.length;
-            for (k = 0; k < yl; k++) {
-              y[k].removeAttribute("class");
-            }
-            this.setAttribute("class", "same-as-selected");
-            break;
-          }
-        }
-        h.click();
-    });
-    b.appendChild(c);
-  }
-  x[i].appendChild(b);
-  a.addEventListener("click", function(e) {
-      /*when the select box is clicked, close any other select boxes,
-      and open/close the current select box:*/
-      e.stopPropagation();
-      closeAllSelect(this);
-      this.nextSibling.classList.toggle("select-hide");
-      this.classList.toggle("select-arrow-active");
-    });
-}
-function closeAllSelect(elmnt) {
-  /*a function that will close all select boxes in the document,
-  except the current select box:*/
-  var x, y, i, xl, yl, arrNo = [];
-  x = document.getElementsByClassName("select-items");
-  y = document.getElementsByClassName("select-selected");
-  xl = x.length;
-  yl = y.length;
-  for (i = 0; i < yl; i++) {
-    if (elmnt == y[i]) {
-      arrNo.push(i)
-    } else {
-      y[i].classList.remove("select-arrow-active");
-    }
-  }
-  for (i = 0; i < xl; i++) {
-    if (arrNo.indexOf(i)) {
-      x[i].classList.add("select-hide");
-    }
-  }
-}
-/*if the user clicks anywhere outside the select box,
-then close all select boxes:*/
-document.addEventListener("click", closeAllSelect);
-</script>
-    </aside>
-    <aside style="height: 180px;">
+      <script src="dist/dropdown-data.js"></script>
+    </section>
+    <!-- section height is temporarily -->
+    <!-- ideally will adjust with different window sizes, to be figured out -->
+    <section style="height: 180px;">
       <h1>Politician Section</h1>
-    </aside>
+    </section>
   </div>
   <section class="table">
     <h1>Politician Table</h1>
   </section>
-
 </main>
 </body>
 </html>
