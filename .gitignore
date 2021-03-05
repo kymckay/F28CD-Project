@@ -102,3 +102,12 @@ dist
 
 # TernJS port file
 .tern-port
+
+# Input data Excel files
+*.xlsx
+
+# Input data csv files
+*.csv
+
+# Input data GeoJSON files
+*.geojson
