@@ -3,35 +3,36 @@ body {
   font-size: 100%;
   margin: 0px;
   box-sizing: boarder-box;
-  background-color:rgba(105,105,105,0.1);
+  background-color: #7f5a83;
+  background-image: linear-gradient(315deg, #7f5a83 0%, #0d324d 74%);
   font-family: Fjalla One;
 }
 
 .header {
    display: flex;
+   margin-right: 5px;
+   margin-left: 5px;
+   margin-top: 5px;
    justify-content: left;
    align-items:center;
-   background: rgba(72,72,72,0.2);
+   background: rgba(255,255,255,0.3);
 }
 
+h4 {
+  position: relative;
+  text-align: center;
+  margin: 7px;
+}
 .logo {
   position: relative;
   height: 50px;
 }
-
 
 section {
   background-color: white;
   padding: 10px;
   margin: 5px;
   height: 600px;
-}
-
-aside {
- background-color: white;
- padding: 10px;
- margin: 5px;
-
 }
 
 .main-flex {
@@ -44,6 +45,8 @@ aside {
 
 .graph {
   flex: 2;
+  margin-left: 0px;
+  margin-right: 0px;
 }
 
 .table {
