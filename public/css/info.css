@@ -11,9 +11,8 @@
 .info .infotext {
   visibility: hidden;
   width: 200px;
-  background-color: #484848;
-  font-family: Arial;
-  color: #fff;
+  background-color: #fff;
+  color: #000000;
   text-align: left;
   border-radius: 5px;
   padding: 5px;
@@ -32,18 +31,17 @@
   margin-left: 47px;
   border-width: 5px;
   border-style: solid;
-  border-color: transparent transparent #484848 transparent;
+  border-color: transparent transparent #fff transparent;
 }
 
 .info:hover .infotext {
   visibility: visible;
   -webkit-animation: fadeIn 0.6s;
   animation: fadeIn 0.6s;
-  opacity: 0.9
 }
 
 /* Add animation (fade in the popup) */
 @-webkit-keyframes fadeIn {
   from {opacity: 0;}
-  to {opacity: 0.9;}
+  to {opacity: 1;}
 }
