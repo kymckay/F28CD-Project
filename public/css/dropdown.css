@@ -1,6 +1,5 @@
 /* Reference: https://www.w3schools.com/howto/howto_custom_select.asp */
-/* Managed to reuse css code for both dropdown menus,
-  no idea why the prediction data menu has maintained its previous formatting, to be figured out */
+
 .dropdown {
   position: relative;
   font-family: Fjalla One;
@@ -8,8 +7,21 @@
   width: 140px;
 }
 
+.dropdown-data {
+  position: relative;
+  margin: auto;
+  font-family: Fjalla One;
+  font-size: 15px;
+  width: 60%;
+}
+
+/*hide the  original SELECT elements*/
+.dropdown-data select {
+  display:none;
+}
+
 .dropdown select {
-  display: none; /*hide original SELECT element:*/
+  display: none;
 }
 
 /*style the arrow inside the select element:*/
@@ -43,7 +55,7 @@
 /*style items (options):*/
 .select-items {
   position: absolute;
-  background-colour: #EBEBEB;
+  background-color: white;
   opacity: 0.9;
   top: 100%;
   left: 0;
