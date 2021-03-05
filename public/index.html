@@ -29,7 +29,8 @@
     </select>
   </div>
 
- <script src="dist/dropdown.js"></script>
+  <!-- js functions not working out yet, so for now this will do-->
+  <script src="src/dropdown.js"></script>
 
   <!-- Info button -->
   <div class="info">
@@ -46,15 +47,18 @@
   <section class="map">
     <h1>The Map</h1>
   </section>
-  <div class="graph ">
+  <section class="graph">
     <!-- ideally height will adjust with different window sizes, to be figured out -->
-    <section style="height: 400px">
+    <div style="height: 400px">
+      <!--how will the title change with different datasets?
+        Easy way would be to enable title in the chart but that looses the font-->
+      <h4>Seats per Party: Actual vs Predicted</h4>
       <!-- Breakdown graph -->
       <!-- The current chart format isn't great, will adjust it if time allows -->
-      <div id="container" style="width: 90%; height: 90%">
-        <canvas id="canvas" onload="function()"></canvas>
+      <div id="container" style="width: 95%; height: 82%">
+        <canvas id="canvas" ></canvas>
       </div>
-      <script src="dist/graph.js"></script>
+      <script src="src/graph.js"></script>
 
       <!-- Prediction data dropdown menu -->
       <div class="dropdown-data">
@@ -67,14 +71,14 @@
           <option value="5">BBC</option>
         </select>
       </div>
-      <script src="dist/dropdown-data.js"></script>
-    </section>
+      <script src="src/dropdown-data.js"></script>
+    </div>
     <!-- section height is temporarily -->
     <!-- ideally will adjust with different window sizes, to be figured out -->
-    <section style="height: 180px;">
+    <div style="height: 175px; margin-top: 5px;">
       <h1>Politician Section</h1>
-    </section>
-  </div>
+    </div>
+  </section>
   <section class="table">
     <h1>Politician Table</h1>
   </section>
