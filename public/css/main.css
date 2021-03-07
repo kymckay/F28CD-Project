@@ -52,3 +52,19 @@ section {
 .table {
   flex: 1.3;
 }
+
+#candSect {
+  max-height: 175px;
+  overflow-y: hidden;
+}
+
+.candAlign {
+  text-align: left;
+  float: left;
+  height: 100px;
+}
+
+.candSectList {
+  list-style-type: none;
+  text-align: left;
+}
