@@ -111,3 +111,6 @@ dist
 
 # Input data GeoJSON files
 *.geojson
+
+# Apple Desktop Services Store
+*.DS_Store
