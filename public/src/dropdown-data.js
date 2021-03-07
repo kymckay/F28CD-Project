@@ -1,4 +1,4 @@
-/*Reference: https://www.w3schools.com/howto/howto_custom_select.asp*/
+/*Reference: https://www.w3schools.com/howto/howto_custom_select.asp */
 //How to reuse this code for both dropdowns is to be figured
 
 var x, i, j, l, ll, selElmnt, a, b, c;
