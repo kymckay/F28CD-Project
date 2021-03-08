@@ -1,5 +1,33 @@
 const ExcelJS = require('exceljs');
 
+// Mapping party names to EC IDs for later data linkage
+// May be a way to do this non-hardcoded, but this is simple for now
+const EC_IDs = {
+  'Conservative Party': { E: 'PP52', W: 'PP52', S: 'PP52', N: 'PP51' }, // Different ID in NI
+  'Conservative': { E: 'PP52', W: 'PP52', S: 'PP52', N: 'PP51' },
+  'Liberal Democrats': 'PP90',
+  'Liberal Democrat': 'PP90',
+  'Labour': 'PP53',
+  'Brexit': 'PP7931', // NOTE: Party name has since changed, may not be relevant
+  'UKIP': { E: 'PP85', W: 'PP85', S: 'PP85', N: 'PP84' }, // Different ID in NI
+  'Green': { E: 'PP63', W: 'PP63', S: 'PP130', N: 'PP305' }, // Different parties in each region under same column
+  'SNP': 'PP102',
+  'Plaid Cymru': 'PP77',
+  'DUP': 'PP70',
+  'Sinn Fein': 'PP39',
+  'SDLP': 'PP55',
+  'UUP': 'PP83',
+  'Alliance': 'PP103',
+  'Other': 'Other'
+}
+
+
+// Some mappings are simple, some vary by region
+function realKey(party, gssId) {
+  const mapsTo = EC_IDs[party];
+  return (typeof mapsTo === 'string') ? mapsTo : mapsTo[gssId.charAt(0)];
+}
+
 exports.readFile = async (filename) => {
   const workbook = new ExcelJS.Workbook();
 
@@ -20,11 +48,12 @@ async function processYear(wb, year) {
   // Object which will hold all data about the year
   const data = { year, constituencies: {} };
 
-  // First get party names from row 3 (corresponding columns contain votes)
+  // First get column of each party from row 3 (party name headings)
   const partyCols = {}
   sheet.getRow(3).eachCell((cell, col) => {
     // Heading occupies two merged cells, we want the first column value
-    partyCols[cell.value] = col - 1;
+    // Excess whitespace can cause key to not match ID mapping object
+    partyCols[cell.value.trim()] = col - 1;
   });
 
   // Now the data can be extracted per constituency (row)
@@ -44,7 +73,7 @@ async function processYear(wb, year) {
 
       // Not every party runs in every region
       if (votes) {
-        parties[k] = votes;
+        parties[realKey(k, gssId)] = votes;
       }
     }
 
