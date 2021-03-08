@@ -40,7 +40,12 @@ async function processYear(wb, year) {
     // Extract each parties votes using columns obtained earlier
     const parties = {};
     for (const k in partyCols) {
-      parties[k] = row.getCell(partyCols[k]).value;
+      const votes = row.getCell(partyCols[k]).value;
+
+      // Not every party runs in every region
+      if (votes) {
+        parties[k] = votes;
+      }
     }
 
     data.constituencies[gssId] = {
