@@ -1,11 +1,10 @@
-var year = [2001, 2005, 2010, 2015, 2017, 2019];
+var year = ['Year 2001', 'Year 2005', 'Year 2010', 'Year 2015', 'Year 2017', 'Year 2019'];
 function dataSet() {
     var data = [];
     for (let i = 0; i < year.length; i++) {
         data[i] = Math.floor(Math.random() * 101);
     }
-    data[5]=150;
-    return data;
+    return data.sort(function(a, b){return a - b});
 }
 
 var trace1 = {
@@ -15,7 +14,7 @@ var trace1 = {
     orientation: 'h',
     marker: {
       color: 'rgba(55,128,191,0.6)',
-      width: 1
+      width: 0.5
     },
     type: 'bar'
 };
@@ -28,7 +27,7 @@ var trace2 = {
     type: 'bar',
     marker: {
       color: 'rgba(255,153,51,0.6)',
-      width: 1
+      width: 0.5
     }
 };
   
