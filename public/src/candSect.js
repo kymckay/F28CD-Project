@@ -1,7 +1,15 @@
 var year = [2001, 2005, 2010, 2015, 2017, 2019];
-function data() 
+function dataSet() {
+    var data = [];
+    for (let i = 0; i < year.length; i++) {
+        data[i] = Math.floor(Math.random() * 101);
+    }
+    data[5]=150;
+    return data;
+}
+
 var trace1 = {
-    x: [20, 14, 23],
+    x: dataSet(),
     y: year,
     name: 'BBC',
     orientation: 'h',
@@ -13,7 +21,7 @@ var trace1 = {
 };
   
 var trace2 = {
-    x: [12, 18, 29],
+    x: dataSet(),
     y: year,
     name: 'Politico',
     orientation: 'h',
