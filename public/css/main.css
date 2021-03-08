@@ -58,13 +58,14 @@ section {
   overflow-y: hidden;
 }
 
-.candAlign {
+#candAlign {
   text-align: left;
   float: left;
   height: 100px;
 }
 
-.candSectList {
+#candSectList {
   list-style-type: none;
   text-align: left;
+  float: left;
 }
