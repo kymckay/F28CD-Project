@@ -7,4 +7,3 @@ window.addEventListener('load', (event) => {
   graph();
 });
 
-window.update
