@@ -7,7 +7,7 @@ function dataSet() {
     return data.sort(function(a, b){return a - b});
 }
 
-var trace1 = {
+var bbc = {
     x: dataSet(),
     y: year,
     name: 'BBC',
@@ -19,7 +19,7 @@ var trace1 = {
     type: 'bar'
 };
   
-var trace2 = {
+var politico = {
     x: dataSet(),
     y: year,
     name: 'Politico',
@@ -30,8 +30,20 @@ var trace2 = {
       width: 0.5
     }
 };
+
+var actual = {
+    x: dataSet(),
+    y: year,
+    name: 'actual',
+    orientation: 'h',
+    type: 'bar',
+    marker: {
+      color: 'rgba(200,153,51,0.6)',
+      width: 0.5
+    }
+};
   
-var data = [trace1, trace2];
+var data = [bbc, politico, actual];
   
 var layout = {
     barmode: 'group'
