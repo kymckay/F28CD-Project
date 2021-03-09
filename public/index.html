@@ -6,6 +6,10 @@
   <link rel="stylesheet" type="text/css" href="css/main.css">
   <link rel="stylesheet" type="text/css" href="css/info.css">
   <link rel="stylesheet" type="text/css" href="css/dropdown.css">
+
+  <link rel="stylesheet" type="text/css" href="css/legend.css">
+
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link href='https://fonts.googleapis.com/css?family=Fjalla One' rel='stylesheet'>
   <script src="dist/main.js"></script>
@@ -17,8 +21,7 @@
     <img src="src/logo.png" alt="logo" class="logo">
   </a>
   <!-- dropdown menu for election year selection -->
-  <!-- not a fan of how hard coded the dropdown is atm, there's probably a way around this? -->
-  <div class="dropdown-year">
+  <div class="dropdown">
     <select>
       <option value="0">Select year</option>
       <option value="1">2019</option>
@@ -29,6 +32,9 @@
       <option value="6">2001</option>
     </select>
   </div>
+
+  <!-- js functions not working out yet, so for now this will do-->
+  <script src="src/dropdown.js"></script>
 
   <!-- Info button -->
   <div class="info">
@@ -42,10 +48,10 @@
   </div>
 </header>
 <main class="main-flex">
-  <section class="map" id="map">
+  <section class="map">
     <h1>The Map</h1>
-    <p ></p>
   </section>
+
 
   <section class="graph">
     <!-- ideally height will adjust with different window sizes, to be figured out -->
@@ -54,9 +60,11 @@
         Easy way would be to enable title in the chart but that looses the font-->
       <h4>Seats per Party: Actual vs Predicted</h4>
       <!-- Breakdown graph -->
+      <!-- The current chart format isn't great, will adjust it if time allows -->
       <div id="container" style="width: 95%; height: 82%">
         <canvas id="canvas" ></canvas>
       </div>
+      <script src="src/graph.js"></script>
 
       <!-- Prediction data dropdown menu -->
       <div class="dropdown-data">
@@ -69,6 +77,7 @@
           <option value="5">BBC</option>
         </select>
       </div>
+      <script src="src/dropdown-data.js"></script>
     </div>
     <!-- section height is temporarily -->
     <!-- ideally will adjust with different window sizes, to be figured out -->
@@ -76,8 +85,112 @@
       <h1>Politician Section</h1>
     </div>
   </section>
+
+
+
+  <!-------------------------------------->
   <section class="table">
-    <h1>Politician Table</h1>
+    <!----- <h1>Politician Table</h1> ----->
+
+    <!------search bar--------->
+    <div class="search">
+      <!--<form action="/action_page.php">-->
+      <input type="text" placeholder="Search candidate.." name="search">
+      <button type="submit">
+       <i class="fa fa-search"></i>
+      </button>
+    </form>
+    </div>
+    
+    
+    <!------candidate table------->
+    <table class="candid">
+      <thead>
+        <tr>
+          <th>Candidate</th>
+          <th>Votes</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td>Candidate 1</td>
+          <td>12345</td>
+        </tr>
+        <tr>
+          <td>Candidate 2</td>
+          <td>2222</td>
+        </tr>
+        <tr>
+          <td>Candidate 3</td>
+          <td>23532</td>
+        </tr>
+        <tr>
+          <td>Candidate 4</td>
+          <td>13536</td>
+        </tr>
+        <tr>
+          <td>Candidate 5</td>
+          <td>2421</td>
+        </tr>
+        <tr>
+          <td>Candidate 6</td>
+          <td>13567</td>
+        </tr>
+        <tr>
+          <td>Candidate 7</td>
+          <td>75423</td>
+        </tr>
+        <tr>
+          <td>Candidate 8</td>
+          <td>46324</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+    <!--------legend--------->
+    <table class="legend">
+    <thead>
+        <tr>
+          <th>Party Legend</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Conservatives</td>
+        </tr>
+        <tr>
+          <td>Labour</td>
+        </tr>
+        <tr>
+          <td>SNP</td>
+        </tr>
+        <tr>
+          <td>Lib Dem</td>
+        </tr>
+        <tr>
+          <td>DUP</td>
+        </tr>
+        <tr>
+          <td>Sinn Fienn</td>
+        </tr>
+        <tr>
+          <td>Plaid Cymru</td>
+        </tr>
+        <tr>
+          <td>SDLP</td>
+        </tr>
+        <tr>
+          <td>Green</td>
+        </tr>
+        <tr>
+          <td>Alliance</td>
+        </tr>
+      </table>  
+
+    </div>
   </section>
 </main>
 </body>
