@@ -12,9 +12,7 @@ const elections_file = path.resolve(__dirname, 'election-results.xlsx');
 
 async function main() {
   // Get relevant candidate and election data in parallel for efficiency
-  console.log("Extracting election data...");
-  console.log("Extracting candidate data...");
-  const [ electionData, candidateData] = await Promise.all([
+  const [ electionData, candidateData ] = await Promise.all([
     elections_in.readFile(elections_file),
     candidates_in.readFile(candidates_file)
   ]);
@@ -22,11 +20,6 @@ async function main() {
   // Unpack the data
   const [data2019, data2017, data2012, data2010] = electionData;
   const { parties, people, candidates } = candidateData;
-
-  console.log(`Extracted ${parties.length} party records`);
-  console.log(`Extracted ${people.length} person records`);
-  console.log(`Extracted ${candidates.length} candidate records`);
-
 
   console.log(`Inserting data into MongoDB...`);
   try {
@@ -49,8 +42,6 @@ async function addCollection(name, documents) {
   const database = client.db('f28cd');
 
   const collection = database.collection(name);
-  // const candidates = database.collection('candidates');
-  // const parties = database.collection('parties');
 
   // First reset any existing data structure
   await collection.deleteMany({});

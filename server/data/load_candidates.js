@@ -1,7 +1,9 @@
+/* eslint-disable no-console */
 const fs = require('fs');
 const csv = require('@fast-csv/parse');
 
 exports.readFile = async (filename) => {
+  console.log("Extracting candidate data...");
   const seen = {}; // Track identifiers to avoid duplicates
 
   // Data from file will be stored in these objects
@@ -50,6 +52,11 @@ exports.readFile = async (filename) => {
       .pipe(csv.parse({ headers: true }))
       .on('error', error => reject(error))
       .on('data', processRow)
-      .on('end', rowCount => resolve({parties, people, candidates, rowCount}));
+      .on('end', rowCount => {
+        console.log(`Extracted ${parties.length} party records`);
+        console.log(`Extracted ${people.length} person records`);
+        console.log(`Extracted ${candidates.length} candidate records`);
+        resolve({parties, people, candidates, rowCount});
+      });
   });
 }

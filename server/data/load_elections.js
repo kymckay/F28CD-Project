@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const ExcelJS = require('exceljs');
 
 // Mapping party names to EC IDs for later data linkage
@@ -29,6 +30,7 @@ function realKey(party, gssId) {
 }
 
 exports.readFile = async (filename) => {
+  console.log("Extracting election data...");
   const workbook = new ExcelJS.Workbook();
 
   await workbook.xlsx.readFile(filename);
@@ -43,6 +45,7 @@ exports.readFile = async (filename) => {
 }
 
 async function processYear(wb, year) {
+  console.log(`Extracting voting data for the year ${year}...`);
   const sheet = wb.getWorksheet(year);
 
   // Object which will hold all data about the year
@@ -83,5 +86,9 @@ async function processYear(wb, year) {
     };
   });
 
+  // Approximate number of vote records (14 parties overall)
+  const numValues = 14 * Object.keys(data.constituencies).length;
+
+  console.log(`Extracted ~${numValues} vote count records for the year ${year}`);
   return data;
 }
