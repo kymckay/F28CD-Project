@@ -29,19 +29,14 @@ function realKey(party, gssId) {
   return (typeof mapsTo === 'string') ? mapsTo : mapsTo[gssId.charAt(0)];
 }
 
-exports.readFile = async (filename) => {
+exports.readFile = async (filename, years) => {
   console.log("Extracting election data...");
   const workbook = new ExcelJS.Workbook();
 
   await workbook.xlsx.readFile(filename);
 
   // Can process years in parallel for efficiency
-  return Promise.all([
-    processYear(workbook, '2019'),
-    processYear(workbook, '2017'),
-    processYear(workbook, '2015'),
-    processYear(workbook, '2010')
-  ]);
+  return Promise.all(years.map(y => processYear(workbook, y)));
 }
 
 async function processYear(wb, year) {

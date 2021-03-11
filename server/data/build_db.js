@@ -10,11 +10,14 @@ const client = new MongoClient(uri, { useUnifiedTopology: true });
 const candidates_file = path.resolve(__dirname, 'candidates-all.csv');
 const elections_file = path.resolve(__dirname, 'election-results.xlsx');
 
+// Only go back to 2010 as voting data constituency IDs change then
+const years = ["2010", "2015", "2017", "2019"];
+
 async function main() {
   // Get relevant candidate and election data in parallel for efficiency
   const [ electionData, candidateData ] = await Promise.all([
-    elections_in.readFile(elections_file),
-    candidates_in.readFile(candidates_file)
+    elections_in.readFile(elections_file, years),
+    candidates_in.readFile(candidates_file, years)
   ]);
 
   // Unpack the data
@@ -33,10 +36,6 @@ async function main() {
   // Join the election voting data to the candidate records before insertion
   candidates.forEach(c => {
     const year = electionData.filter(d => d.year === c.year)[0];
-
-
-    // Some candidate data is from unsupported years
-    if (!year) return;
 
     // If candidate party is not registered, they fall under other
     // TODO: Independent candidate votes are all bundled under "Other" in the data and can't be seperated

@@ -2,7 +2,7 @@
 const fs = require('fs');
 const csv = require('@fast-csv/parse');
 
-exports.readFile = async (filename) => {
+exports.readFile = async (filename, years) => {
   console.log("Extracting candidate data...");
   const seen = {}; // Track identifiers to avoid duplicates
 
@@ -15,6 +15,10 @@ exports.readFile = async (filename) => {
     // Filter for only parliamentary candidates
     if (data.election.startsWith("parl")) {
       const { id, name, election_date, gss_code, party_ec_id, party_name, elected } = data;
+      const year = election_date.substr(0, 4);
+
+      // Don't care about candidates in unrequested years
+      if (years.every(y => y !== year)) return;
 
       // Store each party once (by electoral commision ID)
       if (!seen[party_ec_id]) {
@@ -39,7 +43,7 @@ exports.readFile = async (filename) => {
       candidates.push({
         id,
         party_ec_id,
-        year: election_date.substr(0,4),
+        year,
         gss_code, // identifies constituency ran in
         elected
       });
