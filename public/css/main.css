@@ -1,4 +1,3 @@
-
 body {
   font-size: 100%;
   margin: 0px;
@@ -9,6 +8,7 @@ body {
 }
 
 .header {
+  /*the different flex sections should stack up when the window is resized, to be figured out */
    display: flex;
    margin-right: 5px;
    margin-left: 5px;

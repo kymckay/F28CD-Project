@@ -18,7 +18,8 @@
     <img src="src/logo.png" alt="logo" class="logo">
   </a>
   <!-- dropdown menu for election year selection -->
-  <div class="dropdown">
+  <!-- not a fan of how hard coded the dropdown is atm, there's probably a way around this? -->
+  <div class="dropdown-year">
     <select>
       <option value="0">Select year</option>
       <option value="1">2019</option>
@@ -29,9 +30,6 @@
       <option value="6">2001</option>
     </select>
   </div>
-
-  <!-- js functions not working out yet, so for now this will do-->
-  <script src="src/dropdown.js"></script>
 
   <!-- Info button -->
   <div class="info">
@@ -45,9 +43,11 @@
   </div>
 </header>
 <main class="main-flex">
-  <section class="map">
+  <section class="map" id="map">
     <h1>The Map</h1>
+    <p ></p>
   </section>
+
   <section class="graph">
     <!-- ideally height will adjust with different window sizes, to be figured out -->
     <div style="height: 400px">
@@ -55,11 +55,9 @@
         Easy way would be to enable title in the chart but that looses the font-->
       <h4>Seats per Party: Actual vs Predicted</h4>
       <!-- Breakdown graph -->
-      <!-- The current chart format isn't great, will adjust it if time allows -->
       <div id="container" style="width: 95%; height: 82%">
         <canvas id="canvas" ></canvas>
       </div>
-      <script src="src/graph.js"></script>
 
       <!-- Prediction data dropdown menu -->
       <div class="dropdown-data">
@@ -72,7 +70,6 @@
           <option value="5">BBC</option>
         </select>
       </div>
-      <script src="src/dropdown-data.js"></script>
     </div>
     <!-- section height is temporarily -->
     <!-- ideally will adjust with different window sizes, to be figured out -->
