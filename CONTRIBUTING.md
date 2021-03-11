@@ -14,7 +14,7 @@ To ensure formatting consistency between various editors and operating systems, 
 
 A MongoDB database is used server side to store relevant data about candidates, parties and constituencies for serving to clients. Using a NoSQL DBMS allows agile adaptation of the data structure to meet project needs as things develop and less overhead due to a lack of integrity constraint enforcement (largely unnecessary for a data set that is static after load).
 
-Data is loaded in via scripted means to simplify the process and make it easily repeatable. See [the guide here](server/data/README.md) for specific details on the setup procedure.
+Data is loaded in via scripted means to simplify the process and make it easily repeatable. See [the guide here](data/README.md) for specific details on the setup procedure.
 
 ## Style Standards
 
