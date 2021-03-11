@@ -80,6 +80,7 @@ async function processYear(wb, year) {
       }
     }
 
+    // Storing constituencies by key allows quick data joining later
     data.constituencies[gssId] = {
       electorate: row.getCell(7).value, // column 7 always has electorate
       parties

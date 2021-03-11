@@ -18,17 +18,27 @@ async function main() {
   ]);
 
   // Unpack the data
-  const [data2019, data2017, data2012, data2010] = electionData;
   const { parties, people, candidates } = candidateData;
+
+  // Constituency records will be built (one for each constitency each year)
+  let constituencies = electionData.map(yd => {
+    const cd = yd.constituencies;
+
+    return Object.keys(cd).map(k => ({ gss_code: k, electorate: cd[k].electorate, year: yd.year }));
+  });
+
+  // The year-seperated structure has to be flat before insertion
+  constituencies = [].concat(...constituencies);
 
   console.log(`Inserting data into MongoDB...`);
   try {
     await client.connect();
 
-    // Insert records sequentially to avoid DB write conflicts
+    // Must insert records sequentially to avoid DB write conflicts
     await addCollection("parties", parties);
     await addCollection("people", people);
     await addCollection("candidates", candidates);
+    await addCollection("constituencies", constituencies);
   } catch (error) {
     console.dir(error);
   } finally {
