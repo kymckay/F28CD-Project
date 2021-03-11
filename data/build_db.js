@@ -39,9 +39,9 @@ async function main() {
 
     // If candidate party is not registered, they fall under other
     // TODO: Independent candidate votes are all bundled under "Other" in the data and can't be seperated
-    const party = c.party_ec_id.startsWith("PP") ? c.party_ec_id : "Other";
-
-    c.votes = year.constituencies[c.gss_code].parties[party];
+    // TODO generate prediction data too (try to make consistent with electorate)
+    const { parties: partyVotes } = year.constituencies[c.gss_code];
+    c.votes = (c.party in partyVotes) ? partyVotes[c.party] : partyVotes.Other;
   });
 
   console.log(`Inserting data into MongoDB...`);
