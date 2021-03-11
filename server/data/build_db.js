@@ -30,6 +30,21 @@ async function main() {
   // The year-seperated structure has to be flat before insertion
   constituencies = [].concat(...constituencies);
 
+  // Join the election voting data to the candidate records before insertion
+  candidates.forEach(c => {
+    const year = electionData.filter(d => d.year === c.year)[0];
+
+
+    // Some candidate data is from unsupported years
+    if (!year) return;
+
+    // If candidate party is not registered, they fall under other
+    // TODO: Independent candidate votes are all bundled under "Other" in the data and can't be seperated
+    const party = c.party_ec_id.startsWith("PP") ? c.party_ec_id : "Other";
+
+    c.votes = year.constituencies[c.gss_code].parties[party];
+  });
+
   console.log(`Inserting data into MongoDB...`);
   try {
     await client.connect();
