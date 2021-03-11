@@ -23,7 +23,7 @@
         "env": { "jest": true }
       },
       {
-        "files": ["server/**/*.js"],
+        "files": ["server/**/*.js", "data/**/*.js"],
         "env": { "node": true, "es6": true }
       },
       {
