@@ -61,3 +61,16 @@ async function addCollection(name, documents) {
 }
 
 main().catch(console.dir);
+
+
+// async function test() {
+//   await client.connect();
+//   const database = client.db('f28cd');
+
+//   const collection = database.collection("candidates");
+
+//   await collection.find({ year: '2010' }).forEach((d) => console.log(d));
+
+//   await client.close();
+// }
+// test();
