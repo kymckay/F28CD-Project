@@ -39,7 +39,7 @@ exports.readFile = async (filename) => {
       candidates.push({
         id,
         party_ec_id,
-        election_date,
+        year: election_date.substr(0,4),
         gss_code, // identifies constituency ran in
         elected
       });
