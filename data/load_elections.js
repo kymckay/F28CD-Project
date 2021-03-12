@@ -36,15 +36,20 @@ exports.readFile = async (filename, years) => {
   await workbook.xlsx.readFile(filename);
 
   // Can process years in parallel for efficiency
-  return Promise.all(years.map(y => processYear(workbook, y)));
+  const data = await Promise.all(years.map(y => processYear(workbook, y)));
+
+  // Returning an object enables easy data joining
+  return data.reduce((p, c) => ({...p, ...c}), {});
 }
 
 async function processYear(wb, year) {
+  let extracted = 0;
   console.log(`Extracting voting data for the year ${year}...`);
+
   const sheet = wb.getWorksheet(year);
 
   // Object which will hold all data about the year
-  const data = { year, constituencies: {} };
+  const data = { [year]: {} };
 
   // First get column of each party from row 3 (party name headings)
   const partyCols = {}
@@ -72,19 +77,17 @@ async function processYear(wb, year) {
       // Not every party runs in every region
       if (votes) {
         parties[realKey(k, gssId)] = votes;
+        extracted++;
       }
     }
 
     // Storing constituencies by key allows quick data joining later
-    data.constituencies[gssId] = {
+    data[year][gssId] = {
       electorate: row.getCell(7).value, // column 7 always has electorate
       parties
     };
   });
 
-  // Approximate number of vote records (14 parties overall)
-  const numValues = 14 * Object.keys(data.constituencies).length;
-
-  console.log(`Extracted ~${numValues} vote count records for the year ${year}`);
+  console.log(`Extracted ${extracted} vote count records for the year ${year}`);
   return data;
 }

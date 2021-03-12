@@ -24,10 +24,15 @@ async function main() {
   const { parties, people, candidates } = candidateData;
 
   // Constituency records will be built (one for each constitency each year)
-  let constituencies = electionData.map(yd => {
-    const cd = yd.constituencies;
-
-    return Object.keys(cd).map(k => ({ gss_code: k, electorate: cd[k].electorate, year: yd.year }));
+  let constituencies = Object.keys(electionData).map(y => {
+    const yearData = electionData[y];
+    return Object.keys(yearData).map(k => {
+      return {
+        gss_code: k,
+        electorate: yearData[k].electorate,
+        year: y
+      };
+    });
   });
 
   // The year-seperated structure has to be flat before insertion
@@ -35,12 +40,11 @@ async function main() {
 
   // Join the election voting data to the candidate records before insertion
   candidates.forEach(c => {
-    const year = electionData.filter(d => d.year === c.year)[0];
+    const { parties: partyVotes } = electionData[c.year][c.gss_code];
 
     // If candidate party is not registered, they fall under other
     // TODO: Independent candidate votes are all bundled under "Other" in the data and can't be seperated
     // TODO generate prediction data too (try to make consistent with electorate)
-    const { parties: partyVotes } = year.constituencies[c.gss_code];
     c.votes = (c.party in partyVotes) ? partyVotes[c.party] : partyVotes.Other;
   });
 
@@ -75,7 +79,6 @@ async function addCollection(name, documents) {
 }
 
 main().catch(console.dir);
-
 
 // async function test() {
 //   await client.connect();
