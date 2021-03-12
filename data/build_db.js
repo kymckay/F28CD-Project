@@ -45,7 +45,7 @@ async function main() {
     // If candidate party is not registered, they fall under other
     // TODO: Independent candidate votes are all bundled under "Other" in the data and can't be seperated
     // TODO generate prediction data too (try to make consistent with electorate)
-    c.votes = (c.party in partyVotes) ? partyVotes[c.party] : partyVotes.Other;
+    c.votes = (c.party_ec_id in partyVotes) ? partyVotes[c.party_ec_id] : partyVotes.Other;
   });
 
   console.log(`Inserting data into MongoDB...`);
