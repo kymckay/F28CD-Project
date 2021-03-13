@@ -1,9 +1,15 @@
-import {name, dropdown, getSelectedOption} from './dropdown.js';
-import {graph} from './graph.js';
+import {name, dropdown, getSelectedYear, getSelectedSource} from './dropdown.js';
+import {graph,  setSelectedYear} from './graph.js';
 
 window.addEventListener('load', (event) => {
   dropdown("dropdown-year");
   dropdown("dropdown-data");
-  graph();
+  let myChart = graph();
+
+  window.addEventListener('click', (event) => {
+    setSelectedYear(getSelectedYear(), myChart);
+  });
 });
+
+
 
