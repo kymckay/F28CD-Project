@@ -33,7 +33,7 @@ section {
   padding: 10px;
   margin: 5px;
   height: 90vh;
-  min-height: 500px;
+  min-height: 900px;
 }
 
 .main-flex {
@@ -60,9 +60,9 @@ section {
 }
 
 .graph {
-  flex: 3;
+  flex: 4;
+  height: 80%;
   width: 95%;
-  height: 80%
 }
 
 .dropdown {
