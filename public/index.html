@@ -45,19 +45,19 @@
     <p ></p>
   </section>
 
-  <section class="graph">
+  <section class="middle-section">
     <!-- ideally height will adjust with different window sizes, to be figured out -->
-    <div style="height: 400px">
+    <div class="graph" >
       <!--how will the title change with different datasets?
         Easy way would be to enable title in the chart but that looses the font-->
       <h4>Seats per Party: Actual vs Predicted</h4>
       <!-- Breakdown graph -->
-      <div id="container" style="width: 95%; height: 82%">
-        <canvas id="canvas" ></canvas>
-      </div>
+
+      <canvas id="canvas" ></canvas>
+    </div>
 
       <!-- Prediction data dropdown menu -->
-      <div class="dropdown-data">
+    <div class="dropdown-data dropdown">
         <select>
           <option value="0">Select prediction data source</option>
           <option value="1">Electoral Calculus</option>
@@ -66,11 +66,11 @@
           <option value="4">Politico</option>
           <option value="5">BBC</option>
         </select>
-      </div>
     </div>
+
     <!-- section height is temporarily -->
     <!-- ideally will adjust with different window sizes, to be figured out -->
-    <div style="height: 175px; margin-top: 5px;">
+    <div class="politician-section" >
       <h1>Politician Section</h1>
     </div>
   </section>
