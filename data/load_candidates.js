@@ -45,7 +45,7 @@ exports.readFile = async (filename, years) => {
         party_ec_id,
         year,
         gss_code, // identifies constituency ran in
-        elected
+        elected: elected.toLowerCase() === 'true'
       });
     }
   }
