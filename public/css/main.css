@@ -32,21 +32,45 @@ section {
   background-color: white;
   padding: 10px;
   margin: 5px;
-  height: 600px;
+  height: 90vh;
+  min-height: 500px;
 }
 
 .main-flex {
    display: flex;
+   flex-flow: row wrap;
+}
+
+@media all and (max-width: 900px) {
+  .main-flex {
+    flex-direction: column;
+  }
 }
 
 .map {
   flex: 2.7;
 }
 
-.graph {
+.middle-section {
+  display: flex;
+  flex-direction: column;
   flex: 2;
   margin-left: 0px;
   margin-right: 0px;
+}
+
+.graph {
+  flex: 3;
+  width: 95%;
+  height: 80%
+}
+
+.dropdown {
+  flex: 0.3;
+}
+
+.politician-section {
+  flex: 2;
 }
 
 .table {
