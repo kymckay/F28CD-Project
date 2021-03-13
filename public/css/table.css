@@ -31,3 +31,23 @@
     overflow: auto;
     display: block;
 }
+
+/* sorting table*/
+.candid th {
+    cursor: pointer;
+}
+.candid .th-sort-asc::after {
+    content: "\25b4";
+}
+.candid .th-sort-desc::after {
+    content: "\25be";
+}
+.candid .th-sort-asc::after,
+.candid .th-sort-desc::after {
+    margin-left: 5px;
+}
+/* font style italic for column selected ascending */
+.candid .th-sort-asc,
+.candid .th.sort.desc {
+    font-style: italic;
+}
