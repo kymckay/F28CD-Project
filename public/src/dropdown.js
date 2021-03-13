@@ -2,6 +2,8 @@ import {setSelectedYear} from './graph.js'
 //Reference: https://www.w3schools.com/howto/howto_custom_select.asp
 
 var x, i, j, l, ll, selectedOption, a, b, c;
+var selectedYear;
+var selectedSource;
 export function dropdown(className) {
 
   //select dropdown by class name
@@ -46,10 +48,11 @@ export function dropdown(className) {
             }
           }
           h.click();
+          //I assume this will be the place from which a request for data update will be sent?
           if (className == "dropdown-year") {
-            setSelectedYear(this.innerHTML);
+            selectedYear = this.innerHTML;
           } else if (className == "dropdown-data") {
-            console.log("Source: " + this.innerHTML);
+            selectedSource = this.innerHTML;
           }
 
       });
@@ -91,6 +94,11 @@ export function dropdown(className) {
   document.addEventListener("click", closeAllSelect);
 }
 
-//export function getSelectedOption() {
-//  return c;
-//}
+export function getSelectedYear() {
+  return selectedYear;
+}
+
+export function getSelectedSource() {
+  return selectedSource;
+}
+
