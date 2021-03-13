@@ -1,3 +1,5 @@
+/* sort table */
+
 function sortTableByColumn(table, column, asc = true) {
     const dirModifier = asc ? 1 : -1;
     const tBody = table.tBodies[0];
