@@ -91,17 +91,16 @@
   
   
   <section class="table">
-    <!----- <h1>Politician Table</h1> ----->
 
     <!------search bar--------->
-    <div class="search">
-      <!--<form action="/action_page.php">-->
-      <input type="text" placeholder="Search candidate.." name="search">
-      <button type="submit">
-       <i class="fa fa-search"></i>
-      </button>
-    </form>
+   <div id="searchCandid" class="search">
+      <div class="search_input-container">
+        <input class="search_input" type="text" spellcheck="false" placeholder="Search candidate..">
+        <span class="material-icons search_icon">search</span>
     </div>
+  </div>
+  
+  <script src="src/search.js" type="module"></script>
     
     
     <!------candidate table------->
