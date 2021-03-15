@@ -3,7 +3,7 @@
 import {newDropdown} from './dropdown.js';
 import {graph} from './graph.js';
 
-// Leave this blank, the value will be injected on server start from an untracked file
+// Leave this blank, value injected during build (see contributing guidelines)
 const MAPBOX_KEY = '';
 
 window.addEventListener('load', () => {
@@ -39,7 +39,7 @@ window.addEventListener('load', () => {
     tileSize: 512,
     zoomOffset: -1,
     // Note: Mapbox public token goes here. As this is client side code there's no security concern.
-    // However, we'd still like to avoid having it in the source code. Could set up injection at runtime.
+    // However, we'd still like to avoid having it in the source code.
     accessToken: MAPBOX_KEY
   }).addTo(mymap);
 });

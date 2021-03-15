@@ -16,13 +16,13 @@ TBC
 
 ### Map Tiles Setup
 
-The client-side code is configured to use map tiles from [Mapbox](https://www.mapbox.com). For this to work, you must have a public key (allows up to 50,000 loads per month) which is currently hardcoded in [public/src/main.js]. This is perfectly fine to expose client-side, although we'd like to avoid having it in our source since we're not deploying to a specific domain and can't easily limit where the key can be used.
+The client-side code is configured to use map tiles from [Mapbox](https://www.mapbox.com). For this to work, you must have [a public key](https://docs.mapbox.com/help/getting-started/access-tokens/) (allows up to 50,000 loads per month for free) which should be stored in a file `data/secrets.json` (see the [template file](data/secrets_template.json)). The key will be injected into the code upon build (when the server starts) as we'd like to avoid having it in our source history.
 
-Note: We'll try to set up key injection from an untracked file to avoid the risk of it ever making its way into our git history.
+Do note that this key is intended for public use and so is perfectly safe to be shared (it will be with anyone who loads the webpage). We just don't want it in the history to avoid it being abused by 3rd parties (we aren't deploying to a specific domain and so can't limit the use that way).
 
 ## Style Standards
 
-Our JavaScript is written in ES6 syntax and standards enforced via static analysis with [ESLint](https://eslint.org).
+Our JavaScript is written in ES6 syntax and standards are enforced via static analysis with [ESLint](https://eslint.org).
 
 We try to follow Chris Beams' [commit message guide](https://chris.beams.io/posts/git-commit) to keep our git history nice and navigatable.
 
