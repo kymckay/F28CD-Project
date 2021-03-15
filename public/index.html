@@ -22,18 +22,7 @@
     <img src="src/logo.png" alt="logo" class="logo">
   </a>
   <!-- dropdown menu for election year selection -->
-  <div class="dropdown">
-    <select>
-      <option value="0">Select year</option>
-      <option value="1">2019</option>
-      <option value="2">2017</option>
-      <option value="3">2015</option>
-      <option value="4">2010</option>
-    </select>
-  </div>
-
-  <!-- js functions not working out yet, so for now this will do-->
-  <script src="src/dropdown.js"></script>
+  <div class="dropdown" id="dropdown-year"></div>
 
   <!-- Info button -->
   <div class="info">
@@ -61,16 +50,7 @@
     </div>
 
     <!-- Prediction data dropdown menu -->
-    <div class="dropdown-data dropdown">
-        <select>
-          <option value="0">Select prediction data source</option>
-          <option value="1">Electoral Calculus</option>
-          <option value="2">Financial Times</option>
-          <option value="3">Bloomberg</option>
-          <option value="4">Politico</option>
-          <option value="5">BBC</option>
-        </select>
-    </div>
+    <div class="dropdown" id="dropdown-data"></div>
 
     <!-- Politician Profile Section -->
     <div class="politician-section" >
@@ -107,7 +87,6 @@
   </div>
 
   <script src="src/search.js"></script>
-
 
     <!------candidate table------->
     <table class="candid">
