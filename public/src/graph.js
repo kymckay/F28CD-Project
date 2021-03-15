@@ -38,7 +38,8 @@ export async function graph() {
     responsive: true,
     aspectRatio: 1.15,
     legend: {
-      display: true
+      display: true,
+      position: 'bottom'
     },
 
     scales: {
