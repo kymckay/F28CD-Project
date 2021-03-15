@@ -1,0 +1,73 @@
+/* Reference: https://www.w3schools.com/howto/howto_custom_select.asp */
+/*formatting for year dropdown*/
+.dropdown-year {
+  position: relative;
+  font-family: Fjalla One;
+  font-size: 20px;
+  width: 140px;
+}
+
+/*formatting for prediction data dropdown*/
+.dropdown-data {
+  position: relative;
+  margin: auto;
+  font-family: Fjalla One;
+  font-size: 17px;
+  width: 55%;
+}
+
+/*hide the original dropdown menus*/
+.dropdown-data select {
+  display:none;
+}
+.dropdown-year select {
+  display: none;
+}
+
+/*formatting for the selection arrow*/
+.select-selected:after {
+  position: absolute;
+  content: "";
+  top: 16px;
+  right: 7px;
+  width: 0;
+  height: 0;
+  border: 8px solid transparent;
+  border-color: #000000 transparent transparent transparent;
+}
+
+/*formatting for the selection arrow when the dropdown is expanded*/
+.select-selected.select-arrow-active:after {
+  border-color: transparent transparent #000000 transparent;
+  top: 7px;
+}
+
+/*formatting for options in the dropdown menus*/
+.select-items div,.select-selected {
+  color: #000000;
+  padding: 8px 16px;
+  border: 1px solid transparent;
+  border-color: transparent transparent rgba(0, 0, 0, 0) transparent;
+  cursor: pointer;
+  user-select: none;
+}
+
+/*formatting for the dropdowns when expanded*/
+.select-items {
+  position: absolute;
+  background-color: white;
+  opacity: 0.9;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 99;
+}
+
+/*hide the dropdown when an option has been selected*/
+.select-hide {
+  display: none;
+}
+
+.select-items div:hover, .same-as-selected {
+  background-color: rgba(0, 0, 0, 0.1);
+}

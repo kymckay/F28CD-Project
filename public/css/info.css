@@ -1,0 +1,47 @@
+/* Reference: https://www.w3schools.com/css/css_tooltip.asp */
+.info {
+  position: absolute;
+  color: white;
+  right: 15px;
+  top: 15px;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.info .infotext {
+  visibility: hidden;
+  width: 200px;
+  background-color: #fff;
+  color: #000000;
+  text-align: left;
+  border-radius: 5px;
+  padding: 10px;
+  position: absolute;
+  z-index: 1;
+  top: 120%;
+  left: -140px;
+  margin-left: -60px;
+}
+
+.info .infotext::after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 72%;
+  margin-left: 47px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent #fff transparent;
+}
+
+.info:hover .infotext {
+  visibility: visible;
+  -webkit-animation: fadeIn 0.6s;
+  animation: fadeIn 0.6s;
+}
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}

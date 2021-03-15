@@ -4,9 +4,76 @@
   <meta content="text/html" charset="utf-8" />
   <title>UK Election Data</title>
   <link rel="stylesheet" type="text/css" href="css/main.css">
+  <link rel="stylesheet" type="text/css" href="css/info.css">
+  <link rel="stylesheet" type="text/css" href="css/dropdown.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href='https://fonts.googleapis.com/css?family=Fjalla One' rel='stylesheet'>
   <script src="dist/main.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
 </head>
 <body>
+<header class="header">
+  <a href="index.html">
+    <img src="src/logo.png" alt="logo" class="logo">
+  </a>
+  <!-- dropdown menu for election year selection -->
+  <!-- not a fan of how hard coded the dropdown is atm, there's probably a way around this? -->
+  <div class="dropdown-year">
+    <select>
+      <option value="0">Select year</option>
+      <option value="1">2019</option>
+      <option value="2">2017</option>
+      <option value="3">2015</option>
+      <option value="4">2010</option>
+    </select>
+  </div>
 
+  <!-- Info button -->
+  <div class="info">
+    <i class="fa fa-info-circle" style="font-size:30px;"></i>
+    <span class="infotext">Add website instructions here:
+      <br> 1. Instruction, Instruction, Instruction, Instruction, Instruction
+      <br> 1. Instruction, Instruction, Instruction, Instruction, Instruction
+      <br> 1. Instruction, Instruction, Instruction, Instruction, Instruction
+      <br> 1. Instruction, Instruction, Instruction, Instruction, Instruction
+      <br> 1. Instruction, Instruction, Instruction, Instruction, Instruction</span>
+  </div>
+</header>
+<main class="main-flex">
+  <section class="map" id="map">
+    <h1>The Map</h1>
+    <p ></p>
+  </section>
+
+  <section class="middle-section">
+    <div class="graph" >
+      <!--how will the title change with different datasets?
+        Easy way would be to enable title in the chart but that looses the font-->
+      <h4>Seats per Party: Actual vs Predicted</h4>
+      <!-- Breakdown graph -->
+      <canvas id="canvas" ></canvas>
+    </div>
+
+    <!-- Prediction data dropdown menu -->
+    <div class="dropdown-data dropdown">
+        <select>
+          <option value="0">Select prediction data source</option>
+          <option value="1">Electoral Calculus</option>
+          <option value="2">Financial Times</option>
+          <option value="3">Bloomberg</option>
+          <option value="4">Politico</option>
+          <option value="5">BBC</option>
+        </select>
+    </div>
+
+    <!-- Politician Profile Section -->
+    <div class="politician-section" >
+      <h1>Politician Section</h1>
+    </div>
+  </section>
+  <section class="table">
+    <h1>Politician Table</h1>
+  </section>
+</main>
 </body>
 </html>
