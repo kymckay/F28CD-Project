@@ -1,3 +1,5 @@
+/* global L */ // Defined by Leaflet
+
 import {newDropdown} from './dropdown.js';
 import {graph} from './graph.js';
 
@@ -17,4 +19,18 @@ window.addEventListener('load', () => {
   })
 
   let myChart = graph();
+
+  // Map initalisation
+  const mymap = L.map('map').setView([51.505, -0.09], 13);
+
+  L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    maxZoom: 18,
+    id: 'mapbox/light-v10',
+    tileSize: 512,
+    zoomOffset: -1,
+    // Note: Mapbox public token goes here. As this is client side code there's no security concern.
+    // However, we'd still like to avoid having it in the source code. Could set up injection at runtime.
+    accessToken: ''
+  }).addTo(mymap);
 });
