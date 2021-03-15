@@ -1,4 +1,4 @@
-import {name, dropdown, getSelectedYear, getSelectedSource} from './dropdown.js';
+import {dropdown, getSelectedYear, getSelectedSource} from './dropdown.js';
 import {graph,  setSelectedYear} from './graph.js';
 
 window.addEventListener('load', (event) => {
