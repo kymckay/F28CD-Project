@@ -1,5 +1,3 @@
-import {getSelectedYear, getSelectedSource} from './dropdown.js'
-
 // Reference: https://www.chartjs.org/docs/latest/
 const xlabels = [];
 const predicted1 = [300, 240, 150, 69, 13];
