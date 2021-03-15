@@ -41,25 +41,32 @@ section {
 .main-flex {
    display: flex;
    flex-flow: row wrap;
+   min-width: 700px;
 }
 
 @media all and (max-width: 900px) {
   .main-flex {
     flex-direction: column;
   }
+  .graph {
+    max-width: 200px;
+    align-self: center;
+  }
 }
 
 .map {
   flex: 2.7;
+  min-width: 700px;
 }
 
 .middle-section {
   flex: 2;
+  min-width: 400px;
   display: flex;
   flex-direction: column;
   margin-left: 0px;
   margin-right: 0px;
-  width: 100%;
+  align-self: center;
 }
 
 .graph {
@@ -80,6 +87,7 @@ section {
   flex:  1;
   display: flex;
   flex-direction: column;
+  min-width: 190px;
 }
 
 #candSect {
@@ -92,6 +100,7 @@ section {
   text-align: left;
   float: left;
   height: 100px;
+  margin: 10px;
 }
 
 #candSectList {
@@ -101,10 +110,10 @@ section {
 }
 
 #candSectBox {
-  text-align: center;
-  width: 80%;
-  margin-left: 10%;
+  align-items: center;
+  width: 90%;
   flex: 2;
+
 }
 
 canvas {
