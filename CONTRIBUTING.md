@@ -14,6 +14,12 @@ To ensure formatting consistency between various editors and operating systems, 
 
 TBC
 
+### Map Tiles Setup
+
+The client-side code is configured to use map tiles from [Mapbox](https://www.mapbox.com). For this to work, you must have a public key (allows up to 50,000 loads per month) which is currently hardcoded in [public/src/main.js]. This is perfectly fine to expose client-side, although we'd like to avoid having it in our source since we're not deploying to a specific domain and can't easily limit where the key can be used.
+
+Note: We'll try to set up key injection from an untracked file to avoid the risk of it ever making its way into our git history.
+
 ## Style Standards
 
 Our JavaScript is written in ES6 syntax and standards enforced via static analysis with [ESLint](https://eslint.org).
