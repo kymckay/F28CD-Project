@@ -74,24 +74,18 @@
   </section>
 
 
-
-  <!-------------------------------------->
-
-
   <section class="table">
 
-    <!------search bar--------->
-   <div id="searchCandid" class="search">
-      <div class="search_input-container">
-        <input class="search_input" type="text" spellcheck="false" placeholder="Search candidate..">
+     <!------search bar--------->
+    <div class="search">
+        <input type="text" id="search" class="search" onkeyup="myFunction()" spellcheck="false" placeholder="Search candidate.."> 
         <span class="material-icons search_icon">search</span>
     </div>
   </div>
-
   <script src="src/search.js"></script>
 
     <!------candidate table------->
-    <table class="candid">
+    <table id="candid" class="candid">
       <thead>
         <tr>
           <th>Candidate</th>
