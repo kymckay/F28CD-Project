@@ -6,6 +6,10 @@
   <link rel="stylesheet" type="text/css" href="css/main.css">
   <link rel="stylesheet" type="text/css" href="css/info.css">
   <link rel="stylesheet" type="text/css" href="css/dropdown.css">
+  <link rel="stylesheet" type="text/css" href="css/legend.css">
+  <link rel="stylesheet" type="text/css" href="css/search.css">
+  <link rel="stylesheet" type="text/css" href="css/table.css">
+   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link href='https://fonts.googleapis.com/css?family=Fjalla One' rel='stylesheet'>
   <script src="dist/main.js"></script>
@@ -18,8 +22,7 @@
     <img src="src/logo.png" alt="logo" class="logo">
   </a>
   <!-- dropdown menu for election year selection -->
-  <!-- not a fan of how hard coded the dropdown is atm, there's probably a way around this? -->
-  <div class="dropdown-year">
+  <div class="dropdown">
     <select>
       <option value="0">Select year</option>
       <option value="1">2019</option>
@@ -28,6 +31,9 @@
       <option value="4">2010</option>
     </select>
   </div>
+
+  <!-- js functions not working out yet, so for now this will do-->
+  <script src="src/dropdown.js"></script>
 
   <!-- Info button -->
   <div class="info">
@@ -41,9 +47,8 @@
   </div>
 </header>
 <main class="main-flex">
-  <section class="map" id="map">
+  <section class="map">
     <h1>The Map</h1>
-    <p ></p>
   </section>
 
   <section class="middle-section">
@@ -80,13 +85,126 @@
           <li>Spouse:</li>
         </ul>
       </div>
-      
+
       <div id="candGraph"></div>
       <script src="src/candSect.js"></script>
     </div>
   </section>
+
+
+
+  <!-------------------------------------->
+
+
   <section class="table">
-    <h1>Politician Table</h1>
+
+    <!------search bar--------->
+   <div id="searchCandid" class="search">
+      <div class="search_input-container">
+        <input class="search_input" type="text" spellcheck="false" placeholder="Search candidate..">
+        <span class="material-icons search_icon">search</span>
+    </div>
+  </div>
+
+  <script src="src/search.js"></script>
+
+
+    <!------candidate table------->
+    <table class="candid">
+      <thead>
+        <tr>
+          <th>Candidate</th>
+          <th>Votes</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td>Boris Johnson</td>
+          <td>12345</td>
+        </tr>
+        <tr>
+          <td>Nicola Sturgeon</td>
+          <td>02222</td>
+        </tr>
+        <tr>
+          <td>Caroline Lucas</td>
+          <td>23532</td>
+        </tr>
+        <tr>
+          <td>Keir Starmer</td>
+          <td>13536</td>
+        </tr>
+        <tr>
+          <td>Stephen Farry</td>
+          <td>02421</td>
+        </tr>
+        <tr>
+          <td>Chris Hazzard</td>
+          <td>13567</td>
+        </tr>
+        <tr>
+          <td>Ben Lake</td>
+          <td>75423</td>
+        </tr>
+        <tr>
+          <td>Paula Barker</td>
+          <td>46324</td>
+        </tr>
+        <tr>
+          <td>Hannah Bardell</td>
+          <td>35232</td>
+        </tr>
+        <tr>
+          <td>Nia Griffith</td>
+          <td>65332</td>
+      </tbody>
+    </table>
+  </div>
+  <script src="src/sort.js"></script>
+
+
+    <!--------legend--------->
+    <table class="legend">
+    <thead>
+        <tr>
+          <th>Party Legend</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Conservatives</td>
+        </tr>
+        <tr>
+          <td>Labour</td>
+        </tr>
+        <tr>
+          <td>SNP</td>
+        </tr>
+        <tr>
+          <td>Lib Dem</td>
+        </tr>
+        <tr>
+          <td>DUP</td>
+        </tr>
+        <tr>
+          <td>Sinn Fienn</td>
+        </tr>
+        <tr>
+          <td>Plaid Cymru</td>
+        </tr>
+        <tr>
+          <td>SDLP</td>
+        </tr>
+        <tr>
+          <td>Green</td>
+        </tr>
+        <tr>
+          <td>Alliance</td>
+        </tr>
+      </table>
+
+    </div>
   </section>
 </main>
 </body>
