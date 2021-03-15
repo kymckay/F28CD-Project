@@ -29,7 +29,7 @@
 
 /* overflow: auto used so scrollbar only appears when content overflows*/
 .candid tbody {
-    min-height: 530px;
+    min-height: 580px;
     overflow: auto;
     display: block;
 }
