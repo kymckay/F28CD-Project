@@ -3,6 +3,9 @@
 import {newDropdown} from './dropdown.js';
 import {graph} from './graph.js';
 
+// Leave this blank, the value will be injected on server start from an untracked file
+const MAPBOX_KEY = '';
+
 window.addEventListener('load', () => {
   // Hardcoded data temporarily
   const yearSel = newDropdown("dropdown-year", ["2019", "2017", "2015", "2010"]);
@@ -20,6 +23,12 @@ window.addEventListener('load', () => {
 
   let myChart = graph();
 
+  // If key wasn't set (or failed to inject) don't initalise the map section
+  if (!MAPBOX_KEY) {
+    document.getElementById("map").innerHTML = "Map appears here. API key not configured (see contributing guidelines).";
+    return;
+  }
+
   // Map initalisation
   const mymap = L.map('map').setView([51.505, -0.09], 13);
 
@@ -31,6 +40,6 @@ window.addEventListener('load', () => {
     zoomOffset: -1,
     // Note: Mapbox public token goes here. As this is client side code there's no security concern.
     // However, we'd still like to avoid having it in the source code. Could set up injection at runtime.
-    accessToken: ''
+    accessToken: MAPBOX_KEY
   }).addTo(mymap);
 });
