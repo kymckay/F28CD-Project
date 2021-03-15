@@ -1,52 +1,31 @@
-var year = ['Year 2001', 'Year 2005', 'Year 2010', 'Year 2015', 'Year 2017', 'Year 2019'];
-function dataSet() {
-    var data = [];
-    for (let i = 0; i < year.length; i++) {
-        data[i] = Math.floor(Math.random() * 101);
-    }
-    return data.sort(function(a, b){return a - b});
-}
-
-var bbc = {
-    x: dataSet(),
-    y: year,
-    name: 'BBC',
-    orientation: 'h',
-    marker: {
-      color: 'rgba(55,128,191,0.6)',
-      width: 0.5
+const ctx = document.getElementById('candGraph').getContext('2d');
+const names = ['First Place', 'Second Place'];
+const data = [100000, 90000]
+const myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: names,
+        datasets: [{
+            label: '# of Votes',
+            data: data,
+            backgroundColor: [
+                '#0d324d',
+                '#7f5a83'
+            ],
+            borderColor: [
+                '#0d324',
+                '#7f5a83'
+            ],
+            borderWidth: 1
+        }]
     },
-    type: 'bar'
-};
-  
-var politico = {
-    x: dataSet(),
-    y: year,
-    name: 'Politico',
-    orientation: 'h',
-    type: 'bar',
-    marker: {
-      color: 'rgba(255,153,51,0.6)',
-      width: 0.5
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
     }
-};
-
-var actual = {
-    x: dataSet(),
-    y: year,
-    name: 'actual',
-    orientation: 'h',
-    type: 'bar',
-    marker: {
-      color: 'rgba(200,153,51,0.6)',
-      width: 0.5
-    }
-};
-  
-var data = [bbc, politico, actual];
-  
-var layout = {
-    barmode: 'group'
-};
-  
-Plotly.newPlot('candGraph', data, layout,);
+});
