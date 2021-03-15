@@ -1,35 +1,27 @@
 .search {
     position: relative;
-    max-width: 250px;
+    max-width: 100%;
 }
 
 /* set font of search bar and search input */
-.search, .search_input {
+.search {
     font-family: Fjalla One;
 }
 
-.search, .search_input-container {
-    border-radius: 5px;
-}
 
-.search, .search_input-container {
+.search {
     display: inline-flex;
     box-sizing: border-box;
     width: 100%;
     padding: 6px;
     background: #eeeeee;
+    
 }
 
-/* background white within input container */
-.search_input-container:focus-within {
-    background: #ffffff;
-}
-
-.search_input {
-    flex-grow: 1; 
+/* style inside search bar */
+.search input[type=text] {
+    background: white;
+    border-radius: 5px;
     border: none;
-    outline: none;
     width: 100%;
-    padding: 0 6px;
-    background: transparent;
 }

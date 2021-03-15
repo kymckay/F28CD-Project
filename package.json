@@ -12,7 +12,7 @@
         "build:inject": "node data/mapbox_inject.js",
         "build:script": "rollup --config config/rollup.config.main.js",
         "build:unject": "node data/mapbox_remove.js",
-        "build:data": "node server/data/build_db.js"
+        "build:data": "node data/build_db.js"
     },
     "repository": {
         "type": "git",
@@ -31,6 +31,7 @@
     "devDependencies": {
         "@babel/core": "^7.12.0",
         "@babel/preset-env": "^7.12.0",
+        "@fast-csv/parse": "^4.3.6",
         "@rollup/plugin-babel": "^5.2.1",
         "@rollup/plugin-commonjs": "^15.1.0",
         "@rollup/plugin-node-resolve": "^9.0.0",
@@ -38,11 +39,13 @@
         "eslint": "^7.12.1",
         "eslint-plugin-import": "^2.22.1",
         "eslint-plugin-jest": "^24.1.3",
+        "exceljs": "^4.2.0",
         "jest": "^26.6.3",
         "rollup": "^2.30.0"
     },
     "dependencies": {
-        "express": "^4.16.4"
+        "express": "^4.16.4",
+        "mongodb": "^3.6.4"
     },
     "engines": {
         "node": "14.x"

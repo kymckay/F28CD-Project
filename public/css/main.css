@@ -70,7 +70,7 @@ section {
 }
 
 .politician-section {
-  flex: 2;
+  flex: 4;
 }
 
 .table {
@@ -80,6 +80,7 @@ section {
 #candSect {
   max-height: 175px;
   overflow-y: hidden;
+  flex: 1;
 }
 
 #candAlign {
@@ -92,4 +93,15 @@ section {
   list-style-type: none;
   text-align: left;
   float: left;
+}
+
+#candSectBox {
+  text-align: center;
+  width: 80%;
+  margin-left: 10%;
+  flex: 2;
+}
+
+canvas {
+  display: inline;
 }
