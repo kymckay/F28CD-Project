@@ -14,6 +14,7 @@
   <link href='https://fonts.googleapis.com/css?family=Fjalla One' rel='stylesheet'>
   <script src="dist/main.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+  <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
 </head>
 <body>
 <header class="header">
@@ -28,8 +29,6 @@
       <option value="2">2017</option>
       <option value="3">2015</option>
       <option value="4">2010</option>
-      <option value="5">2005</option>
-      <option value="6">2001</option>
     </select>
   </div>
 
@@ -52,22 +51,17 @@
     <h1>The Map</h1>
   </section>
 
-
-  <section class="graph">
-    <!-- ideally height will adjust with different window sizes, to be figured out -->
-    <div style="height: 400px">
+  <section class="middle-section">
+    <div class="graph" >
       <!--how will the title change with different datasets?
         Easy way would be to enable title in the chart but that looses the font-->
       <h4>Seats per Party: Actual vs Predicted</h4>
       <!-- Breakdown graph -->
-      <!-- The current chart format isn't great, will adjust it if time allows -->
-      <div id="container" style="width: 95%; height: 82%">
-        <canvas id="canvas" ></canvas>
-      </div>
-      <script src="src/graph.js"></script>
+      <canvas id="canvas" ></canvas>
+    </div>
 
-      <!-- Prediction data dropdown menu -->
-      <div class="dropdown-data">
+    <!-- Prediction data dropdown menu -->
+    <div class="dropdown-data dropdown">
         <select>
           <option value="0">Select prediction data source</option>
           <option value="1">Electoral Calculus</option>
@@ -76,21 +70,32 @@
           <option value="4">Politico</option>
           <option value="5">BBC</option>
         </select>
-      </div>
-      <script src="src/dropdown-data.js"></script>
     </div>
-    <!-- section height is temporarily -->
-    <!-- ideally will adjust with different window sizes, to be figured out -->
-    <div style="height: 175px; margin-top: 5px;">
+
+    <!-- Politician Profile Section -->
+    <div class="politician-section" >
       <h1>Politician Section</h1>
+      <h4>Winning Margin: Actual v.s. Predicted</h4>
+      <div id="candSect">
+        <img src="src/media/cand1.jpg" alt="Candidate Picture" id="candAlign">
+        <ul id="candSectList">
+          <li>Name:</li>
+          <li>Age:</li>
+          <li>Party:</li>
+          <li>Spouse:</li>
+        </ul>
+      </div>
+
+      <div id="candGraph"></div>
+      <script src="src/candSect.js"></script>
     </div>
   </section>
 
 
 
   <!-------------------------------------->
-  
-  
+
+
   <section class="table">
 
     <!------search bar--------->
@@ -100,10 +105,10 @@
         <span class="material-icons search_icon">search</span>
     </div>
   </div>
-  
+
   <script src="src/search.js"></script>
-    
-    
+
+
     <!------candidate table------->
     <table class="candid">
       <thead>
@@ -197,7 +202,7 @@
         <tr>
           <td>Alliance</td>
         </tr>
-      </table>  
+      </table>
 
     </div>
   </section>

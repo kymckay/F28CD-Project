@@ -2,8 +2,8 @@
 .info {
   position: absolute;
   color: white;
-  right: 20px;
-  top: 13px;
+  right: 15px;
+  top: 15px;
   display: inline-block;
   cursor: pointer;
 }
@@ -15,11 +15,11 @@
   color: #000000;
   text-align: left;
   border-radius: 5px;
-  padding: 5px;
+  padding: 10px;
   position: absolute;
   z-index: 1;
   top: 120%;
-  left: -129px;
+  left: -140px;
   margin-left: -60px;
 }
 
@@ -27,7 +27,7 @@
   content: "";
   position: absolute;
   bottom: 100%;
-  left: 71%;
+  left: 72%;
   margin-left: 47px;
   border-width: 5px;
   border-style: solid;
