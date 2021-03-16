@@ -20,6 +20,12 @@ const myChart = new Chart(ctx, {
         }]
     },
     options: {
+        responsive: true,
+        aspectRatio: 2.6,
+        legend: {
+          display: true,
+          position: 'bottom'
+        },
         scales: {
             yAxes: [{
                 ticks: {

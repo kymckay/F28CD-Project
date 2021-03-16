@@ -22,7 +22,7 @@
   </a>
   <!-- dropdown menu for election year selection -->
 
-  <div class="dropdown" id="dropdown-year"></div>
+  <div id="dropdown-year"></div>
 
 
   <!-- Info button -->
@@ -51,11 +51,10 @@
     </div>
 
     <!-- Prediction data dropdown menu -->
-    <div class="dropdown" id="dropdown-data"></div>
+    <div class="dropdown, dropdown-section" id="dropdown-data"></div>
 
     <!-- Politician Profile Section -->
     <div class="politician-section" >
-      <h1>Politician Section</h1>
       <h4>Winning Margin: Actual v.s. Predicted</h4>
       <div id="candSect">
         <img src="assets/cand1.jpg" alt="Candidate Picture" id="candAlign">
@@ -82,7 +81,7 @@
         <input type="text" id="search" class="search" onkeyup="myFunction()" spellcheck="false" placeholder="Search candidate..">
         <span class="material-icons search_icon">search</span>
     </div>
-  </div>
+
   <script src="src/search.js"></script>
 
     <!------candidate table------->
@@ -180,5 +179,8 @@
       </table>
   </section>
 </main>
+<footer class="footer">
+  <article>Data Sources:</article>
+</footer>
 </body>
 </html>

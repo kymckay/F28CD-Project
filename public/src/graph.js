@@ -1,5 +1,3 @@
-import {getSelectedYear, getSelectedSource} from './dropdown.js'
-
 // Reference: https://www.chartjs.org/docs/latest/
 const xlabels = [];
 const predicted1 = [300, 240, 150, 69, 13];
@@ -40,7 +38,8 @@ export async function graph() {
     responsive: true,
     aspectRatio: 1.15,
     legend: {
-      display: true
+      display: true,
+      position: 'bottom'
     },
 
     scales: {
