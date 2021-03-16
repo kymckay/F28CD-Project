@@ -1,7 +1,10 @@
 /* global L */ // Defined by Leaflet
 
-import {newDropdown} from './dropdown.js';
-import {graph} from './graph.js';
+import { newDropdown } from './dropdown.js';
+import { graph } from './graph.js';
+import { candidateGraph } from './candSect.js';
+import { enableSearch } from './search.js';
+import { enableSort } from './sort.js';
 
 // Leave this blank, value injected during build (see contributing guidelines)
 const MAPBOX_KEY = '';
@@ -21,7 +24,10 @@ window.addEventListener('load', () => {
     console.log(e.value);
   })
 
-  let myChart = graph();
+  enableSort();
+  enableSearch();
+  candidateGraph();
+  graph();
 
   // If key wasn't set (or failed to inject) don't initalise the map section
   if (!MAPBOX_KEY) {
