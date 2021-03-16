@@ -1,8 +1,11 @@
-export function candidateGraph() {}
+/* global Chart */ // Defined by Chart.js
+
+export function candidateGraph() {
   const ctx = document.getElementById('candGraph').getContext('2d');
   const names = ['First Place', 'Second Place'];
   const data = [100000, 90000]
-  const myChart = new Chart(ctx, {
+
+  new Chart(ctx, {
       type: 'bar',
       data: {
           labels: names,

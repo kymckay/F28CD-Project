@@ -1,3 +1,5 @@
+/* global Chart */ // Defined by Chart.js
+
 // Reference: https://www.chartjs.org/docs/latest/
 const xlabels = [];
 const predicted1 = [300, 240, 150, 69, 13];
@@ -73,14 +75,12 @@ async function getData() {
   const years = data.split('\n').slice(0, 1);
 
   //create a local array an parse in each year as a separate element
-  years.forEach(years => {
-    const year = years.split(',').slice(1);
-  })
+  years.forEach(year => year.split(',').slice(1));
 
   const party = [];
 
-  rows.forEach(rows => {
-    const columns = rows.split(',');
+  rows.forEach(row => {
+    const columns = row.split(',');
     party.push(columns[0]);
 
     results2019.push(columns[1]);
@@ -127,9 +127,9 @@ export async function setSelectedYear(selectedYear, graph) {
 
 // to be changed
 async function setOption(option) {
-  if (option == "BBC") {
+  if (option === "BBC") {
     predicted = predicted1;
-  } else if (option == "CNN") {
+  } else if (option === "CNN") {
     predicted = predicted2;
   }
 }
