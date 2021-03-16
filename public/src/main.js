@@ -2,6 +2,7 @@ import {newDropdown} from './dropdown.js';
 import {graph} from './graph.js';
 import { candidateGraph } from './candSect.js';
 import { enableSearch } from './search.js';
+import { enableSort } from './sort.js';
 
 window.addEventListener('load', () => {
   // Hardcoded data temporarily
@@ -18,6 +19,7 @@ window.addEventListener('load', () => {
     console.log(e.value);
   })
 
+  enableSort();
   enableSearch();
   candidateGraph();
   graph();
