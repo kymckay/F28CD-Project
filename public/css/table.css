@@ -1,9 +1,11 @@
 .candid {
+    flex: 3;
     border-collapse: collapse;
-    margin: 25px 0;
+    margin: 15px 0;
     font-size: 0.9em;
     font-family: Fjalla One;
     min-width: 100%;
+
 }
 
 /* style header */
@@ -27,7 +29,7 @@
 
 /* overflow: auto used so scrollbar only appears when content overflows*/
 .candid tbody {
-    height: 230px;
+    min-height: 580px;
     overflow: auto;
     display: block;
 }
