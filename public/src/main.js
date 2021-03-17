@@ -53,7 +53,27 @@ function initDropdowns(data) {
 
 // Populates elements whenever a new year's data is retrieved
 function populatePage(data) {
-  // TODO: populate candidates list
+  // Clear existing rows first
+  const [ clist ] = document.getElementById('candid').getElementsByTagName('tbody');
+  clist.innerHTML = '';
+
+  // Document fragment will trigger reflow only once when attached
+  const newRows = document.createDocumentFragment();
+  data.candidates.forEach(cand => {
+    const row = document.createElement("tr");
+    const name = document.createElement("td");
+    const votes = document.createElement("td");
+
+    name.innerHTML = cand.name;
+    votes.innerHTML = cand.votes;
+
+    row.appendChild(name);
+    row.appendChild(votes);
+    newRows.appendChild(row);
+  });
+
+  // Populate the table with the new data
+  clist.appendChild(newRows);
 }
 
 document.addEventListener('DOMContentLoaded', initPage);

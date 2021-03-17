@@ -39,7 +39,8 @@ app.post('/years', (_, res) => {
   // TODO populate payload
   res.json({
     years: ['2019', '2017', '2015', '2010'],
-    sources: ["Electoral Calculus", "Financial Times", "Bloomberg", "Politico", "BBC"]
+    sources: ["Electoral Calculus", "Financial Times", "Bloomberg", "Politico", "BBC"],
+    candidates: [{ name: "Boris Johnson", votes: 12345 }, { name: "Nicola Sturgeon", votes: 2222 }, { name: "Keir Starmer", votes: 13536 }]
   });
 });
 
