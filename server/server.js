@@ -24,6 +24,10 @@ app.post('/year', express.json({}), (req, res) => {
     return;
   }
 
+  // TODO: Fetch data for year from MongoDB
+
+  // TODO: Deny request if no data found in DB for requested year
+
   // TODO: Populate payload
   res.send({});
 })
