@@ -46,5 +46,9 @@ window.addEventListener('load', () => {
     zoom: 12, // Starting zoom level
   });
 
+  const marker = new mapboxgl.Marker() // initialize a new marker
+  .setLngLat(coor, 5) // Marker [lng, lat] coordinates
+  .addTo(map); // Add the marker to the map
+
 
 });
