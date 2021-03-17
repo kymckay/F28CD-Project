@@ -1,6 +1,6 @@
 /* global mapboxgl, MapboxGeocoder */ // Defined by Mapbox GL JS
 
-export function initMap(apiKey) {
+export async function initMap(apiKey) {
   // If key wasn't set (or failed to inject) don't initalise the map section
   if (!apiKey) {
     document.getElementById("map").innerHTML = "Map appears here. API key not configured (see contributing guidelines).";

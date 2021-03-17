@@ -1,10 +1,9 @@
 import { getYears } from './requests.js';
 import { initMap } from './map.js';
 import { initDropdowns, populateDropdowns } from './dropdowns.js';
+import { initSearch, initSort, populateList } from './list.js';
 import { graph } from './graph.js';
 import { candidateGraph } from './candSect.js';
-import { populateList, initSearch } from './list.js';
-import { enableSort } from './sort.js';
 
 // Leave this blank, value injected during build (see contributing guidelines)
 const MAPBOX_KEY = '';
@@ -13,7 +12,7 @@ const MAPBOX_KEY = '';
 function initPage() {
   initMap(MAPBOX_KEY);
   initDropdowns();
-  enableSort();
+  initSort();
   initSearch();
   candidateGraph();
   graph();
