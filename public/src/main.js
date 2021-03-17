@@ -42,7 +42,7 @@ window.addEventListener('load', () => {
   mapboxgl.accessToken = MAPBOX_KEY;
   const map = new mapboxgl.Map({
     container: 'map', // Container ID
-    style: 'mapbox://styles/mapbox/streets-v11', // Map style to use
+    style: 'mapbox://styles/mapbox/light-v10', // Map style to use
     center: coor, // Starting position [lng, lat]
     zoom: 12, // Starting zoom level
   });
