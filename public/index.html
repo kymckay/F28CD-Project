@@ -2,6 +2,7 @@
 <html lang="en" xml:lang="en">
 <head>
   <meta content="text/html" charset="utf-8" />
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
   <title>UK Election Data</title>
   <link rel="stylesheet" type="text/css" href="css/main.css">
   <link rel="stylesheet" type="text/css" href="css/info.css">
@@ -9,16 +10,14 @@
   <link rel="stylesheet" type="text/css" href="css/legend.css">
   <link rel="stylesheet" type="text/css" href="css/search.css">
   <link rel="stylesheet" type="text/css" href="css/table.css">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-    crossorigin="" />
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link href='https://fonts.googleapis.com/css?family=Fjalla One' rel='stylesheet'>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Fjalla One'>
+  <link rel='stylesheet' type='text/css' href='https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css'>
+  <link rel='stylesheet' type='text/css' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.css'>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
-  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-    crossorigin=""></script>
+  <script src='https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js'></script>
+  <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.min.js'></script>
   <script src="dist/main.js"></script>
 </head>
 <body>
@@ -55,7 +54,9 @@
     </div>
 
     <!-- Prediction data dropdown menu -->
-    <div class="dropdown, dropdown-section" id="dropdown-data"></div>
+    <div class="dropdown-section">
+      <div class="dropdown" id="dropdown-data"></div>
+    </div>
 
     <!-- Politician Profile Section -->
     <div class="politician-section" >

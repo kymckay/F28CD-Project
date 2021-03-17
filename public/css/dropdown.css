@@ -9,12 +9,37 @@
 #dropdown-year {
   position: relative;
   font-size: 20px;
-  width: 140px;
 }
 
 /*formatting for prediction data dropdown*/
 #dropdown-data {
+  max-width: 220px;
+  margin: 0;
+  position: absolute;
+  right: 25%;
+  left: 36%;
+}
+
+select {
+  background-color: transparent;
   position: relative;
+  font-family: inherit;
+  font-size: 100%;
+  border: 0;
+  outline: 0;
+}
+
+#dropdown-year select {
+  color: white;
+  font-size: 30px;
+}
+
+#dropdown-data select {
+  padding: 4px;
   font-size: 17px;
-  width: 100%;
+}
+
+option {
+  color: black;
+  background: white;
 }
