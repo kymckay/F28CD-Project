@@ -1,4 +1,4 @@
-/* global L */ // Defined by Leaflet
+/* global mapboxgl, MapboxGeocoder */ // Defined by Mapbox GL JS
 
 import { newDropdown } from './dropdown.js';
 import { graph } from './graph.js';
@@ -47,10 +47,6 @@ window.addEventListener('load', () => {
     zoom: 12, // Starting zoom level
   });
 
-  const marker = new mapboxgl.Marker() // initialize a new marker
-  .setLngLat(coor, 5) // Marker [lng, lat] coordinates
-  .addTo(map); // Add the marker to the map
-
   const geocoder = new MapboxGeocoder({ // Initialize the geocoder
     accessToken: MAPBOX_KEY, // Set the access token
     mapboxgl: mapboxgl, // Set the mapbox-gl instance
@@ -62,7 +58,7 @@ window.addEventListener('load', () => {
     },
     marker: false, // Do not use the default marker style
   });
-  
+
   // Add the geocoder to the map
   map.addControl(geocoder);
 
