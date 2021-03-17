@@ -30,8 +30,19 @@ app.post('/year', express.json({}), (req, res) => {
   // TODO: Deny request if no data found in DB for requested year
 
   // TODO: Populate payload
-  res.send({});
-})
+  res.json({});
+});
+
+app.post('/years', (_, res) => {
+  // TODO: Get available years from MongoDB and data for the first year
+
+  // TODO populate payload
+  res.json({
+    years: ['2019', '2017', '2015', '2010'],
+    sources: ["Electoral Calculus", "Financial Times", "Bloomberg", "Politico", "BBC"],
+    candidates: [{ name: "Boris Johnson", votes: 12345 }, { name: "Nicola Sturgeon", votes: 2222 }, { name: "Keir Starmer", votes: 13536 }]
+  });
+});
 
 server.listen(port, () => {
   console.log(`Listening on http://localhost:${port}`);
