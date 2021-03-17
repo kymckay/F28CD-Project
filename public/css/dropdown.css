@@ -38,3 +38,8 @@ select {
   padding: 4px;
   font-size: 17px;
 }
+
+option {
+  color: black;
+  background: white;
+}
