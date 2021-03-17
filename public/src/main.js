@@ -10,22 +10,8 @@ import { enableSort } from './sort.js';
 // Leave this blank, value injected during build (see contributing guidelines)
 const MAPBOX_KEY = '';
 
-// Immediately send a request off for the initial data needed to populate the page
-getYears();
-
-window.addEventListener('load', () => {
-  // Hardcoded data temporarily
-  const yearSel = newDropdown("dropdown-year", ["2019", "2017", "2015", "2010"]);
-  const srcSel = newDropdown("dropdown-data", ["Electoral Calculus", "Financial Times", "Bloomberg", "Politico", "BBC"]);
-
-  // Handle updates on year change
-  yearSel.addEventListener("change", e =>  getYear(e.target.value));
-
-  // Handle updates on source change
-  srcSel.addEventListener("change", e => {
-    console.log(e.value);
-  })
-
+// Element functionality initalised here
+function initPage() {
   enableSort();
   enableSearch();
   candidateGraph();
@@ -50,4 +36,39 @@ window.addEventListener('load', () => {
     // However, we'd still like to avoid having it in the source code.
     accessToken: MAPBOX_KEY
   }).addTo(mymap);
+}
+
+// Dropdowns need data to initalise with
+function initDropdowns(data) {
+  // Populate year dropdown and handle updates on year change
+  const yearSel = newDropdown("dropdown-year", data.years);
+  yearSel.addEventListener("change", e => getYear(e.target.value));
+
+
+  const srcSel = newDropdown("dropdown-data", data.sources);
+
+  // Handle updates on source change
+  srcSel.addEventListener("change", e => { console.log(e.target.value) })
+}
+
+// Populates elements whenever a new year's data is retrieved
+function populatePage(data) {
+  // TODO: populate candidates list
+}
+
+document.addEventListener('DOMContentLoaded', initPage);
+
+// Immediately send a request off for the initial data needed to populate the page
+getYears().then((data) => {
+  const init = () => {
+    initDropdowns(data);
+    populatePage(data);
+  };
+
+  // Populate elements once the DOM is ready (or immediately if already)
+  if (document.readyState !== 'loading') {
+    init();
+  } else {
+    document.addEventListener('DOMContentLoaded', init);
+  }
 });

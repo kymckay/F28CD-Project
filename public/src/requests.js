@@ -1,29 +1,39 @@
-export async function getYears() {
-  const xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function () {
-    // Successful request
-    if (this.readyState === 4 && this.status === 200) {
-      const res = JSON.parse(this.responseText);
-      console.log(res);
-    }
-  };
+export function getYears() {
+  return new Promise((resolve, reject) => {
+    const xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+      if (this.readyState === 4) {
+        // Successful request
+        if (this.status === 200) {
+          resolve(JSON.parse(this.responseText));
+        } else {
+          reject(this.status);
+        }
+      }
+    };
 
-  xhttp.open('POST', '/years', true);
-  xhttp.send();
+    xhttp.open('POST', '/years', true);
+    xhttp.send();
+  })
 }
 
 export function getYear(year) {
-  const xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function () {
-    // Successful request
-    if (this.readyState === 4 && this.status === 200) {
-      const res = JSON.parse(this.responseText);
-      console.log(res);
-    }
-  };
+  return new Promise((resolve, reject) => {
+    const xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+      if (this.readyState === 4) {
+        // Successful request
+        if (this.status === 200) {
+          resolve(JSON.parse(this.responseText));
+        } else {
+          reject(this.status);
+        }
+      }
+    };
 
-  xhttp.open('POST', '/year', true);
-  xhttp.setRequestHeader("Content-Type", "application/json");
+    xhttp.open('POST', '/year', true);
+    xhttp.setRequestHeader("Content-Type", "application/json");
 
-  xhttp.send(JSON.stringify({ year }));
+    xhttp.send(JSON.stringify({ year }));
+  })
 }

@@ -37,7 +37,10 @@ app.post('/years', (_, res) => {
   // TODO: Get available years from MongoDB and data for the first year
 
   // TODO populate payload
-  res.json({});
+  res.json({
+    years: ['2019', '2017', '2015', '2010'],
+    sources: ["Electoral Calculus", "Financial Times", "Bloomberg", "Politico", "BBC"]
+  });
 });
 
 server.listen(port, () => {
