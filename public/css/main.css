@@ -8,6 +8,11 @@ body {
   font-family: Fjalla One;
 }
 
+/* removes scrollbar but keeps functionality */
+body::-webkit-scrollbar {
+  display: none;
+}
+
 .header {
    display: flex;
    margin-right: 5px;
