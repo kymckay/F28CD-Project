@@ -1,0 +1,26 @@
+.search {
+    position: relative;
+    max-width: 100%;
+    font-size: 100%;
+}
+
+/* set font of search bar and search input */
+.search {
+    font-family: Fjalla One;
+}
+
+.search {
+    display: inline-flex;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 6px;
+    background: #eeeeee;
+}
+
+/* style inside search bar */
+.search input[type=text] {
+    background: white;
+    border-radius: 5px;
+    border: none;
+    width: 100%;
+}

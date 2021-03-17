@@ -8,7 +8,10 @@
         "start": "npm run build && npm run start:server",
         "start:server": "node server/server.js",
         "test": "npm run lint && jest",
-        "build": "rollup --config config/rollup.config.main.js",
+        "build": "npm run build:inject && npm run build:script && npm run build:unject",
+        "build:inject": "node data/mapbox_inject.js",
+        "build:script": "rollup --config config/rollup.config.main.js",
+        "build:unject": "node data/mapbox_remove.js",
         "build:data": "node data/build_db.js"
     },
     "repository": {

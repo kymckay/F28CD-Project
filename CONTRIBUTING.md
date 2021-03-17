@@ -16,9 +16,15 @@ A MongoDB database is used server side to store relevant data about candidates, 
 
 Data is loaded in via scripted means to simplify the process and make it easily repeatable. See [the guide here](data/README.md) for specific details on the setup procedure.
 
+### Map Tiles Setup
+
+The client-side code is configured to use map tiles from [Mapbox](https://www.mapbox.com). For this to work, you must have [a public key](https://docs.mapbox.com/help/getting-started/access-tokens/) (allows up to 50,000 loads per month for free) which should be stored in a file `data/secrets.json` (see the [template file](data/secrets_template.json)). The key will be injected into the code upon build (when the server starts) as we'd like to avoid having it in our source history.
+
+Do note that this key is intended for public use and so is perfectly safe to be shared (it will be with anyone who loads the webpage). We just don't want it in the history to avoid it being abused by 3rd parties (we aren't deploying to a specific domain and so can't limit the use that way).
+
 ## Style Standards
 
-Our JavaScript is written in ES6 syntax and standards enforced via static analysis with [ESLint](https://eslint.org).
+Our JavaScript is written in ES6 syntax and standards are enforced via static analysis with [ESLint](https://eslint.org).
 
 We try to follow Chris Beams' [commit message guide](https://chris.beams.io/posts/git-commit) to keep our git history nice and navigatable.
 

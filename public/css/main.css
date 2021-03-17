@@ -1,0 +1,131 @@
+body {
+  font-size: 100%;
+  width: 100%;
+  height: 100vh;
+  margin: 0px;
+  box-sizing: boarder-box;
+  background-color: #7f5a83;
+  background-image: linear-gradient(315deg, #7f5a83 0%, #0d324d 74%);
+  font-family: Fjalla One;
+}
+
+.header {
+   display: flex;
+   margin-right: 5px;
+   margin-left: 5px;
+   margin-top: 5px;
+   justify-content: left;
+   align-items:center;
+   background: rgba(255,255,255,0.3);
+}
+
+h4 {
+  position: relative;
+  text-align: center;
+  margin: 7px;
+}
+
+.logo {
+  position: relative;
+  height: 50px;
+}
+
+section {
+  background-color: white;
+  padding: 10px;
+  margin: 5px;
+  height: 90vh;
+  min-height: 900px;
+}
+
+.main-flex {
+   display: flex;
+   flex-flow: row wrap;
+   min-width: 700px;
+}
+
+/* main sections stack on top of each other when the window is resized bellow 900px in width */
+@media all and (max-width: 900px) {
+  .main-flex {
+    flex-direction: column;
+  }
+  .middle-section {
+    border-left: 5px solid;
+  }
+}
+
+#map {
+  flex: 2.7;
+  min-width: 700px;
+}
+
+.middle-section {
+  flex: 2;
+  min-width: 400px;
+  display: flex;
+  flex-direction: column;
+  margin-left: 0px;
+  margin-right: 0px;
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.graph {
+  flex: 1;
+  height: 80%;
+  width: 90%;
+  align-self: center;
+  max-width: 450px;
+}
+
+.dropdown-section {
+  flex: 0.1;
+  width: 100%;
+  border-bottom: 5px solid;
+  border-color: #0d324d;
+}
+
+.politician-section {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.table {
+  flex:  1;
+  display: flex;
+  flex-direction: column;
+  min-width: 190px;
+}
+
+#candSect {
+  max-height: 175px;
+  flex: 1;
+  margin: 30px;
+}
+
+#candAlign {
+  text-align: left;
+  float: left;
+  height: 100px;
+
+}
+
+#candSectList {
+  text-align: center;
+  list-style-type: none;
+  float: left;
+}
+
+#candSectBox {
+  width: 85%;
+  align-self: center;
+  max-width: 500px;
+}
+
+.footer {
+  color: white;
+  text-align: center;
+  font-size: 50%;
+}

@@ -1,0 +1,52 @@
+.legend {
+    position: relative;
+    border-collapse: collapse;
+    margin: 0px 0;
+    font-size: 0.9em;
+    font-family: Fjalla One;
+    min-width: 100%;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+/* legend header */
+.legend thead tr {
+    background-color: white;
+    color: black;
+    text-align: left;
+}
+
+.legend tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+/* row colour for each party*/
+.legend tbody tr:nth-child(1) {
+    background-color: #0087DC;
+}
+.legend tbody tr:nth-child(2) {
+    background-color: #E4003B;
+}
+.legend tbody tr:nth-child(3) {
+    background-color: #FDF38E;
+}
+.legend tbody tr:nth-child(4) {
+    background-color: #FAA61A;
+}
+.legend tbody tr:nth-child(5) {
+    background-color: #D46A4C;
+}
+.legend tbody tr:nth-child(6) {
+    background-color: #326760;
+}
+.legend tbody tr:nth-child(7) {
+    background-color: #008142;
+}
+.legend tbody tr:nth-child(8) {
+    background-color: #2AA82C;
+}
+.legend tbody tr:nth-child(9) {
+    background-color: #528D6B;
+}
+.legend tbody tr:nth-child(10) {
+    background-color: #F6CB2F;
+}

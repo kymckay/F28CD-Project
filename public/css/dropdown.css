@@ -1,0 +1,20 @@
+/* Reference: https://www.w3schools.com/howto/howto_custom_select.asp */
+
+/* common dropdown styling */
+.dropdown {
+  font-family: Fjalla One;
+}
+
+/*formatting for year dropdown*/
+#dropdown-year {
+  position: relative;
+  font-size: 20px;
+  width: 140px;
+}
+
+/*formatting for prediction data dropdown*/
+#dropdown-data {
+  position: relative;
+  font-size: 17px;
+  width: 100%;
+}

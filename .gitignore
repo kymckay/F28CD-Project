@@ -111,3 +111,9 @@ dist
 
 # Input data GeoJSON files
 *.geojson
+
+# Apple Desktop Services Store
+*.DS_Store
+
+# Secrets file should stay out of git history
+secrets.json

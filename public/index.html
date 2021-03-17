@@ -4,9 +4,183 @@
   <meta content="text/html" charset="utf-8" />
   <title>UK Election Data</title>
   <link rel="stylesheet" type="text/css" href="css/main.css">
+  <link rel="stylesheet" type="text/css" href="css/info.css">
+  <link rel="stylesheet" type="text/css" href="css/dropdown.css">
+  <link rel="stylesheet" type="text/css" href="css/legend.css">
+  <link rel="stylesheet" type="text/css" href="css/search.css">
+  <link rel="stylesheet" type="text/css" href="css/table.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin="" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href='https://fonts.googleapis.com/css?family=Fjalla One' rel='stylesheet'>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    crossorigin=""></script>
   <script src="dist/main.js"></script>
 </head>
 <body>
+<header class="header">
+  <a href="index.html">
+    <img src="assets/logo.png" alt="logo" class="logo">
+  </a>
+  <!-- dropdown menu for election year selection -->
 
+  <div id="dropdown-year"></div>
+
+
+  <!-- Info button -->
+  <div class="info">
+    <i class="fa fa-info-circle" style="font-size:30px;"></i>
+    <span class="infotext">Add website instructions here:
+      <br> 1. Instruction, Instruction, Instruction, Instruction, Instruction
+      <br> 1. Instruction, Instruction, Instruction, Instruction, Instruction
+      <br> 1. Instruction, Instruction, Instruction, Instruction, Instruction
+      <br> 1. Instruction, Instruction, Instruction, Instruction, Instruction
+      <br> 1. Instruction, Instruction, Instruction, Instruction, Instruction</span>
+  </div>
+</header>
+<main class="main-flex">
+  <section id="map"></section>
+
+  <section class="middle-section">
+    <div class="graph" >
+      <!--how will the title change with different datasets?
+        Easy way would be to enable title in the chart but that looses the font-->
+      <h4>Seats per Party: Actual vs Predicted</h4>
+      <!-- Breakdown graph -->
+      <canvas id="canvas" ></canvas>
+    </div>
+
+    <!-- Prediction data dropdown menu -->
+    <div class="dropdown, dropdown-section" id="dropdown-data"></div>
+
+    <!-- Politician Profile Section -->
+    <div class="politician-section" >
+      <h4>Winning Margin: Actual v.s. Predicted</h4>
+      <div id="candSect">
+        <img src="assets/cand1.jpg" alt="Candidate Picture" id="candAlign">
+        <ul id="candSectList">
+          <li>Name:</li>
+          <li>Age:</li>
+          <li>Party:</li>
+          <li>Spouse:</li>
+        </ul>
+      </div>
+      <div id="candSectBox">
+        <canvas id="candGraph"></canvas>
+      </div>
+
+    </div>
+  </section>
+
+
+  <section class="table">
+
+     <!------search bar--------->
+    <div class="search">
+        <input type="text" id="search" class="search" spellcheck="false" placeholder="Search candidate...">
+        <span class="material-icons search_icon">search</span>
+    </div>
+
+    <!------candidate table------->
+    <table id="candid" class="candid">
+      <thead>
+        <tr>
+          <th>Candidate</th>
+          <th>Votes</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td>Boris Johnson</td>
+          <td>12345</td>
+        </tr>
+        <tr>
+          <td>Nicola Sturgeon</td>
+          <td>02222</td>
+        </tr>
+        <tr>
+          <td>Caroline Lucas</td>
+          <td>23532</td>
+        </tr>
+        <tr>
+          <td>Keir Starmer</td>
+          <td>13536</td>
+        </tr>
+        <tr>
+          <td>Stephen Farry</td>
+          <td>02421</td>
+        </tr>
+        <tr>
+          <td>Chris Hazzard</td>
+          <td>13567</td>
+        </tr>
+        <tr>
+          <td>Ben Lake</td>
+          <td>75423</td>
+        </tr>
+        <tr>
+          <td>Paula Barker</td>
+          <td>46324</td>
+        </tr>
+        <tr>
+          <td>Hannah Bardell</td>
+          <td>35232</td>
+        </tr>
+        <tr>
+          <td>Nia Griffith</td>
+          <td>65332</td>
+      </tbody>
+    </table>
+
+
+    <!--------legend--------->
+    <table class="legend">
+    <thead>
+        <tr>
+          <th>Party Legend</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Conservatives</td>
+        </tr>
+        <tr>
+          <td>Labour</td>
+        </tr>
+        <tr>
+          <td>SNP</td>
+        </tr>
+        <tr>
+          <td>Lib Dem</td>
+        </tr>
+        <tr>
+          <td>DUP</td>
+        </tr>
+        <tr>
+          <td>Sinn Fienn</td>
+        </tr>
+        <tr>
+          <td>Plaid Cymru</td>
+        </tr>
+        <tr>
+          <td>SDLP</td>
+        </tr>
+        <tr>
+          <td>Green</td>
+        </tr>
+        <tr>
+          <td>Alliance</td>
+        </tr>
+      </table>
+  </section>
+</main>
+<footer class="footer">
+  <article>Data Sources:</article>
+</footer>
 </body>
 </html>
