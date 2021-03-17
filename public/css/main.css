@@ -54,7 +54,7 @@ section {
   }
 }
 
-.map {
+#map {
   flex: 2.7;
   min-width: 700px;
 }
