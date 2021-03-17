@@ -15,10 +15,11 @@ app.get('/', (req, res) => {
 app.use(express.static(path.join(__dirname, '../public/')));
 
 app.post('/year', express.json({}), (req, res) => {
-  console.log(req.body);
+  const { year } = req.body;
 
-  // TODO: If request is bad (non-year data) deny it
-  if (true) {
+  // User may have altered dropdown values and sent a bad request
+  // First sanity check that they're asking for a year string
+  if (!year.match(/^\d{4}$/)) {
     res.status(403).end();
     return;
   }

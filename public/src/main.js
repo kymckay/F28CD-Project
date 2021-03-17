@@ -21,6 +21,7 @@ window.addEventListener('load', () => {
       // Successful request
       if (this.readyState === 4 && this.status === 200) {
         const res = JSON.parse(this.responseText);
+        console.log(res);
       }
     };
 
