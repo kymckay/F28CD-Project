@@ -35,14 +35,19 @@ app.post('/year', express.json({}), (req, res) => {
 });
 
 app.post('/years', async (_, res) => {
-  // TODO: Get available years from MongoDB and data for the first year
+  // Sort years from most recent to most historic
   const years = await db.getYears();
+  years.sort().reverse();
 
-  // TODO populate payload
+  // TODO: Get data for the most recent year from MongoDB to put in the payload
+
+  // TODO: Match the payload info from MongoDB to the structure here
   res.json({
     years,
     sources: ["Electoral Calculus", "Financial Times", "Bloomberg", "Politico", "BBC"],
-    candidates: [{ name: "Boris Johnson", votes: 12345 }, { name: "Nicola Sturgeon", votes: 2222 }, { name: "Keir Starmer", votes: 13536 }]
+    candidates: [{ name: "Boris Johnson", votes: 12345 }, { name: "Nicola Sturgeon", votes: 2222 }, { name: "Keir Starmer", votes: 13536 }],
+    parties: [{ name: "Conservatives" }],
+    constituencies: [{ gss: '', electorate: 100 }]
   });
 });
 
