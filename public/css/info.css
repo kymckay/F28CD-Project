@@ -2,7 +2,7 @@
 .info {
   position: absolute;
   color: white;
-  right: 15px;
+  right: 14px;
   top: 15px;
   display: inline-block;
   cursor: pointer;
@@ -10,7 +10,7 @@
 
 .info .infotext {
   visibility: hidden;
-  width: 200px;
+  width: 552px;
   background-color: #fff;
   color: #000000;
   text-align: left;
@@ -19,7 +19,7 @@
   position: absolute;
   z-index: 1;
   top: 120%;
-  left: -140px;
+  left: -487px;
   margin-left: -60px;
 }
 
@@ -27,7 +27,7 @@
   content: "";
   position: absolute;
   bottom: 100%;
-  left: 72%;
+  left: 89%;
   margin-left: 47px;
   border-width: 5px;
   border-style: solid;
