@@ -1,4 +1,4 @@
-/* global L */ // Defined by Leaflet
+/* global mapboxgl, MapboxGeocoder */ // Defined by Mapbox GL JS
 
 import { newDropdown } from './dropdown.js';
 import { graph } from './graph.js';
@@ -48,16 +48,59 @@ window.addEventListener('load', () => {
   }
 
   // Map initalisation
-  const mymap = L.map('map').setView([51.505, -0.09], 13);
+  const long = -3.1883;
+  const lat = 55.9533;
+  const coor = [long, lat];
+  mapboxgl.accessToken = MAPBOX_KEY;
+  const map = new mapboxgl.Map({
+    container: 'map', // Container ID
+    style: 'mapbox://styles/mapbox/light-v10', // Map style to use
+    center: coor, // Starting position [lng, lat]
+    zoom: 12, // Starting zoom level
+  });
 
-  L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-    maxZoom: 18,
-    id: 'mapbox/light-v10',
-    tileSize: 512,
-    zoomOffset: -1,
-    // Note: Mapbox public token goes here. As this is client side code there's no security concern.
-    // However, we'd still like to avoid having it in the source code.
-    accessToken: MAPBOX_KEY
-  }).addTo(mymap);
+  const geocoder = new MapboxGeocoder({ // Initialize the geocoder
+    accessToken: MAPBOX_KEY, // Set the access token
+    mapboxgl: mapboxgl, // Set the mapbox-gl instance
+    placeholder: 'Search for places in United Kingdom',// Placeholder text for the search bar
+    bbox: [-8.196671, 50.064075, 1.737475, 60.917070], // Boundary for Berkeley
+    proximity: {
+      longitude: long,
+      latitude: lat
+    },
+    marker: false, // Do not use the default marker style
+  });
+
+  // Add the geocoder to the map
+  map.addControl(geocoder);
+
+  // After the map style has loaded on the page,
+  // add a source layer and default styling for a single point
+  map.on('load', function() {
+    map.addSource('single-point', {
+      type: 'geojson',
+      data: {
+        type: 'FeatureCollection',
+        features: []
+      }
+    });
+
+    map.addLayer({
+      id: 'point',
+      source: 'single-point',
+      type: 'circle',
+      paint: {
+        'circle-radius': 10,
+        'circle-color': '#448ee4'
+      }
+    });
+
+    // Listen for the `result` event from the Geocoder
+    // `result` event is triggered when a user makes a selection
+    //  Add a marker at the result's coordinates
+    geocoder.on('result', function(e) {
+      map.getSource('single-point').setData(e.result.geometry);
+    });
+  });
+
 });
