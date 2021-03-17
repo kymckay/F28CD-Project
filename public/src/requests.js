@@ -1,5 +1,15 @@
 export async function getYears() {
-  // TODO
+  const xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function () {
+    // Successful request
+    if (this.readyState === 4 && this.status === 200) {
+      const res = JSON.parse(this.responseText);
+      console.log(res);
+    }
+  };
+
+  xhttp.open('POST', '/years', true);
+  xhttp.send();
 }
 
 export function getYear(year) {

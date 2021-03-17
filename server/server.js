@@ -30,8 +30,15 @@ app.post('/year', express.json({}), (req, res) => {
   // TODO: Deny request if no data found in DB for requested year
 
   // TODO: Populate payload
-  res.send({});
-})
+  res.json({});
+});
+
+app.post('/years', (_, res) => {
+  // TODO: Get available years from MongoDB and data for the first year
+
+  // TODO populate payload
+  res.json({});
+});
 
 server.listen(port, () => {
   console.log(`Listening on http://localhost:${port}`);
