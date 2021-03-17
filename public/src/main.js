@@ -50,5 +50,14 @@ window.addEventListener('load', () => {
   .setLngLat(coor, 5) // Marker [lng, lat] coordinates
   .addTo(map); // Add the marker to the map
 
+  const geocoder = new MapboxGeocoder({ // Initialize the geocoder
+    accessToken: MAPBOX_KEY, // Set the access token
+    mapboxgl: mapboxgl, // Set the mapbox-gl instance
+    placeholder: 'Search for places in United Kingdom',
+    marker: false, // Do not use the default marker style
+  });
+  
+  // Add the geocoder to the map
+  map.addControl(geocoder);
 
 });
