@@ -1,5 +1,6 @@
 /* global L */ // Defined by Leaflet
 
+import { getYears, getYear } from './requests.js';
 import { newDropdown } from './dropdown.js';
 import { graph } from './graph.js';
 import { candidateGraph } from './candSect.js';
@@ -9,27 +10,16 @@ import { enableSort } from './sort.js';
 // Leave this blank, value injected during build (see contributing guidelines)
 const MAPBOX_KEY = '';
 
+// Immediately send a request off for the initial data needed to populate the page
+getYears();
+
 window.addEventListener('load', () => {
   // Hardcoded data temporarily
   const yearSel = newDropdown("dropdown-year", ["2019", "2017", "2015", "2010"]);
   const srcSel = newDropdown("dropdown-data", ["Electoral Calculus", "Financial Times", "Bloomberg", "Politico", "BBC"]);
 
   // Handle updates on year change
-  yearSel.addEventListener("change", e => {
-    const xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-      // Successful request
-      if (this.readyState === 4 && this.status === 200) {
-        const res = JSON.parse(this.responseText);
-        console.log(res);
-      }
-    };
-
-    xhttp.open('POST', '/year', true);
-    xhttp.setRequestHeader("Content-Type", "application/json");
-
-    xhttp.send(JSON.stringify({ year: e.target.value }));
-  })
+  yearSel.addEventListener("change", e =>  getYear(e.target.value));
 
   // Handle updates on source change
   srcSel.addEventListener("change", e => {
