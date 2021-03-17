@@ -16,7 +16,18 @@ window.addEventListener('load', () => {
 
   // Handle updates on year change
   yearSel.addEventListener("change", e => {
-    console.log(e.value);
+    const xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      // Successful request
+      if (this.readyState === 4 && this.status === 200) {
+        const res = JSON.parse(this.responseText);
+      }
+    };
+
+    xhttp.open('POST', '/year', true);
+    xhttp.setRequestHeader("Content-Type", "application/json");
+
+    xhttp.send(JSON.stringify({ year: e.target.value }));
   })
 
   // Handle updates on source change

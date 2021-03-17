@@ -1,4 +1,3 @@
-
 export function newDropdown(divId, options) {
   // Div element containing the dropdown is identified by ID
   const dropDiv = document.getElementById(divId);
@@ -8,7 +7,7 @@ export function newDropdown(divId, options) {
   for (const k in options) {
     const opt = document.createElement("option");
     opt.innerHTML = options[k];
-    opt.setAttribute("value", k);
+    opt.setAttribute("value", options[k]);
     select.appendChild(opt);
   }
 
