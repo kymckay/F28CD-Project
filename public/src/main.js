@@ -53,7 +53,8 @@ window.addEventListener('load', () => {
   const geocoder = new MapboxGeocoder({ // Initialize the geocoder
     accessToken: MAPBOX_KEY, // Set the access token
     mapboxgl: mapboxgl, // Set the mapbox-gl instance
-    placeholder: 'Search for places in United Kingdom',
+    placeholder: 'Search for places in United Kingdom',// Placeholder text for the search bar
+    bbox: [-8.196671, 50.064075, 1.737475, 60.917070], // Boundary for Berkeley
     marker: false, // Do not use the default marker style
   });
   
