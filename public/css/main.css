@@ -81,6 +81,7 @@ section {
 .dropdown-section {
   flex: 0.1;
   width: 100%;
+  position: relative;
   border-bottom: 5px solid;
   border-color: #0d324d;
 }
