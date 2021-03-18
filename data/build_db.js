@@ -3,12 +3,14 @@ const path = require('path');
 const { MongoClient } = require('mongodb');
 const candidates_in = require('./load_candidates');
 const elections_in = require('./load_elections');
+const constituencies_in = require('./load_constituencies');
 
 const uri = 'mongodb://localhost:27017?retryWrites=true&writeConcern=majority';
 const client = new MongoClient(uri, { useUnifiedTopology: true });
 
 const candidates_file = path.resolve(__dirname, 'candidates-all.csv');
 const elections_file = path.resolve(__dirname, 'election-results.xlsx');
+const constitencies_file = path.resolve(__dirname, 'constituencies.geojson')
 
 // Only go back to 2010 as voting data constituency IDs change then
 const years = ["2010", "2015", "2017", "2019"];
