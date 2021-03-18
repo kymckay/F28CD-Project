@@ -2,8 +2,8 @@ import { getOptions, getYear } from './requests.js';
 import { initMap } from './map.js';
 import { initDropdowns, populateDropdowns } from './dropdowns.js';
 import { initSearch, initSort } from './list.js';
-import { graph } from './graph.js';
-import { candidateGraph } from './candSect.js';
+import { initGraph } from './graph.js';
+import { initCandidate } from './candidate.js';
 
 // Leave this blank, value injected during build (see contributing guidelines)
 const MAPBOX_KEY = '';
@@ -14,8 +14,8 @@ function initPage() {
   initDropdowns();
   initSort();
   initSearch();
-  candidateGraph();
-  graph();
+  initGraph();
+  initCandidate();
 }
 
 document.addEventListener('DOMContentLoaded', initPage);

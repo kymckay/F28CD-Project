@@ -11,7 +11,7 @@ const results2019 = [];
 const results2017 = [];
 
 
-export async function graph() {
+export async function initGraph() {
   await setOption("CNN"); //won't be called from within this function
   await getData();
 
