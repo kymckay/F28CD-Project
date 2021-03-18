@@ -38,6 +38,9 @@ export async function populateList(data) {
     name.innerHTML = cand.name;
     votes.innerHTML = cand.votes;
 
+    // Can style the rows by their party ID
+    row.classList.add(cand.party_ec_id);
+
     row.appendChild(name);
     row.appendChild(votes);
     newRows.appendChild(row);

@@ -14,15 +14,22 @@
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 
-/* legend header */
-#legend thead tr {
-  background-color: white;
-  color: black;
+th, td {
+  padding: 5px;
   text-align: left;
+  width: 200px;
 }
 
-#legend tbody tr {
-  border-bottom: 1px solid #dddddd;
+thead tr {
+  background-color: grey;
+  text-align: left;
+  display: block;
+}
+
+/* default for other parties is a light grey */
+tbody tr {
+  background-color: #dddddd;
+  border-bottom: 1px solid #000;
 }
 
 /* rows classed with party Electoral Commission ID for colouring */
