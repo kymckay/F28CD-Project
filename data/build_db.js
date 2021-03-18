@@ -10,16 +10,17 @@ const client = new MongoClient(uri, { useUnifiedTopology: true });
 
 const candidates_file = path.resolve(__dirname, 'candidates-all.csv');
 const elections_file = path.resolve(__dirname, 'election-results.xlsx');
-const constitencies_file = path.resolve(__dirname, 'constituencies.geojson')
+const constituencies_file = path.resolve(__dirname, 'constituencies.geojson');
 
 // Only go back to 2010 as voting data constituency IDs change then
 const years = ["2010", "2015", "2017", "2019"];
 
 async function main() {
   // Get relevant candidate and election data in parallel for efficiency
-  const [ electionData, candidateData ] = await Promise.all([
+  const [ electionData, candidateData, constituencyData] = await Promise.all([
     elections_in.readFile(elections_file, years),
-    candidates_in.readFile(candidates_file, years)
+    candidates_in.readFile(candidates_file, years),
+    constituencies_in.readFile(constituencies_file)
   ]);
 
   // Unpack the data
