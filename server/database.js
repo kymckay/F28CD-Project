@@ -22,30 +22,33 @@ exports.getYears = async function() {
 }
 
 // All the candidates for a given year
-async function getCandidates(year) {
+function getCandidates(year) {
   // Want to minimise to only data client needs (reduce data sent)
   return db.db().collection('candidates')
     .find({ year }, {
-      party_ec_id: true,
-      name: true,
-      gss_code: true,
-      elected: true,
-      votes: true,
-    }).toArray();
+      projection: {
+        _id: 0,
+        party_ec_id: 1,
+        name: 1,
+        gss_code: 1,
+        elected: 1,
+        votes: 1,
+      }
+    })
+    .toArray();
 }
 
 // The constituencies for a given year
 function getConstituencies(year) {
   // Want to minimise to only data client needs (reduce data sent)
   return db.db().collection('constituencies')
-    .find({ year }, { gss_code: true, electorate: true })
+    .find({ year }, { projection: {_id: 0, gss_code: 1, electorate: 1} })
     .toArray();
 }
 
-// TODO: Filter to only parties of candidates of that year
 function getParties(year) {
   return db.db().collection('parties')
-    .find({}, { party_ec_id: true, party_name: true })
+    .find({ year }, { projection: { _id: 0, party_ec_id: 1, party_name: 1} })
     .toArray();
 }
 

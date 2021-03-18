@@ -19,11 +19,13 @@ exports.readFile = async (filename, years) => {
       // Don't care about candidates in unrequested years
       if (years.every(y => y !== year)) return;
 
-      // Store each party once (by electoral commision ID)
-      if (!seen[party_ec_id]) {
+      // Store each party once per year they had a candidate (by electoral commision ID)
+      // Storing for each year allows quick querying when live
+      if (!seen[`${party_ec_id}${year}`]) {
         parties.push({
           party_ec_id,
-          party_name
+          party_name,
+          year
         });
 
         seen[party_ec_id] = true;
