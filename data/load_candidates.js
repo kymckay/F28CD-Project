@@ -28,7 +28,7 @@ exports.readFile = async (filename, years) => {
           year
         });
 
-        seen[party_ec_id] = true;
+        seen[`${party_ec_id}${year}`] = true;
       }
 
       candidates.push({
