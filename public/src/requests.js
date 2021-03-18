@@ -1,4 +1,4 @@
-import { populateList } from './list.js';
+import { populateList, populateLegend } from './list.js';
 
 export function getOptions() {
   return new Promise((resolve, reject) => {
@@ -45,5 +45,6 @@ function getYear(year) {
 export async function newYear(year) {
   const data = await getYear(year);
 
+  populateLegend(data.parties);
   populateList(data.candidates);
 }

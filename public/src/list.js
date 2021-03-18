@@ -47,6 +47,29 @@ export async function populateList(data) {
   clist.appendChild(newRows);
 }
 
+export async function populateLegend(data) {
+  const [llist] = document.getElementById('legend').getElementsByTagName('tbody');
+  llist.innerHTML = '';
+
+  // Document fragment will trigger reflow only once when attached
+  const newRows = document.createDocumentFragment();
+  data.forEach(party => {
+    const row = document.createElement("tr");
+    const name = document.createElement("td");
+
+    name.innerHTML = party.party_name;
+
+    // Can style the rows by their party ID
+    row.classList.add(party.party_ec_id);
+
+    row.appendChild(name);
+    newRows.appendChild(row);
+  });
+
+  // Populate the table with the new data
+  llist.appendChild(newRows);
+}
+
 function sortTableByColumn(table, column, asc = true) {
   const dirModifier = asc ? 1 : -1;
   const tBody = table.tBodies[0];
