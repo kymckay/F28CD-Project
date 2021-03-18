@@ -7,6 +7,11 @@ export async function initMap(apiKey) {
     return;
   }
 
+  // Include fs module
+  const fs = require('fs');
+  const constName = JSON.parse(fs.readFileSync('data/constituencies.geojson').pcon19nm);
+  const constPoly = JSON.parse(fs.readFileSync('data/constituencies.geojson').coordinates);
+
   const long = -3.1883;
   const lat = 55.9533;
   const coor = [long, lat];
@@ -42,6 +47,21 @@ export async function initMap(apiKey) {
         type: 'FeatureCollection',
         features: []
       }
+    });
+
+    constPoly.forEach(e => {
+      map.addSource(
+        constName[e], {
+          'type': 'geojson',
+          'data': {
+            'type': 'Feature',
+            'geometry': {
+              'type': 'Polygon',
+              'coordinates': constPoly[e]
+            }
+          }
+        }
+      )
     });
 
     map.addLayer({
