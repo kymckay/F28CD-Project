@@ -30,12 +30,12 @@ export async function populateList(data) {
 
   // Document fragment will trigger reflow only once when attached
   const newRows = document.createDocumentFragment();
-  data.candidates.forEach(cand => {
+  data.forEach(cand => {
     const row = document.createElement("tr");
     const name = document.createElement("td");
     const votes = document.createElement("td");
 
-    name.innerHTML = cand.person[0].name;
+    name.innerHTML = cand.name;
     votes.innerHTML = cand.votes;
 
     row.appendChild(name);

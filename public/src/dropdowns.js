@@ -1,4 +1,4 @@
-import { getYear } from './requests.js';
+import { newYear } from './requests.js';
 
 // Populates a dropdown (identified by ID in HTML) with array of values
 async function populateDropdown(id, data) {
@@ -24,7 +24,7 @@ export async function populateDropdowns(years, sources) {
 // Adds event handling to drop down elements
 export async function initDropdowns() {
   // Handle updates on year change (request method handled page population)
-  document.getElementById("dropdown-year").addEventListener("change", e => getYear(e.target.value));
+  document.getElementById("dropdown-year").addEventListener("change", e => newYear(e.target.value));
 
   // Handle updates on source change
   document.getElementById("dropdown-data").addEventListener("change", e => { console.log(e.target.value) })
