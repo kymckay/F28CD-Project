@@ -11,7 +11,7 @@ const MAPBOX_KEY = '';
 // Element functionality initalised here
 function initPage() {
   initMap(MAPBOX_KEY);
-  initDropdowns();
+  initDropdowns(populatePage);
   initSort();
   initSearch();
   candidateGraph();

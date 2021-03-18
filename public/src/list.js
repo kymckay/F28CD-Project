@@ -35,7 +35,7 @@ export async function populateList(data) {
     const name = document.createElement("td");
     const votes = document.createElement("td");
 
-    name.innerHTML = cand.name;
+    name.innerHTML = cand.person[0].name;
     votes.innerHTML = cand.votes;
 
     row.appendChild(name);
