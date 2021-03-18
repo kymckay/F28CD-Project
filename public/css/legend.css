@@ -1,52 +1,58 @@
+#legendContainer {
+  flex: 2;
+  overflow-y: scroll;
+  min-width: 100%;
+}
+
 #legend {
-    position: relative;
-    border-collapse: collapse;
-    margin-bottom: 15px;
-    font-size: 0.9em;
-    font-family: Fjalla One;
-    min-width: 100%;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  position: relative;
+  border-collapse: collapse;
+  margin-bottom: 15px;
+  font-size: 0.9em;
+  font-family: Fjalla One;
+  min-width: 100%;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 
 /* legend header */
 #legend thead tr {
-    background-color: white;
-    color: black;
-    text-align: left;
+  background-color: white;
+  color: black;
+  text-align: left;
 }
 
 #legend tbody tr {
-    border-bottom: 1px solid #dddddd;
+  border-bottom: 1px solid #dddddd;
 }
 
 /* rows classed with party Electoral Commission ID for colouring */
 tbody .PP52, tbody .PP51 {
-    background-color: #0087DC;
+  background-color: #0087DC;
 }
 tbody .PP53 {
-    background-color: #E4003B;
+  background-color: #E4003B;
 }
 tbody .PP102 {
-    background-color: #FDF38E;
+  background-color: #FDF38E;
 }
 tbody .PP90 {
-    background-color: #FAA61A;
+  background-color: #FAA61A;
 }
 tbody .PP70 {
-    background-color: #D46A4C;
+  background-color: #D46A4C;
 }
 tbody .PP39 {
-    background-color: #326760;
+  background-color: #326760;
 }
 tbody .PP77 {
-    background-color: #008142;
+  background-color: #008142;
 }
 tbody .PP55 {
-    background-color: #2AA82C;
+  background-color: #2AA82C;
 }
 tbody .PP63, tbody .PP130, tbody .PP305 {
-    background-color: #528D6B;
+  background-color: #528D6B;
 }
 tbody .PP103 {
-    background-color: #F6CB2F;
+  background-color: #F6CB2F;
 }
