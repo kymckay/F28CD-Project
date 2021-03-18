@@ -38,18 +38,13 @@ app.post('/year', express.json({}), async (req, res) => {
   res.json(data);
 });
 
-app.post('/years', async (_, res) => {
+app.post('/options', async (_, res) => {
   // Sort years from most recent to most historic
   const years = await db.getYears();
   years.sort().reverse();
 
-  // Page will load with data for most recent year
-  const data = await db.getData(years[0]);
-
-  // Inject years and sources data into payload
-  data.years = years;
-  data.sources = ["Electoral Calculus", "Financial Times", "Bloomberg", "Politico", "BBC"]; // TODO
-  res.json(data);
+  const sources = ["Electoral Calculus", "Financial Times", "Bloomberg", "Politico", "BBC"]; // TODO
+  res.json({ years, sources });
 });
 
 // Start the server after the MongoDB connection is ready

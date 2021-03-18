@@ -1,4 +1,4 @@
-export function getYears() {
+export function getOptions() {
   return new Promise((resolve, reject) => {
     const xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
@@ -12,7 +12,7 @@ export function getYears() {
       }
     };
 
-    xhttp.open('POST', '/years', true);
+    xhttp.open('POST', '/options', true);
     xhttp.send();
   })
 }

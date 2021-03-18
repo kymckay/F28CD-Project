@@ -1,4 +1,4 @@
-import { getYears } from './requests.js';
+import { getOptions } from './requests.js';
 import { initMap } from './map.js';
 import { initDropdowns, populateDropdowns } from './dropdowns.js';
 import { initSearch, initSort, populateList } from './list.js';
@@ -18,20 +18,23 @@ function initPage() {
   graph();
 }
 
-// Populates elements whenever a new year's data is retrieved
+// Populates all derivative elements whenever a new year's data is retrieved
 function populatePage(data) {
-  populateDropdowns(data.years, data.sources);
   populateList(data);
+}
+
+function populateOptions(data) {
+  populateDropdowns(data.years, data.sources);
 }
 
 document.addEventListener('DOMContentLoaded', initPage);
 
 // Immediately send a request off for the initial data needed to populate the page
-getYears().then((data) => {
-  // Populate elements once the DOM is ready (or immediately if already)
+getOptions().then((data) => {
+  // Populate dropdowns once the DOM is ready (or immediately if already)
   if (document.readyState !== 'loading') {
-    populatePage(data);
+    populateOptions(data);
   } else {
-    document.addEventListener('DOMContentLoaded', () => populatePage(data));
+    document.addEventListener('DOMContentLoaded', () => populateOptions(data));
   }
 });
