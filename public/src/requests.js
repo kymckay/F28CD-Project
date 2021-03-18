@@ -17,6 +17,9 @@ export function getOptions() {
   })
 }
 
+// TODO: make spinners for the unpopulated elements while waiting
+// TODO: Cache year data to avoid repeated requests
+// TODO: make this populate the page upon completion
 export function getYear(year) {
   return new Promise((resolve, reject) => {
     const xhttp = new XMLHttpRequest();

@@ -22,9 +22,9 @@ export async function populateDropdowns(years, sources) {
 
 
 // Adds event handling to drop down elements
-export async function initDropdowns(onNewYear) {
-  // Handle updates on year change
-  document.getElementById("dropdown-year").addEventListener("change", e => getYear(e.target.value).then(onNewYear));
+export async function initDropdowns() {
+  // Handle updates on year change (request method handled page population)
+  document.getElementById("dropdown-year").addEventListener("change", e => getYear(e.target.value));
 
   // Handle updates on source change
   document.getElementById("dropdown-data").addEventListener("change", e => { console.log(e.target.value) })
