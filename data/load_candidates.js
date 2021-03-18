@@ -13,7 +13,7 @@ exports.readFile = async (filename, years) => {
   function processRow(data) {
     // Filter for only parliamentary candidates
     if (data.election.startsWith("parl")) {
-      const { id, name, election_date, gss_code, party_ec_id, party_name, elected } = data;
+      const { name, election_date, gss_code, party_ec_id, party_name, elected } = data;
       const year = election_date.substr(0, 4);
 
       // Don't care about candidates in unrequested years
@@ -30,7 +30,6 @@ exports.readFile = async (filename, years) => {
       }
 
       candidates.push({
-        id,
         name,
         party_ec_id,
         year,
