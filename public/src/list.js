@@ -1,7 +1,7 @@
 function search() {
   const input = document.getElementById("search");
   const filter = input.value.toUpperCase();
-  const table = document.getElementById("candid");
+  const table = document.getElementById("candList");
   const tr = table.getElementsByTagName("tr");
 
   for (const i in tr) {
@@ -25,7 +25,7 @@ export async function initSearch() {
 // Clears and populates the list with the data passed in
 export async function populateList(data) {
   // Clear existing rows first
-  const [clist] = document.getElementById('candid').getElementsByTagName('tbody');
+  const [clist] = document.getElementById('candList').getElementsByTagName('tbody');
   clist.innerHTML = '';
 
   // Document fragment will trigger reflow only once when attached
@@ -77,7 +77,7 @@ function sortTableByColumn(table, column, asc = true) {
 
 // Enables the sorting functionality of the table headings
 export async function initSort() {
-  document.querySelectorAll(".candid th").forEach(headerCell => {
+  document.querySelectorAll("#candList th").forEach(headerCell => {
     headerCell.addEventListener("click", () => {
       const tableElement = headerCell.parentElement.parentElement.parentElement;
       const headerIndex = Array.prototype.indexOf.call(headerCell.parentElement.children, headerCell);
