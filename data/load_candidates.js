@@ -8,7 +8,6 @@ exports.readFile = async (filename, years) => {
 
   // Data from file will be stored in these objects
   const parties = []; // Political party
-  const people = []; // Actual person
   const candidates = []; // Candidate represents a particular campaign
 
   function processRow(data) {
@@ -30,18 +29,9 @@ exports.readFile = async (filename, years) => {
         seen[party_ec_id] = true;
       }
 
-      // Store the person as a separate object once
-      if (!seen[id]) {
-        people.push({
-          id,
-          name
-        });
-
-        seen[id] = true;
-      }
-
       candidates.push({
         id,
+        name,
         party_ec_id,
         year,
         gss_code, // identifies constituency ran in
@@ -56,11 +46,10 @@ exports.readFile = async (filename, years) => {
       .pipe(csv.parse({ headers: true }))
       .on('error', error => reject(error))
       .on('data', processRow)
-      .on('end', rowCount => {
+      .on('end', () => {
         console.log(`Extracted ${parties.length} party records`);
-        console.log(`Extracted ${people.length} person records`);
         console.log(`Extracted ${candidates.length} candidate records`);
-        resolve({parties, people, candidates, rowCount});
+        resolve({parties, candidates});
       });
   });
 }

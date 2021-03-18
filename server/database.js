@@ -21,33 +21,22 @@ exports.getYears = async function() {
   return await db.db().collection('constituencies').distinct('year');
 }
 
+// All the candidates for a given year
 async function getCandidates(year) {
-  // Name of candidate stored in people collection to reduce duplication
+  // Want to minimise to only data client needs (reduce data sent)
   return db.db().collection('candidates')
-    .aggregate([
-      { $match: { year } },
-      { $lookup:
-        {
-          from: 'people',
-          localField: 'id',
-          foreignField: 'id',
-          as: 'person'
-        }
-      },
-      {
-        $project:
-        {
-          party_ec_id: true,
-          gss_code: true,
-          elected: true,
-          votes: true,
-          'person.name': true
-        }
-      }
-    ]).toArray();
+    .find({ year }, {
+      party_ec_id: true,
+      name: true,
+      gss_code: true,
+      elected: true,
+      votes: true,
+    }).toArray();
 }
 
+// The constituencies for a given year
 function getConstituencies(year) {
+  // Want to minimise to only data client needs (reduce data sent)
   return db.db().collection('constituencies')
     .find({ year }, { gss_code: true, electorate: true })
     .toArray();
