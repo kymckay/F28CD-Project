@@ -3,7 +3,6 @@ const path = require('path');
 const { MongoClient } = require('mongodb');
 const candidates_in = require('./load_candidates');
 const elections_in = require('./load_elections');
-const constituencies_in = require('./load_constituencies');
 
 const uri = 'mongodb://localhost:27017?retryWrites=true&writeConcern=majority';
 const client = new MongoClient(uri, { useUnifiedTopology: true });
@@ -19,8 +18,7 @@ async function main() {
   // Get relevant candidate and election data in parallel for efficiency
   const [ electionData, candidateData, constituencyData] = await Promise.all([
     elections_in.readFile(elections_file, years),
-    candidates_in.readFile(candidates_file, years),
-    constituencies_in.readFile(constituencies_file)
+    candidates_in.readFile(candidates_file, years)
   ]);
 
   // Unpack the data
