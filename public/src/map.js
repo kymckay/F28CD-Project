@@ -105,7 +105,7 @@ export async function initMap(apiKey) {
       'layout': {},
       'paint': {
         'fill-color': '#088',
-        'fill-opacity': '0.8'
+        'fill-opacity': 0.8
       }
     });
 
