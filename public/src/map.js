@@ -44,7 +44,7 @@ export async function initMap(apiKey) {
       // data: '..public/assets/constituencies.geojson'
     })
   
-    // add polygon
+    // add polygon fill
     map.addLayer({
       'id': 'polygons-fill',
       'type': 'fill',
@@ -69,7 +69,26 @@ export async function initMap(apiKey) {
         'line-width': 2
       }
     });
+
+    // adding a symbol layer
+    map.addLayer({
+      'id': 'polygons-label',
+      'type': 'symbol',
+      'source': 'polygons',
+      'layout': {
+        'icon-image': 'custom-marker',
+        // get the title name from the source's "title" property
+        'text-field': ['get', 'pcon19nm'],
+        'text-font': [
+          "Open Sans Regular",
+          "Arial Unicode MS Regular"
+        ],
+        'text-offset': [0, 1.25],
+        'text-anchor': 'top'
+      }
+    });
     
+    // Add source fo search pin
     map.addSource('single-point', {
       type: 'geojson',
       data: {
@@ -78,6 +97,7 @@ export async function initMap(apiKey) {
       }
     });
 
+    // add the search pin
     map.addLayer({
       id: 'point',
       source: 'single-point',
