@@ -37,20 +37,35 @@ export async function initMap(apiKey) {
   // add a source layer and default styling for a single point
   map.on('load', function () {
     
+    // polygon GeoJson
     map.addSource('polygons', {
       type: 'geojson',
-      data: 'https://opendata.arcgis.com/datasets/937997590f724a398ccc0100dbd9feee_0.geojson'
+      data: '..public/assets/constituencies.geojson'
     })
   
+    // add polygon
     map.addLayer({
       'id': 'polygons',
       'type': 'fill',
       'source': 'polygons',
       'layout': {},
       'paint': {
-      'fill-color': '#088',
-      'fill-opacity': 0.8,
-      'fill-outline-color': 'rgba(0,0,0,0)'
+        'fill-color': '#088',
+        'fill-opacity': 0.3,
+      }
+    });
+
+    // add polygon outline
+    // Bacause of the way the package is setup, 
+    // // you cannot directly add an outline with width > 1
+    map.addLayer({
+      'id': 'polygons',
+      'type': 'line',
+      'source': 'polygons',
+      'layout': {},
+      'paint': {
+        'line-color': '#483D8B',
+        'line-width': 4
       }
     });
     
