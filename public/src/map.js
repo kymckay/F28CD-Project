@@ -46,12 +46,12 @@ export async function initMap(apiKey) {
   
     // add polygon
     map.addLayer({
-      'id': 'polygons',
+      'id': 'polygons-fill',
       'type': 'fill',
       'source': 'polygons',
       'layout': {},
       'paint': {
-        'fill-color': '#088',
+        'fill-color': '#7f5a83',
         'fill-opacity': 0.3,
       }
     });
@@ -60,12 +60,12 @@ export async function initMap(apiKey) {
     // Bacause of the way the package is setup, 
     // // you cannot directly add an outline with width > 1
     map.addLayer({
-      'id': 'polygons',
+      'id': 'polygons-outline',
       'type': 'line',
       'source': 'polygons',
       'layout': {},
       'paint': {
-        'line-color': '#483D8B',
+        'line-color': '#0d324d',
         'line-width': 4
       }
     });
