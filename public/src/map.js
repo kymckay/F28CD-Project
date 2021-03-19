@@ -40,7 +40,8 @@ export async function initMap(apiKey) {
     // polygon GeoJson
     map.addSource('polygons', {
       type: 'geojson',
-      data: '..public/assets/constituencies.geojson'
+      data: 'https://opendata.arcgis.com/datasets/937997590f724a398ccc0100dbd9feee_0.geojson'
+      // data: '..public/assets/constituencies.geojson'
     })
   
     // add polygon
