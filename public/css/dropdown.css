@@ -6,14 +6,13 @@ select {
   font-size: 100%;
   border: 0;
   outline: 0;
-  font-family: Fjalla One;
 }
 
 #dropdown-year {
   color: white;
-  font-size: 30px;
+  font-size: 40px;
   position: relative;
-  font-size: 20px;
+  font-family: 'Montserrat';
 }
 
 #dropdown-data {

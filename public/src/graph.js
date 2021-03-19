@@ -21,16 +21,16 @@ export async function initGraph() {
     datasets: [
      {
         label: "Actual",
-        backgroundColor: "#0d324d",
-        borderColor: "#0d324d",
+        backgroundColor: "#3c4750",
+        borderColor: "#3c4750",
         borderWidth: 1,
         data: actual
       },
       {
         label: "Predicted",
-        backgroundColor: "#7f5a83",
-        borderColor: "#7f5a83",
-        borderWidth: 1,
+        backgroundColor: '#FFFFFF',
+        borderColor: "#3c4750",
+        borderWidth: 2,
         data: predicted
       }
     ]

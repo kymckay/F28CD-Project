@@ -10,6 +10,7 @@
   <link rel="stylesheet" type="text/css" href="css/legend.css">
   <link rel="stylesheet" type="text/css" href="css/search.css">
   <link rel="stylesheet" type="text/css" href="css/table.css">
+  <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Fjalla One'>
@@ -25,10 +26,9 @@
   <a href="index.html">
     <img src="assets/logo.png" alt="logo" class="logo">
   </a>
+
   <!-- dropdown menu for election year selection -->
-
   <select id="dropdown-year"></select>
-
 
   <!-- Info button -->
   <div class="info">
@@ -84,9 +84,10 @@
   <section class="table">
 
      <!------search bar--------->
-    <div class="search">
-        <input type="text" id="search" class="search" spellcheck="false" placeholder="Search candidate...">
-        <span class="material-icons search_icon">search</span>
+    <div class="search-section">
+      <span class="material-icons search_icon" style="color: gray; margin: 5px;">search</span>
+      <input type="text" id="search" class="search" spellcheck="false" placeholder="Search candidate...">
+
     </div>
 
     <!------candidate table------->
@@ -107,6 +108,7 @@
 
     <!--------legend--------->
     <div id="legendContainer">
+
       <table id="legend" aria-label="party colouring legend">
         <thead>
           <tr>
