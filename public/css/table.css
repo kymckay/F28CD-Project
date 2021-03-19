@@ -53,3 +53,13 @@
 .candid .th.sort.desc {
     font-style: italic;
 }
+
+
+/* table rows clickable */
+tbody > tr {
+    cursor: pointer;
+    user-select: none;
+}
+tr.selected {
+    font-style: italic;
+}
