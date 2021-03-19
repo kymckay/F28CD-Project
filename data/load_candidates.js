@@ -8,40 +8,31 @@ exports.readFile = async (filename, years) => {
 
   // Data from file will be stored in these objects
   const parties = []; // Political party
-  const people = []; // Actual person
   const candidates = []; // Candidate represents a particular campaign
 
   function processRow(data) {
     // Filter for only parliamentary candidates
     if (data.election.startsWith("parl")) {
-      const { id, name, election_date, gss_code, party_ec_id, party_name, elected } = data;
+      const { name, election_date, gss_code, party_ec_id, party_name, elected } = data;
       const year = election_date.substr(0, 4);
 
       // Don't care about candidates in unrequested years
       if (years.every(y => y !== year)) return;
 
-      // Store each party once (by electoral commision ID)
-      if (!seen[party_ec_id]) {
+      // Store each party once per year they had a candidate (by electoral commision ID)
+      // Storing for each year allows quick querying when live
+      if (!seen[`${party_ec_id}${year}`]) {
         parties.push({
           party_ec_id,
-          party_name
+          party_name,
+          year
         });
 
-        seen[party_ec_id] = true;
-      }
-
-      // Store the person as a separate object once
-      if (!seen[id]) {
-        people.push({
-          id,
-          name
-        });
-
-        seen[id] = true;
+        seen[`${party_ec_id}${year}`] = true;
       }
 
       candidates.push({
-        id,
+        name,
         party_ec_id,
         year,
         gss_code, // identifies constituency ran in
@@ -56,11 +47,10 @@ exports.readFile = async (filename, years) => {
       .pipe(csv.parse({ headers: true }))
       .on('error', error => reject(error))
       .on('data', processRow)
-      .on('end', rowCount => {
+      .on('end', () => {
         console.log(`Extracted ${parties.length} party records`);
-        console.log(`Extracted ${people.length} person records`);
         console.log(`Extracted ${candidates.length} candidate records`);
-        resolve({parties, people, candidates, rowCount});
+        resolve({parties, candidates});
       });
   });
 }

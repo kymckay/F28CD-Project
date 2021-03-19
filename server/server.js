@@ -16,7 +16,7 @@ app.get('/', (req, res) => {
 // Files stored statically in public folder
 app.use(express.static(path.join(__dirname, '../public/')));
 
-app.post('/year', express.json({}), (req, res) => {
+app.post('/year', express.json({}), async (req, res) => {
   const { year } = req.body;
 
   // User may have altered dropdown values and sent a bad request
@@ -26,29 +26,25 @@ app.post('/year', express.json({}), (req, res) => {
     return;
   }
 
-  // TODO: Fetch data for year from MongoDB
+  const data = await db.getData(year);
 
-  // TODO: Deny request if no data found in DB for requested year
+  // Deny request if no data exists for year in DB
+  // User may be sending bogus requests to try and thrash the DB
+  if (!data) {
+    res.status(403).end();
+    return;
+  }
 
-  // TODO: Populate payload
-  res.json({});
+  res.json(data);
 });
 
-app.post('/years', async (_, res) => {
+app.post('/options', async (_, res) => {
   // Sort years from most recent to most historic
   const years = await db.getYears();
   years.sort().reverse();
 
-  // TODO: Get data for the most recent year from MongoDB to put in the payload
-
-  // TODO: Match the payload info from MongoDB to the structure here
-  res.json({
-    years,
-    sources: ["Electoral Calculus", "Financial Times", "Bloomberg", "Politico", "BBC"],
-    candidates: [{ name: "Boris Johnson", votes: 12345 }, { name: "Nicola Sturgeon", votes: 2222 }, { name: "Keir Starmer", votes: 13536 }],
-    parties: [{ name: "Conservatives" }],
-    constituencies: [{ gss: '', electorate: 100 }]
-  });
+  const sources = ["Electoral Calculus", "Financial Times", "Bloomberg", "Politico", "BBC"]; // TODO
+  res.json({ years, sources });
 });
 
 // Start the server after the MongoDB connection is ready

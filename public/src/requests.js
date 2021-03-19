@@ -1,4 +1,6 @@
-export function getYears() {
+import { populateList, populateLegend } from './list.js';
+
+export function getOptions() {
   return new Promise((resolve, reject) => {
     const xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
@@ -12,12 +14,12 @@ export function getYears() {
       }
     };
 
-    xhttp.open('POST', '/years', true);
+    xhttp.open('POST', '/options', true);
     xhttp.send();
   })
 }
 
-export function getYear(year) {
+function getYear(year) {
   return new Promise((resolve, reject) => {
     const xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
@@ -36,4 +38,13 @@ export function getYear(year) {
 
     xhttp.send(JSON.stringify({ year }));
   })
+}
+
+// TODO: make spinners for the unpopulated elements while waiting
+// TODO: Cache year data to avoid repeated requests
+export async function newYear(year) {
+  const data = await getYear(year);
+
+  populateLegend(data.parties);
+  populateList(data.candidates);
 }

@@ -1,7 +1,7 @@
 function search() {
   const input = document.getElementById("search");
   const filter = input.value.toUpperCase();
-  const table = document.getElementById("candid");
+  const table = document.getElementById("candList");
   const tr = table.getElementsByTagName("tr");
 
   for (const i in tr) {
@@ -25,18 +25,21 @@ export async function initSearch() {
 // Clears and populates the list with the data passed in
 export async function populateList(data) {
   // Clear existing rows first
-  const [clist] = document.getElementById('candid').getElementsByTagName('tbody');
+  const [clist] = document.getElementById('candList').getElementsByTagName('tbody');
   clist.innerHTML = '';
 
   // Document fragment will trigger reflow only once when attached
   const newRows = document.createDocumentFragment();
-  data.candidates.forEach(cand => {
+  data.forEach(cand => {
     const row = document.createElement("tr");
     const name = document.createElement("td");
     const votes = document.createElement("td");
 
     name.innerHTML = cand.name;
     votes.innerHTML = cand.votes;
+
+    // Can style the rows by their party ID
+    row.classList.add(cand.party_ec_id);
 
     row.appendChild(name);
     row.appendChild(votes);
@@ -45,6 +48,29 @@ export async function populateList(data) {
 
   // Populate the table with the new data
   clist.appendChild(newRows);
+}
+
+export async function populateLegend(data) {
+  const [llist] = document.getElementById('legend').getElementsByTagName('tbody');
+  llist.innerHTML = '';
+
+  // Document fragment will trigger reflow only once when attached
+  const newRows = document.createDocumentFragment();
+  data.forEach(party => {
+    const row = document.createElement("tr");
+    const name = document.createElement("td");
+
+    name.innerHTML = party.party_name;
+
+    // Can style the rows by their party ID
+    row.classList.add(party.party_ec_id);
+
+    row.appendChild(name);
+    newRows.appendChild(row);
+  });
+
+  // Populate the table with the new data
+  llist.appendChild(newRows);
 }
 
 function sortTableByColumn(table, column, asc = true) {
@@ -77,7 +103,7 @@ function sortTableByColumn(table, column, asc = true) {
 
 // Enables the sorting functionality of the table headings
 export async function initSort() {
-  document.querySelectorAll(".candid th").forEach(headerCell => {
+  document.querySelectorAll("#candList th").forEach(headerCell => {
     headerCell.addEventListener("click", () => {
       const tableElement = headerCell.parentElement.parentElement.parentElement;
       const headerIndex = Array.prototype.indexOf.call(headerCell.parentElement.children, headerCell);

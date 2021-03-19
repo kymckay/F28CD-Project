@@ -1,6 +1,6 @@
 /* global Chart */ // Defined by Chart.js
 
-export function candidateGraph() {
+export function initCandidate() {
   const ctx = document.getElementById('candGraph').getContext('2d');
   const names = ['First Place', 'Second Place'];
   const data = [100000, 90000]

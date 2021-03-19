@@ -21,7 +21,7 @@ async function main() {
   ]);
 
   // Unpack the data
-  const { parties, people, candidates } = candidateData;
+  const { parties, candidates } = candidateData;
 
   // Constituency records will be built (one for each constitency each year)
   let constituencies = Object.keys(electionData).map(y => {
@@ -61,7 +61,6 @@ async function main() {
 
     // Must insert records sequentially to avoid DB write conflicts
     await addCollection("parties", parties);
-    await addCollection("people", people);
     await addCollection("candidates", candidates);
     await addCollection("constituencies", constituencies);
   } catch (error) {
