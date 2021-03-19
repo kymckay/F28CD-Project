@@ -66,7 +66,7 @@ export async function initMap(apiKey) {
       'layout': {},
       'paint': {
         'line-color': '#0d324d',
-        'line-width': 4
+        'line-width': 2
       }
     });
     
