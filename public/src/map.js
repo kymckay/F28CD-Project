@@ -36,6 +36,24 @@ export async function initMap(apiKey) {
   // After the map style has loaded on the page,
   // add a source layer and default styling for a single point
   map.on('load', function () {
+    
+    map.addSource('polygons', {
+      type: 'geojson',
+      data: 'https://opendata.arcgis.com/datasets/937997590f724a398ccc0100dbd9feee_0.geojson'
+    })
+  
+    map.addLayer({
+      'id': 'polygons',
+      'type': 'fill',
+      'source': 'polygons',
+      'layout': {},
+      'paint': {
+      'fill-color': '#088',
+      'fill-opacity': 0.8,
+      'fill-outline-color': 'rgba(0,0,0,0)'
+      }
+    });
+    
     map.addSource('single-point', {
       type: 'geojson',
       data: {
