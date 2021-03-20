@@ -12,24 +12,12 @@
   font-size: 0.9em;
   min-width: 100%;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-
 }
 
 th, td {
   padding: 5px;
   text-align: left;
   width: 200px;
-}
-
-table {
-  position: relative;
-}
-
-th {
-  position: -webkit-sticky;
-  position: sticky;
-  z-index: 2;
-  top: 0;
 }
 
 thead tr {
@@ -39,8 +27,6 @@ thead tr {
   display: block;
 }
 
-
-
 /* default for other parties is a light grey */
 tbody tr {
   background-color: #f1f1f0;
@@ -49,7 +35,7 @@ tbody tr {
 
 /* rows classed with party Electoral Commission ID for colouring */
 tbody .PP52, tbody .PP51 {
-  background-color: #0087DC, 0.5;
+  background-color: #0087DC;
 }
 tbody .PP53 {
   background-color: #E4003B;
