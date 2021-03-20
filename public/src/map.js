@@ -71,7 +71,8 @@ export async function initMap(apiKey) {
         'layout': {},
         'paint': {
           'line-color': '#0d324d',
-          'line-width': 2
+          'line-width': 2,
+          'line-opacity': 0.5
         }
       },
       'settlement-label'
