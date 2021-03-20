@@ -46,7 +46,7 @@ export async function initMap(apiKey) {
       type: 'geojson',
       data: 'https://opendata.arcgis.com/datasets/937997590f724a398ccc0100dbd9feee_0.geojson'
       // data: '..public/assets/constituencies.geojson'
-    })
+    });
 
     // add polygon fill
     map.addLayer(
