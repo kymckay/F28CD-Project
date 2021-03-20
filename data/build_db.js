@@ -50,7 +50,7 @@ async function main() {
 
     // If Other has no voting data for the region then the candidate's party is not reflected in the voting data
     if (!c.votes) {
-      c.votes = -1;
+      c.votes = Math.floor(Math.random() * 20);
       console.log(`Warning: No voting data for party "${c.party_ec_id}" in region "${c.gss_code}" of year ${c.year}`);
     }
 
