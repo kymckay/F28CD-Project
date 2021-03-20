@@ -107,7 +107,10 @@ export async function initMap(apiKey) {
       ]);
        
       // Display a popup with the name of the constituency.
-      popup.setLngLat([feature.properties.long, feature.properties.lat]).setText(feature.properties.pcon19nm).addTo(map);
+      popup
+      .setLngLat([feature.properties.long, feature.properties.lat])
+      .setText(feature.properties.pcon19nm + "\n\n(Reigning Party: )")
+      .addTo(map);
     });
        
     map.on('mouseleave', 'constituency-fill', function () {
