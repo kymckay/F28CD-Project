@@ -12,6 +12,8 @@ const elections_file = path.resolve(__dirname, 'election-results.xlsx');
 
 // Only go back to 2010 as voting data constituency IDs change then
 const years = ["2010", "2015", "2017", "2019"];
+// Used to generate prediction data
+const sources = ["Electoral Calculus", "Politico", "Opinium", "YouGov", "Ipsos MORI"];
 
 async function main() {
   // Get relevant candidate and election data in parallel for efficiency
@@ -60,6 +62,7 @@ async function main() {
     await client.connect();
 
     // Must insert records sequentially to avoid DB write conflicts
+    await addCollection("sources", sources.map(s => ({name: s})))
     await addCollection("parties", parties);
     await addCollection("candidates", candidates);
     await addCollection("constituencies", constituencies);

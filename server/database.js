@@ -17,8 +17,12 @@ exports.startMongo = function(callback) {
   });
 }
 
-exports.getYears = async function() {
-  return await db.db().collection('constituencies').distinct('year');
+exports.getYears = function() {
+  return db.db().collection('constituencies').distinct('year');
+}
+
+exports.getSources = function () {
+  return db.db().collection('sources').distinct('name');
 }
 
 // All the candidates for a given year
