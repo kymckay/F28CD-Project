@@ -84,6 +84,10 @@ export async function initMap(apiKey) {
     ); 
 
     map.on('mousemove', 'constituency-fill', function (e) {
+      // Change the cursor style as a UI indicator.
+      map.getCanvas().style.cursor = 'pointer';
+       
+      
     });
        
 
