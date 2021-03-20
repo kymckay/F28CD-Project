@@ -83,6 +83,11 @@ export async function initMap(apiKey) {
         'settlement-label' // Place constituency under labels.
     ); 
 
+    map.on('mousemove', 'constituency-fill', function (e) {
+    });
+       
+
+
     // Add source fo search pin
     map.addSource('single-point', {
       type: 'geojson',
