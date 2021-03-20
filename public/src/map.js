@@ -47,7 +47,7 @@ export async function initMap(apiKey) {
       data: 'https://opendata.arcgis.com/datasets/937997590f724a398ccc0100dbd9feee_0.geojson'
       // data: '..public/assets/constituencies.geojson'
     })
-  
+
     // add polygon fill
     map.addLayer(
       {
@@ -93,10 +93,10 @@ export async function initMap(apiKey) {
       // Query the constituencies layer visible in the map.
       // Use filter to collect only results with the same constituency name.
       // TODO: To be used with Colouring of map – not really used on this branch
-      const relatedFeatures = map.querySourceFeatures('constituency-fill', {
-        sourceLayer: 'original',
-        filter: ['in', 'pcon19nm', feature.properties.pcon19nm]
-      });
+      // const relatedFeatures = map.querySourceFeatures('constituency-fill', {
+      //   sourceLayer: 'original',
+      //   filter: ['in', 'pcon19nm', feature.properties.pcon19nm]
+      // });
        
       // Add features with the same constituency name
       // to the highlighted layer.
@@ -109,7 +109,7 @@ export async function initMap(apiKey) {
       // Display a popup with the name of the constituency.
       popup
       .setLngLat([feature.properties.long, feature.properties.lat])
-      .setText(feature.properties.pcon19nm + "\n\n(Reigning Party: )")
+      .setText(`${feature.properties.pcon19nm} (Reigning Party: )`)
       .addTo(map);
     });
        
