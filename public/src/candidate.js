@@ -19,7 +19,7 @@ export function initCandidate() {
       },
       options: {
           responsive: true,
-          aspectRatio: 2.6,
+          aspectRatio: 3,
           legend: {
             display: true,
             position: 'bottom'
