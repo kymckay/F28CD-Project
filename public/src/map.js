@@ -33,71 +33,56 @@ export async function initMap(apiKey) {
   // Add the geocoder to the map
   map.addControl(geocoder);
 
+  const popup = new mapboxgl.Popup({
+    closeButton: false
+  });
+
   // After the map style has loaded on the page,
   // add a source layer and default styling for a single point
   map.on('load', function () {
     
     // polygon GeoJson
-    map.addSource('polygons', {
+    map.addSource('constituency', {
       type: 'geojson',
       data: 'https://opendata.arcgis.com/datasets/937997590f724a398ccc0100dbd9feee_0.geojson'
       // data: '..public/assets/constituencies.geojson'
     })
   
-    // // add polygon fill
-    // // will be kept as comment to implement intial colour before highlight
-    // map.addLayer(
-    //   {
-    //     'id': 'polygons-fill',
-    //     'type': 'fill',
-    //     'source': 'polygons',
-    //     'layout': {},
-    //     'paint': {
-    //       'fill-color': '#7f5a83',
-    //       'fill-opacity': 0.1,
-    //     }
-    //   }, 
-    //   'settlement-label' // place polygons beneath label
-    // );
-
-    // add polygon outline
-    // Bacause of the way the package is setup, 
-    // // you cannot directly add an outline with width > 1
+    // add polygon fill
     map.addLayer(
       {
-        'id': 'polygons-outline',
-        'type': 'line',
-        'source': 'polygons',
+        'id': 'constituency-fill',
+        'type': 'fill',
+        'source': 'constituency',
         'layout': {},
         'paint': {
-          'line-color': '#0d324d',
-          'line-width': 2,
-          'line-opacity': 0.5
+          'fill-outline-color': '#0d324d',
+          'fill-color': '#7f5a83',
+          'fill-opacity': 0.2         
         }
-      },
-      'settlement-label'
+      }, 
+       'settlement-label' // place constituency beneath label
     );
 
-    // Add filled county polygons
+    // Add filled constituency constituency
     // for highlighted display.
     map.addLayer(
       {
-      'id': 'constituencies-highlighted',
-      'type': 'fill',
-      'source': 'counties',
-      'source-layer': 'polygons',
-      'paint': {
-        'fill-outline-color': '#484896',
-        'fill-color': '#6e599f',
-        'fill-opacity': 0.75
+        'id': 'constituency-highlighted',
+        'type': 'fill',
+        'source': 'constituency',
+        'paint': {
+          'fill-outline-color': '#484896',
+          'fill-color': '#6e599f',
+          'fill-opacity': 0.75
+        },
+        // Display none by adding a
+        // filter with an empty string.
+        'filter': ['in', 'pcon19nm', '']
       },
-      // Display none by adding a
-      // filter with an empty string.
-      'filter': ['in', 'COUNTY', '']
-      },
-        'settlement-label'
-    ); // Place polygons under labels.
-    
+        'settlement-label' // Place constituency under labels.
+    ); 
+
     // Add source fo search pin
     map.addSource('single-point', {
       type: 'geojson',
