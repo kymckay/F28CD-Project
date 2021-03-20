@@ -80,24 +80,6 @@ export async function initMap(apiKey) {
       },
         'settlement-label'
     ); // Place polygons under labels.
-
-    // adding a symbol layer
-    map.addLayer({
-      'id': 'polygons-label',
-      'type': 'symbol',
-      'source': 'polygons',
-      'layout': {
-        'icon-image': 'custom-marker',
-        // get the title name from the source's "title" property
-        'text-field': ['get', 'pcon19nm'],
-        'text-font': [
-          "Open Sans Regular",
-          "Arial Unicode MS Regular"
-        ],
-        'text-offset': [0, 1.25],
-        'text-anchor': 'top'
-      }
-    });
     
     // Add source fo search pin
     map.addSource('single-point', {
