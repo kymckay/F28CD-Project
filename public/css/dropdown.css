@@ -17,7 +17,7 @@ select {
 
 #dropdown-data {
   max-width: 220px;
-  margin: 0;
+  margin-bottom: 10px;
   position: absolute;
   right: 25%;
   left: 36%;
