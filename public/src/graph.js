@@ -2,8 +2,8 @@
 
 // Reference: https://www.chartjs.org/docs/latest/
 const xlabels = [];
-const predicted1 = [300, 240, 150, 69, 13];
-const predicted2 = [200, 340, 59, 21, 70];
+const predicted1 = [300, 240, 150, 69, 13, 87, 12];
+const predicted2 = [200, 340, 59, 21, 70, 34, 64];
 let predicted;
 //results for 2019 appear by default
 let actual = [];
@@ -21,14 +21,23 @@ export async function initGraph() {
     datasets: [
      {
         label: "Actual",
-        backgroundColor: "#3c4750",
+        backgroundColor: [
+              '#0087DC',
+              '#E4003B',
+              '#FAA61A',
+              '#326760',
+              '#008142',
+              '#FDF38E',
+              '#f1f1f0'],
+
+
         borderColor: "#3c4750",
         borderWidth: 1,
         data: actual
       },
       {
         label: "Predicted",
-        backgroundColor: '#f1f1f0',
+        backgroundColor: "#3c4750",
         borderColor: "#3c4750",
         borderWidth: 1,
         data: predicted
