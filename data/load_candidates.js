@@ -2,7 +2,7 @@
 const fs = require('fs');
 const csv = require('@fast-csv/parse');
 
-exports.readFile = async (filename, years) => {
+exports.readFile = async (filename, years, sources) => {
   console.log("Extracting candidate data...");
   // Data from file will be stored in these objects
   const parties = {}; // Political party
@@ -25,7 +25,8 @@ exports.readFile = async (filename, years) => {
           party_ec_id,
           party_name,
           year,
-          votes: 0 // Party votes will be tallied elsewhere
+          votes: 0, // Party votes will be tallied elsewhere
+          predictions: sources.map(() => 0), // Party predictions will be tallied elsewhere
         };
       }
 

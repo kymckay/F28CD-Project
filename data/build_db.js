@@ -19,7 +19,7 @@ async function main() {
   // Get relevant candidate and election data in parallel for efficiency
   const [ electionData, candidateData ] = await Promise.all([
     elections_in.readFile(elections_file, years),
-    candidates_in.readFile(candidates_file, years)
+    candidates_in.readFile(candidates_file, years, sources)
   ]);
 
   // Unpack the data
@@ -54,13 +54,14 @@ async function main() {
       console.log(`Warning: No voting data for party "${c.party_ec_id}" in region "${c.gss_code}" of year ${c.year}`);
     }
 
-    // Count towards party's overall votes that year
-    const partyKey = `${c.party_ec_id}${c.year}`;
-    parties[partyKey].votes += c.votes;
-
     // Generate some prediction data for the candidate (with decreasing accuracy)
     // (to demonstrate functionality, real data is hard to find in a convenient format)
     c.predictions = sources.map((_, i) => c.votes - (i * 100) + Math.floor(Math.random() * i * 200));
+
+    // Count towards party's overall votes and predictions that year
+    const partyKey = `${c.party_ec_id}${c.year}`;
+    parties[partyKey].votes += c.votes;
+    parties[partyKey].predictions = parties[partyKey].predictions.map((v, i) => v + c.predictions[i]);
   });
 
   console.log(`Inserting data into MongoDB...`);
