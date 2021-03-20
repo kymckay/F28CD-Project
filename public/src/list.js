@@ -54,12 +54,21 @@ export async function populateLegend(data) {
   const [llist] = document.getElementById('legend').getElementsByTagName('tbody');
   llist.innerHTML = '';
 
-  // Sort parties by name
-  data.sort((a, b) => a.name.localeCompare(b.name));
+  // Sort parties by popularity
+  data.sort((a, b) => b.votes - a.votes);
+
+  // Take most popular (ignoring "independent" non-party entry)
+  const significant = data.filter(p => p.party_ec_id !== 'ynmp-party:2').slice(0, 9);
+
+  // Sort by name for legend display
+  significant.sort((a, b) => a.party_name.localeCompare(b.party_name));
+
+  // Remaining grouped as "Other"
+  significant.push({ party_name: 'Other', party_ec_id: 'other' });
 
   // Document fragment will trigger reflow only once when attached
   const newRows = document.createDocumentFragment();
-  data.forEach(party => {
+  significant.forEach(party => {
     const row = document.createElement("tr");
     const name = document.createElement("td");
 
