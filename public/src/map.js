@@ -43,35 +43,43 @@ export async function initMap(apiKey) {
       data: 'https://opendata.arcgis.com/datasets/937997590f724a398ccc0100dbd9feee_0.geojson'
       // data: '..public/assets/constituencies.geojson'
     })
-  
-    // add polygon fill
-    map.addLayer(
-      {
-        'id': 'polygons-fill',
-        'type': 'fill',
-        'source': 'polygons',
-        'layout': {},
-        'paint': {
-          'fill-color': '#7f5a83',
-          'fill-opacity': 0.3,
-        }
-      }, 
-      'settlement-label' // place polygons beneath label
-    );
 
     // add polygon outline
     // Bacause of the way the package is setup, 
     // // you cannot directly add an outline with width > 1
-    map.addLayer({
-      'id': 'polygons-outline',
-      'type': 'line',
-      'source': 'polygons',
-      'layout': {},
+    map.addLayer(
+      {
+        'id': 'polygons-outline',
+        'type': 'line',
+        'source': 'polygons',
+        'layout': {},
+        'paint': {
+          'line-color': '#0d324d',
+          'line-width': 2
+        }
+      },
+      'settlement-label'
+    );
+
+    // Add filled county polygons
+    // for highlighted display.
+    map.addLayer(
+      {
+      'id': 'constituencies-highlighted',
+      'type': 'fill',
+      'source': 'counties',
+      'source-layer': 'polygons',
       'paint': {
-        'line-color': '#0d324d',
-        'line-width': 2
-      }
-    });
+        'fill-outline-color': '#484896',
+        'fill-color': '#6e599f',
+        'fill-opacity': 0.75
+      },
+      // Display none by adding a
+      // filter with an empty string.
+      'filter': ['in', 'COUNTY', '']
+      },
+        'settlement-label'
+    ); // Place polygons under labels.
 
     // adding a symbol layer
     map.addLayer({
