@@ -56,7 +56,7 @@ async function main() {
 
     // Generate some prediction data for the candidate (with decreasing accuracy)
     // (to demonstrate functionality, real data is hard to find in a convenient format)
-    c.predictions = sources.map((_, i) => c.votes - (i * 100) + Math.floor(Math.random() * i * 200));
+    c.predictions = sources.map((_, i) => Math.max(0, c.votes - (i * 100) + Math.floor(Math.random() * i * 200)));
 
     // Count towards party's overall votes and predictions that year
     const partyKey = `${c.party_ec_id}${c.year}`;
