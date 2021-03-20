@@ -43,6 +43,22 @@ export async function initMap(apiKey) {
       data: 'https://opendata.arcgis.com/datasets/937997590f724a398ccc0100dbd9feee_0.geojson'
       // data: '..public/assets/constituencies.geojson'
     })
+  
+    // // add polygon fill
+    // // will be kept as comment to implement intial colour before highlight
+    // map.addLayer(
+    //   {
+    //     'id': 'polygons-fill',
+    //     'type': 'fill',
+    //     'source': 'polygons',
+    //     'layout': {},
+    //     'paint': {
+    //       'fill-color': '#7f5a83',
+    //       'fill-opacity': 0.1,
+    //     }
+    //   }, 
+    //   'settlement-label' // place polygons beneath label
+    // );
 
     // add polygon outline
     // Bacause of the way the package is setup, 
