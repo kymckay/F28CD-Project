@@ -39,11 +39,11 @@ app.post('/year', express.json({}), async (req, res) => {
 });
 
 app.post('/options', async (_, res) => {
+  const [years, sources] = await Promise.all([db.getYears(), db.getSources()]);
+
   // Sort years from most recent to most historic
-  const years = await db.getYears();
   years.sort().reverse();
 
-  const sources = ["Electoral Calculus", "Financial Times", "Bloomberg", "Politico", "BBC"]; // TODO
   res.json({ years, sources });
 });
 

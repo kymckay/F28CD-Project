@@ -12,12 +12,14 @@ const elections_file = path.resolve(__dirname, 'election-results.xlsx');
 
 // Only go back to 2010 as voting data constituency IDs change then
 const years = ["2010", "2015", "2017", "2019"];
+// Used to generate prediction data
+const sources = ["Electoral Calculus", "Politico", "Opinium", "YouGov", "Ipsos MORI"];
 
 async function main() {
   // Get relevant candidate and election data in parallel for efficiency
   const [ electionData, candidateData ] = await Promise.all([
     elections_in.readFile(elections_file, years),
-    candidates_in.readFile(candidates_file, years)
+    candidates_in.readFile(candidates_file, years, sources)
   ]);
 
   // Unpack the data
@@ -48,11 +50,18 @@ async function main() {
 
     // If Other has no voting data for the region then the candidate's party is not reflected in the voting data
     if (!c.votes) {
-      c.votes = -1;
+      c.votes = Math.floor(Math.random() * 20);
       console.log(`Warning: No voting data for party "${c.party_ec_id}" in region "${c.gss_code}" of year ${c.year}`);
     }
 
-    // TODO: generate prediction data too (try to make consistent with electorate of region)
+    // Generate some prediction data for the candidate (with decreasing accuracy)
+    // (to demonstrate functionality, real data is hard to find in a convenient format)
+    c.predictions = sources.map((_, i) => Math.max(0, c.votes - (i * 100) + Math.floor(Math.random() * i * 200)));
+
+    // Count towards party's overall votes and predictions that year
+    const partyKey = `${c.party_ec_id}${c.year}`;
+    parties[partyKey].votes += c.votes;
+    parties[partyKey].predictions = parties[partyKey].predictions.map((v, i) => v + c.predictions[i]);
   });
 
   console.log(`Inserting data into MongoDB...`);
@@ -60,7 +69,8 @@ async function main() {
     await client.connect();
 
     // Must insert records sequentially to avoid DB write conflicts
-    await addCollection("parties", parties);
+    await addCollection("sources", sources.map(s => ({name: s})))
+    await addCollection("parties", Object.values(parties));
     await addCollection("candidates", candidates);
     await addCollection("constituencies", constituencies);
   } catch (error) {

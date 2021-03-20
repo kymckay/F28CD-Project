@@ -2,12 +2,10 @@
 const fs = require('fs');
 const csv = require('@fast-csv/parse');
 
-exports.readFile = async (filename, years) => {
+exports.readFile = async (filename, years, sources) => {
   console.log("Extracting candidate data...");
-  const seen = {}; // Track identifiers to avoid duplicates
-
   // Data from file will be stored in these objects
-  const parties = []; // Political party
+  const parties = {}; // Political party
   const candidates = []; // Candidate represents a particular campaign
 
   function processRow(data) {
@@ -21,14 +19,15 @@ exports.readFile = async (filename, years) => {
 
       // Store each party once per year they had a candidate (by electoral commision ID)
       // Storing for each year allows quick querying when live
-      if (!seen[`${party_ec_id}${year}`]) {
-        parties.push({
+      const partyKey = `${party_ec_id}${year}`;
+      if (!parties[partyKey]) {
+        parties[partyKey] = {
           party_ec_id,
           party_name,
-          year
-        });
-
-        seen[`${party_ec_id}${year}`] = true;
+          year,
+          votes: 0, // Party votes will be tallied elsewhere
+          predictions: sources.map(() => 0), // Party predictions will be tallied elsewhere
+        };
       }
 
       candidates.push({

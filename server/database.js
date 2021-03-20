@@ -17,8 +17,12 @@ exports.startMongo = function(callback) {
   });
 }
 
-exports.getYears = async function() {
-  return await db.db().collection('constituencies').distinct('year');
+exports.getYears = function() {
+  return db.db().collection('constituencies').distinct('year');
+}
+
+exports.getSources = function () {
+  return db.db().collection('sources').distinct('name');
 }
 
 // All the candidates for a given year
@@ -33,6 +37,7 @@ function getCandidates(year) {
         gss_code: 1,
         elected: 1,
         votes: 1,
+        predictions: 1,
       }
     })
     .toArray();
@@ -48,7 +53,15 @@ function getConstituencies(year) {
 
 function getParties(year) {
   return db.db().collection('parties')
-    .find({ year }, { projection: { _id: 0, party_ec_id: 1, party_name: 1} })
+    .find({ year }, {
+      projection: {
+        _id: 0,
+        party_ec_id: 1,
+        party_name: 1,
+        votes: 1,
+        predictions: 1,
+      }
+    })
     .toArray();
 }
 
