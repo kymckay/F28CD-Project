@@ -20,7 +20,7 @@ export async function initMap(apiKey) {
     style: 'mapbox://styles/mapbox/light-v10',
     center: ukCentre,
     zoom: 8,
-    maxbounds: uk
+    maxbounds: ukSearchBounds
   });
 
   const geocoder = new MapboxGeocoder({
