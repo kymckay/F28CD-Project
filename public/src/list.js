@@ -54,6 +54,9 @@ export async function populateLegend(data) {
   const [llist] = document.getElementById('legend').getElementsByTagName('tbody');
   llist.innerHTML = '';
 
+  // Sort parties by name
+  data.sort((a, b) => a.name.localeCompare(b.name));
+
   // Document fragment will trigger reflow only once when attached
   const newRows = document.createDocumentFragment();
   data.forEach(party => {
