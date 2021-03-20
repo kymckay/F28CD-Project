@@ -37,6 +37,7 @@ function getCandidates(year) {
         gss_code: 1,
         elected: 1,
         votes: 1,
+        predictions: 1,
       }
     })
     .toArray();

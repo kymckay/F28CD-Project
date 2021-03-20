@@ -54,7 +54,9 @@ async function main() {
       console.log(`Warning: No voting data for party "${c.party_ec_id}" in region "${c.gss_code}" of year ${c.year}`);
     }
 
-    // TODO: generate prediction data too (try to make consistent with electorate of region)
+    // Generate some prediction data for the candidate (with decreasing accuracy)
+    // (to demonstrate functionality, real data is hard to find in a convenient format)
+    c.predictions = sources.map((_, i) => c.votes - (i * 100) + Math.floor(Math.random() * i * 200));
   });
 
   console.log(`Inserting data into MongoDB...`);
