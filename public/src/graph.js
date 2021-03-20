@@ -27,3 +27,37 @@ export async function initGraph() {
     }
   });
 }
+
+export async function populateGraph(data) {
+  // Get the most popular 6 parties
+  data.sort((a, b) => b.votes - a.votes);
+  const top6 = data.slice(0,6);
+  top6.sort((a, b) => a.party_name.localeCompare(b.party_name));
+
+  chart.data.labels = top6.map(p => p.party_name);
+  chart.data.labels.push('Other');
+
+  // Cumulate remaining party votes under "Other" entry
+  const dataReal = top6.map(p => p.votes);
+  dataReal.push(data.slice(6).reduce((acc, cur) => acc + cur.votes, 0));
+
+  const dataPred = top6.map(p => p.predictions[0]);
+  dataPred.push(data.slice(6).reduce((acc, cur) => acc + cur.predictions[0], 0));
+
+  // Clear existing data
+  chart.data.datasets = [];
+
+  chart.data.datasets.push({
+    label: 'Votes',
+    borderWidth: 1,
+    data: dataReal
+  });
+
+  chart.data.datasets.push({
+    label: 'Prediction',
+    borderWidth: 1,
+    data: dataPred
+  });
+
+  chart.update();
+}
