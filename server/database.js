@@ -53,7 +53,15 @@ function getConstituencies(year) {
 
 function getParties(year) {
   return db.db().collection('parties')
-    .find({ year }, { projection: { _id: 0, party_ec_id: 1, party_name: 1, votes: 1 } })
+    .find({ year }, {
+      projection: {
+        _id: 0,
+        party_ec_id: 1,
+        party_name: 1,
+        votes: 1,
+        predictions: 1,
+      }
+    })
     .toArray();
 }
 
