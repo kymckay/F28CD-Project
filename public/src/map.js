@@ -10,20 +10,24 @@ export async function initMap(apiKey) {
   const long = -2.89479;
   const lat = 54.093409;
   const ukCentre = [long, lat];
-  const ukBounds = [-8.196671, 50.064075, 1.737475, 60.917070];
+  const ukSearchBounds = [-8.196671, 50.064075, 1.737475, 60.917070];
+  const ukBounds = [[-8.196671, 50.064075], [1.737475, 60.917070]];
+  
   mapboxgl.accessToken = apiKey;
+
   const map = new mapboxgl.Map({
     container: 'map', // ID in the HTML
     style: 'mapbox://styles/mapbox/light-v10',
     center: ukCentre,
-    zoom: 12,
+    zoom: 8,
+    maxbounds: uk
   });
 
   const geocoder = new MapboxGeocoder({
     accessToken: apiKey,
     mapboxgl: mapboxgl,
     placeholder: 'Search for places in United Kingdom',
-    bbox: ukBounds,
+    bbox: ukSearchBounds,
     proximity: {
       longitude: long,
       latitude: lat
