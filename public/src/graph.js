@@ -28,9 +28,9 @@ export async function initGraph() {
       },
       {
         label: "Predicted",
-        backgroundColor: '#FFFFFF',
+        backgroundColor: '#f1f1f0',
         borderColor: "#3c4750",
-        borderWidth: 2,
+        borderWidth: 1,
         data: predicted
       }
     ]
