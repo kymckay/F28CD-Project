@@ -7,14 +7,15 @@ export async function initMap(apiKey) {
     return;
   }
 
-  const long = -3.1883;
-  const lat = 55.9533;
-  const coor = [long, lat];
+  const long = -2.89479;
+  const lat = 54.093409;
+  const ukCentre = [long, lat];
+  const ukBounds = [-8.196671, 50.064075, 1.737475, 60.917070];
   mapboxgl.accessToken = apiKey;
   const map = new mapboxgl.Map({
     container: 'map', // ID in the HTML
     style: 'mapbox://styles/mapbox/light-v10',
-    center: coor,
+    center: ukCentre,
     zoom: 12,
   });
 
@@ -22,7 +23,7 @@ export async function initMap(apiKey) {
     accessToken: apiKey,
     mapboxgl: mapboxgl,
     placeholder: 'Search for places in United Kingdom',
-    bbox: [-8.196671, 50.064075, 1.737475, 60.917070],
+    bbox: ukBounds,
     proximity: {
       longitude: long,
       latitude: lat
