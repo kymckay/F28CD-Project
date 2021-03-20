@@ -21,6 +21,6 @@
 
 /* style inside search bar, removes outline of the search box when selected */
 .search:focus {
-  outline: none;
+  outline-style: dotted;
   color: 	#505050;
 }
