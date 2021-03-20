@@ -117,7 +117,6 @@ export async function initMap(apiKey) {
       map.getCanvas().style.cursor = '';
       popup.remove();
       map.setFilter('constituency-highlighted', ['in', 'pcon19nm', '']);
-      overlay.style.display = 'none';
     });
 
     // Add source fo search pin
