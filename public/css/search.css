@@ -1,26 +1,26 @@
-.search {
+/* formatting of the section containing the search box */
+.search-section {
+    display: inline-flex;
+    box-sizing: border-box;
     position: relative;
     max-width: 100%;
+    background: white;
+    border-radius: 5px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+/* search box formatting */
+.search {
+    border: none;
+    border-radius: 5px;
+    width: 100%;
+    padding: 2px;
+    background: white;
     font-size: 100%;
 }
 
-/* set font of search bar and search input */
-.search {
-    font-family: Fjalla One;
-}
-
-.search {
-    display: inline-flex;
-    box-sizing: border-box;
-    width: 100%;
-    padding: 6px;
-    background: #eeeeee;
-}
-
-/* style inside search bar */
-.search input[type=text] {
-    background: white;
-    border-radius: 5px;
-    border: none;
-    width: 100%;
+/* style inside search bar, removes outline of the search box when selected */
+.search:focus {
+  outline-style: dotted;
+  color: 	#505050;
 }

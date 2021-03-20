@@ -2,6 +2,7 @@
   flex: 2;
   overflow-y: scroll;
   min-width: 100%;
+  border-radius: 5px;
 }
 
 #legend {
@@ -9,7 +10,6 @@
   border-collapse: collapse;
   margin-bottom: 15px;
   font-size: 0.9em;
-  font-family: Fjalla One;
   min-width: 100%;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
@@ -21,15 +21,16 @@ th, td {
 }
 
 thead tr {
-  background-color: grey;
+  background-color: #3c4750;
+  color: white;
   text-align: left;
   display: block;
 }
 
 /* default for other parties is a light grey */
 tbody tr {
-  background-color: #dddddd;
-  border-bottom: 1px solid #000;
+  background-color: #f1f1f0;
+  border-bottom: 2px solid #FFFFFF;
 }
 
 /* rows classed with party Electoral Commission ID for colouring */

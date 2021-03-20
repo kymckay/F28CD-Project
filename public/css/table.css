@@ -1,14 +1,15 @@
 #listContainer {
   flex: 3;
   overflow-y: scroll;
-  margin: 15px 0;
+  border-radius: 5px;
+  margin: 10px 0 30px 0;
   min-width: 100%;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 
 #candList {
   border-collapse: collapse;
   font-size: 0.9em;
-  font-family: Fjalla One;
   min-width: 100%;
 }
 

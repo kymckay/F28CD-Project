@@ -2,8 +2,8 @@
 
 export function initCandidate() {
   const ctx = document.getElementById('candGraph').getContext('2d');
-  const names = ['First Place', 'Second Place'];
-  const data = [100000, 90000]
+  const names = ['First Place', 'Second Place', 'Third Place', 'Fourth Place'];
+  const data = [10000, 9000, 6000, 400]
 
   new Chart(ctx, {
       type: 'bar',
@@ -12,20 +12,14 @@ export function initCandidate() {
           datasets: [{
               label: '# of Votes',
               data: data,
-              backgroundColor: [
-                  '#0d324d',
-                  '#7f5a83'
-              ],
-              borderColor: [
-                  '#0d324',
-                  '#7f5a83'
-              ],
+              backgroundColor: "#3c4750",
+              borderColor: "#3c4750",
               borderWidth: 1
           }]
       },
       options: {
           responsive: true,
-          aspectRatio: 2.6,
+          aspectRatio: 3,
           legend: {
             display: true,
             position: 'bottom'
