@@ -5,6 +5,7 @@ body {
   box-sizing: boarder-box;
   background-color: #3c4750;
   font-family: Helvetica;
+  height: 100vh;
 }
 
 /* removes scrollbar but keeps functionality */
@@ -12,6 +13,7 @@ body::-webkit-scrollbar {
   display: none;
 }
 
+/* header section formatting */
 .header {
    display: flex;
    margin-right: 5px;
@@ -21,36 +23,34 @@ body::-webkit-scrollbar {
    align-items:center;
 }
 
+/* formatting for h4 elements (i.e. section titles)*/
 h4 {
   position: relative;
   text-align: center;
   margin: 7px;
-  font-weight: bold;
+  font-family: 'Montserrat';
 }
 
-h5 {
-   position: relative;
-   text-align: center;
-   margin-bottom: 5px;
-}
-
+/* logo formatting */
 .logo {
   position: relative;
-  height: 50px;
+  height: 45px;
   margin-right: 20px;
   margin-left: 10px;
   margin-top: 5px;
 }
 
+/* formatting for section elements */
 section {
   background-color: white;
   padding: 10px;
   margin: 5px;
-  height: 90vh;
-  min-height: 890px;
+  height: 85vh;
+  min-height: 850px;
   border-radius: 7px;
 }
 
+/* formatting of the main section */
 .main-flex {
    display: flex;
    flex-flow: row wrap;
@@ -65,17 +65,19 @@ section {
   .middle-section {
     border-left: 5px solid;
     border-right: 5px solid;
-    border-color: black;
+    border-color: #3c4750;
   }
 }
 
+/* map container formatting */
 #map {
   flex: 2.7;
   min-width: 700px;
 }
 
+/* formatting for middle section (contains graph and politician section) */
 .middle-section {
-  flex: 2;
+  flex: 1.8;
   min-width: 400px;
   display: flex;
   flex-direction: column;
@@ -85,29 +87,62 @@ section {
   padding-left: 0;
 }
 
+/* breakdown graph section formatting */
 .graph {
-  flex: 1;
+  flex: 1.2;
   height: 80%;
-  width: 90%;
+  width: 85%;
   align-self: center;
   max-width: 450px;
 }
 
+/* prediction data dropdown menu section formatting */
 .dropdown-section {
   flex: 0.1;
   width: 100%;
+  height: 30px;
   position: relative;
   border-bottom: 5px solid;
-  border-color: black;
+  border-color: #3c4750;
 }
 
+/* politician profile section formatting */
 .politician-section {
   flex: 1;
   padding: 20px;
   display: flex;
   flex-direction: column;
+  max-height: 300px;
 }
 
+/* section for politician picture and bio */
+#candSect {
+  flex: 1;
+  margin: 30px;
+}
+
+/* politician profile picture formatting */
+#candAlign {
+  text-align: left;
+  float: left;
+  height: 100px;
+}
+
+/* politician bio section formatting */
+#candSectList {
+  text-align: center;
+  list-style-type: none;
+  float: left;
+}
+
+/* politician section graph formatting */
+#candSectBox {
+  width: 90%;
+  align-self: center;
+  max-width: 400px;
+}
+
+/* politician list section formatting */
 .table {
   flex:  1;
   display: flex;
@@ -115,31 +150,7 @@ section {
   min-width: 190px;
 }
 
-#candSect {
-  max-height: 175px;
-  flex: 1;
-  margin: 30px;
-}
-
-#candAlign {
-  text-align: left;
-  float: left;
-  height: 100px;
-
-}
-
-#candSectList {
-  text-align: center;
-  list-style-type: none;
-  float: left;
-}
-
-#candSectBox {
-  width: 85%;
-  align-self: center;
-  max-width: 500px;
-}
-
+/* footer formatting */
 .footer {
   font-family: Arial;
   color: white;
