@@ -92,7 +92,7 @@ export async function initMap(apiKey) {
        
       // Query the constituencies layer visible in the map.
       // Use filter to collect only results with the same constituency name.
-      // TODO: To be used with Colouring of map – not really used on this branch
+      // TODO: To be used with Colouring of map - not really used on this branch
       // const relatedFeatures = map.querySourceFeatures('constituency-fill', {
       //   sourceLayer: 'original',
       //   filter: ['in', 'pcon19nm', feature.properties.pcon19nm]
