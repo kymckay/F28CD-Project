@@ -98,7 +98,15 @@ export async function initMap(apiKey) {
         filter: ['in', 'pcon19nm', feature.properties.pcon19nm]
       });
        
-      
+      // Add features with the same constituency name
+      // to the highlighted layer.
+      map.setFilter('constituency-highlighted', [
+        'in',
+        'pcon19nm',
+        feature.properties.pcon19nm
+      ]);
+       
+
     });
        
 
