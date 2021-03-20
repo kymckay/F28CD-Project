@@ -54,6 +54,10 @@ async function main() {
       console.log(`Warning: No voting data for party "${c.party_ec_id}" in region "${c.gss_code}" of year ${c.year}`);
     }
 
+    // Count towards party's overall votes that year
+    const partyKey = `${c.party_ec_id}${c.year}`;
+    parties[partyKey].votes += c.votes;
+
     // Generate some prediction data for the candidate (with decreasing accuracy)
     // (to demonstrate functionality, real data is hard to find in a convenient format)
     c.predictions = sources.map((_, i) => c.votes - (i * 100) + Math.floor(Math.random() * i * 200));
@@ -65,7 +69,7 @@ async function main() {
 
     // Must insert records sequentially to avoid DB write conflicts
     await addCollection("sources", sources.map(s => ({name: s})))
-    await addCollection("parties", parties);
+    await addCollection("parties", Object.values(parties));
     await addCollection("candidates", candidates);
     await addCollection("constituencies", constituencies);
   } catch (error) {
