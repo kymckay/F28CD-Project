@@ -45,16 +45,19 @@ export async function initMap(apiKey) {
     })
   
     // add polygon fill
-    map.addLayer({
-      'id': 'polygons-fill',
-      'type': 'fill',
-      'source': 'polygons',
-      'layout': {},
-      'paint': {
-        'fill-color': '#7f5a83',
-        'fill-opacity': 0.3,
-      }
-    });
+    map.addLayer(
+      {
+        'id': 'polygons-fill',
+        'type': 'fill',
+        'source': 'polygons',
+        'layout': {},
+        'paint': {
+          'fill-color': '#7f5a83',
+          'fill-opacity': 0.3,
+        }
+      }, 
+      'settlement-label' // place polygons beneath label
+    );
 
     // add polygon outline
     // Bacause of the way the package is setup, 
