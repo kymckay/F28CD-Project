@@ -18,6 +18,7 @@ async function populateDropdown(id, options, index = false) {
 
 export async function populateDropdowns(years, sources) {
   populateDropdown('dropdown-year', years);
+  // Sources are indexed to match to the data array structure
   populateDropdown('dropdown-data', sources, true);
 }
 
