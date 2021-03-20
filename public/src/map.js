@@ -33,61 +33,92 @@ export async function initMap(apiKey) {
   // Add the geocoder to the map
   map.addControl(geocoder);
 
+  const popup = new mapboxgl.Popup({
+    closeButton: false
+  });
+
   // After the map style has loaded on the page,
   // add a source layer and default styling for a single point
   map.on('load', function () {
     
     // polygon GeoJson
-    map.addSource('polygons', {
+    map.addSource('constituency', {
       type: 'geojson',
       data: 'https://opendata.arcgis.com/datasets/937997590f724a398ccc0100dbd9feee_0.geojson'
       // data: '..public/assets/constituencies.geojson'
-    })
-  
+    });
+
     // add polygon fill
-    map.addLayer({
-      'id': 'polygons-fill',
-      'type': 'fill',
-      'source': 'polygons',
-      'layout': {},
-      'paint': {
-        'fill-color': '#7f5a83',
-        'fill-opacity': 0.3,
-      }
+    map.addLayer(
+      {
+        'id': 'constituency-fill',
+        'type': 'fill',
+        'source': 'constituency',
+        'layout': {},
+        'paint': {
+          'fill-outline-color': '#0d324d',
+          'fill-color': '#7f5a83',
+          'fill-opacity': 0.2         
+        }
+      }, 
+       'settlement-label' // place constituency beneath label
+    );
+
+    // Add filled constituency constituency
+    // for highlighted display.
+    map.addLayer(
+      {
+        'id': 'constituency-highlighted',
+        'type': 'fill',
+        'source': 'constituency',
+        'paint': {
+          'fill-outline-color': '#484896',
+          'fill-color': '#6e599f',
+          'fill-opacity': 0.75
+        },
+        // Display none by adding a
+        // filter with an empty string.
+        'filter': ['in', 'pcon19nm', '']
+      },
+        'settlement-label' // Place constituency under labels.
+    ); 
+
+    map.on('mousemove', 'constituency-fill', function (e) {
+      // Change the cursor style as a UI indicator.
+      map.getCanvas().style.cursor = 'pointer';
+       
+      // Use the first found feature.
+      const feature = e.features[0];
+       
+      // Query the constituencies layer visible in the map.
+      // Use filter to collect only results with the same constituency name.
+      // TODO: To be used with Colouring of map - not really used on this branch
+      // const relatedFeatures = map.querySourceFeatures('constituency-fill', {
+      //   sourceLayer: 'original',
+      //   filter: ['in', 'pcon19nm', feature.properties.pcon19nm]
+      // });
+       
+      // Add features with the same constituency name
+      // to the highlighted layer.
+      map.setFilter('constituency-highlighted', [
+        'in',
+        'pcon19nm',
+        feature.properties.pcon19nm
+      ]);
+       
+      // Display a popup with the name of the constituency.
+      popup
+      .setLngLat([feature.properties.long, feature.properties.lat])
+      .setText(`${feature.properties.pcon19nm} (Reigning Party: )`)
+      .addTo(map);
+    });
+       
+    map.on('mouseleave', 'constituency-fill', function () {
+      map.getCanvas().style.cursor = '';
+      popup.remove();
+      map.setFilter('constituency-highlighted', ['in', 'pcon19nm', '']);
     });
 
-    // add polygon outline
-    // Bacause of the way the package is setup, 
-    // // you cannot directly add an outline with width > 1
-    map.addLayer({
-      'id': 'polygons-outline',
-      'type': 'line',
-      'source': 'polygons',
-      'layout': {},
-      'paint': {
-        'line-color': '#0d324d',
-        'line-width': 2
-      }
-    });
-
-    // adding a symbol layer
-    map.addLayer({
-      'id': 'polygons-label',
-      'type': 'symbol',
-      'source': 'polygons',
-      'layout': {
-        'icon-image': 'custom-marker',
-        // get the title name from the source's "title" property
-        'text-field': ['get', 'pcon19nm'],
-        'text-font': [
-          "Open Sans Regular",
-          "Arial Unicode MS Regular"
-        ],
-        'text-offset': [0, 1.25],
-        'text-anchor': 'top'
-      }
-    });
-    
     // Add source fo search pin
     map.addSource('single-point', {
       type: 'geojson',
