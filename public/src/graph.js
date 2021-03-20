@@ -47,15 +47,20 @@ export async function populateGraph(data) {
   // Clear existing data
   chart.data.datasets = [];
 
+  // Show real data as a solid bar
   chart.data.datasets.push({
     label: 'Votes',
     borderWidth: 1,
+    borderColor: "#3C4750",
     data: dataReal
   });
 
+  // Show prediction data as an outline only bar to differentiate
   chart.data.datasets.push({
     label: 'Prediction',
+    backgroundColor: '#FFF',
     borderWidth: 1,
+    borderColor: "#3C4750",
     data: dataPred
   });
 
