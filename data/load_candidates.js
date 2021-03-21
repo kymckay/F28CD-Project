@@ -2,6 +2,23 @@
 const fs = require('fs');
 const csv = require('@fast-csv/parse');
 
+// Party colours sourced from Wikidata (hardcoded for simplicity, could be queried at runtime)
+// Just the most popular that will show on the graph/legend
+const colours = {
+  'PP52': '#0087DC',
+  'PP53': '#DC241F',
+  'PP102': '#FFF95D',
+  'PP90': '#FAA61A',
+  'PP70': '#D46A4C',
+  'PP39': '#008800',
+  'PP77': '#3F8428',
+  'PP55': '#3A9E84',
+  'PP63': '#6AB023',
+  'PP130': '#62A439',
+  'PP305': '#8DC63F',
+  'PP103': '#F6CB2F'
+}
+
 exports.readFile = async (filename, years, sources) => {
   console.log("Extracting candidate data...");
   // Data from file will be stored in these objects
@@ -25,6 +42,7 @@ exports.readFile = async (filename, years, sources) => {
           party_ec_id,
           party_name,
           year,
+          colour: colours[party_ec_id],
           votes: 0, // Party votes will be tallied elsewhere
           predictions: sources.map(() => 0), // Party predictions will be tallied elsewhere
         };
