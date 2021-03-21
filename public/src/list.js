@@ -54,6 +54,10 @@ export async function populateLegend(data) {
   const [llist] = document.getElementById('legend').getElementsByTagName('tbody');
   llist.innerHTML = '';
 
+  // Update the stylesheet to colour party classed elements
+  const css = document.getElementById('party-styling');
+  css.innerHTML = data.filter(p => p.colour).map(p => `tbody .${p.party_ec_id} { background-color: ${p.colour}; }`).join("\n");
+
   // Document fragment will trigger reflow only once when attached
   const newRows = document.createDocumentFragment();
   data.forEach(party => {
@@ -62,8 +66,8 @@ export async function populateLegend(data) {
 
     name.innerHTML = party.party_name;
 
-    // Can style the rows by their party colours
-    row.style.backgroundColor = party.colour;
+    // Can style the rows by their party ID
+    row.classList.add(party.party_ec_id);
 
     row.appendChild(name);
     newRows.appendChild(row);
