@@ -59,6 +59,10 @@ export async function populateGraph(data) {
   const dataReal = top6.map(p => p.votes);
   dataReal.push(rest.reduce((acc, cur) => acc + cur.votes, 0));
 
+  const partyColours = top6.map(p => p.colour);
+  partyColours.push('#3C4750'); // "Other" gets neutral styling
+
+  // Updates prediction data for easy access when dropdown changes
   populatePredictions(top6, rest);
 
   // Clear existing data
@@ -68,11 +72,12 @@ export async function populateGraph(data) {
   chart.data.datasets[0] = {
     label: 'Votes',
     borderWidth: 1,
+    backgroundColor: partyColours,
     borderColor: "#3C4750",
     data: dataReal
   };
 
-  // Update the prediction data with the current index
+  // Update displayed predictions, preserving current index
   updatePredictions(predictIndex);
 }
 
