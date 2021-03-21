@@ -7,19 +7,18 @@ export async function initMap(apiKey) {
     return;
   }
 
-  const long = -2.89479;
-  const lat = 54.093409;
+  const long = -2.821868;
+  const lat = 55.612226;
   const ukCentre = [long, lat];
   const ukSearchBounds = [-8.196671, 50.064075, 1.737475, 60.917070];
   const ukBounds = [[-8.196671, 50.064075], [1.737475, 60.917070]];
-  
   mapboxgl.accessToken = apiKey;
 
   const map = new mapboxgl.Map({
     container: 'map', // ID in the HTML
     style: 'mapbox://styles/mapbox/light-v10',
     center: ukCentre,
-    zoom: 8,
+    zoom: 4.9,
     maxbounds: ukSearchBounds
   });
 
