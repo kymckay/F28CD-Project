@@ -35,10 +35,22 @@ export function populateCandidate(data) {
   candidates = data;
 
   // For now default to first in the list
-  updateCandidate(data[0]);
+  updateCandidate(0);
 }
 
-export function updateCandidate(chosen) {
+export function updateCandidate(index) {
+  const chosen = candidates[index];
+
+  updateChart(chosen);
+
+  document.getElementById('candName').innerHTML = chosen.name;
+  document.getElementById('candParty').innerHTML = chosen.party_ec_id; // TODO get name
+  document.getElementById('candConst').innerHTML = chosen.gss_code; // TODO get name
+  document.getElementById('candCamps').innerHTML = 1; // TODO get number of runs
+  document.getElementById('candElect').innerHTML = 1; // TODO get this
+}
+
+function updateChart(chosen) {
   // Compare to candidates in same constituency
   const competitors = candidates.filter(c => (c.gss_code === chosen.gss_code) && (c.party_ec_id !== chosen.party_ec_id));
 
@@ -50,12 +62,12 @@ export function updateCandidate(chosen) {
 
   // MOV will compare up to top 3 below (may not be 3 in region)
   // MOL will compare up to top 3 above (may not be 3 above)
-  const compare = competitors.filter(c => chosen.elected ? true : c.votes > chosen.votes).slice(0,3);
+  const compare = competitors.filter(c => chosen.elected ? true : c.votes > chosen.votes).slice(0, 3);
 
   chart.data.labels = compare.map(c => c.name);
   chart.data.datasets = [{
     label: chosen.elected ? 'Margin of Victory' : 'Margin of Loss',
-    data: compare.map(c => Math.floor(100 * (chosen.votes - c.votes)/total)),
+    data: compare.map(c => Math.floor(100 * (chosen.votes - c.votes) / total)),
     backgroundColor: '#3C4750',
     borderColor: '#3C4750',
     borderWidth: 1
