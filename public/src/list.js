@@ -61,8 +61,8 @@ export async function populateLegend(data) {
   // Sort parties by popularity
   data.sort((a, b) => b.votes - a.votes);
 
-  // Take most popular (ignoring "independent" non-party entry)
-  const significant = data.filter(p => p.party_ec_id !== 'ynmp-party:2').slice(0, 9);
+  // Legend only needed for parties with colours
+  const significant = data.filter(p => p.colour);
 
   // Sort by name for legend display
   significant.sort((a, b) => a.party_name.localeCompare(b.party_name));
