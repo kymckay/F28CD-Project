@@ -1,5 +1,6 @@
 import { populateList, populateLegend } from './list.js';
 import { populateGraph } from './graph.js';
+import { populateCandidate } from './candidate.js';
 
 export function getOptions() {
   return new Promise((resolve, reject) => {
@@ -49,4 +50,5 @@ export async function newYear(year) {
   populateLegend(data.parties);
   populateList(data.candidates);
   populateGraph(data.parties);
+  populateCandidate(data.candidates);
 }
