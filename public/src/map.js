@@ -11,7 +11,7 @@ export async function initMap(apiKey) {
   const lat = 55.612226;
   const ukCentre = [long, lat];
   const ukSearchBounds = [-8.196671, 50.064075, 1.737475, 60.917070];
-  const ukBounds = [[-8.196671, 50.064075], [1.737475, 60.917070]];
+  const ukBounds = [[-12.696671, 49.064075],[6.237475, 60.917070]];
   mapboxgl.accessToken = apiKey;
 
   const map = new mapboxgl.Map({
@@ -19,7 +19,7 @@ export async function initMap(apiKey) {
     style: 'mapbox://styles/mapbox/light-v10',
     center: ukCentre,
     zoom: 4.9,
-    maxbounds: ukSearchBounds
+    maxBounds: ukBounds
   });
 
   const geocoder = new MapboxGeocoder({
