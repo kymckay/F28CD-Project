@@ -16,7 +16,10 @@ const colours = {
   'PP63': '#6AB023',
   'PP130': '#62A439',
   'PP305': '#8DC63F',
-  'PP103': '#F6CB2F'
+  'PP103': '#F6CB2F',
+  'PP85': '#70147A',
+  'PP7931': '#12B6CF',
+  'PP3960': '#00008B',
 }
 
 exports.readFile = async (filename, years, sources) => {
