@@ -1,146 +1,92 @@
 /* global Chart */ // Defined by Chart.js
 
+// Chart will be updated later
+let chart;
+
+// Prediction data can be switched between after load
+const predictions = [];
+let predictIndex = 0; // Index should persist when year changes
+
 // Reference: https://www.chartjs.org/docs/latest/
-const xlabels = [];
-const predicted1 = [300, 240, 150, 69, 13, 87, 12];
-const predicted2 = [200, 340, 59, 21, 70, 34, 64];
-let predicted;
-//results for 2019 appear by default
-let actual = [];
-const results2019 = [];
-const results2017 = [];
-
-
 export async function initGraph() {
-  await setOption("CNN"); //won't be called from within this function
-  await getData();
-
-  // chart formatting and data addition
-  const barChartData = {
-   labels: xlabels,
-    datasets: [
-     {
-        label: "Actual",
-        backgroundColor: [
-              '#0087DC',
-              '#E4003B',
-              '#FAA61A',
-              '#326760',
-              '#008142',
-              '#FDF38E',
-              '#f1f1f0'],
-
-
-        borderColor: "#3c4750",
-        borderWidth: 1,
-        data: actual
+  const ctx = document.getElementById('canvas').getContext('2d');
+  chart = new Chart(ctx, {
+    type: "bar",
+    data: {}, // Empty until data arrives with
+    options: {
+      responsive: true,
+      aspectRatio: 1.15,
+      legend: {
+        display: true,
+        position: 'bottom'
       },
-      {
-        label: "Predicted",
-        backgroundColor: "#3c4750",
-        borderColor: "#3c4750",
-        borderWidth: 1,
-        data: predicted
+
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
       }
-    ]
+    }
+  });
+}
+
+function populatePredictions(top6, rest) {
+  const numSources = top6[0].predictions.length;
+
+  // For each source we store the top 6 parties' predictions
+  // The rest are grouped under "Other" at index 6
+  for (let i = 0; i < numSources; i++) {
+    predictions[i] = top6.map(p => p.predictions[i]);
+    predictions[i].push(rest.reduce((acc, cur) => acc + cur.predictions[i], 0));
+  }
+}
+
+export async function populateGraph(data) {
+  // Get the most popular 6 parties
+  data.sort((a, b) => b.votes - a.votes);
+
+  const top6 = data.slice(0,6);
+  top6.sort((a, b) => a.party_name.localeCompare(b.party_name));
+
+  const rest = data.slice(6);
+
+  chart.data.labels = top6.map(p => p.party_name);
+  chart.data.labels.push('Other');
+
+  // Cumulate remaining party votes under "Other" entry
+  const dataReal = top6.map(p => p.votes);
+  dataReal.push(rest.reduce((acc, cur) => acc + cur.votes, 0));
+
+  populatePredictions(top6, rest);
+
+  // Clear existing data
+  chart.data.datasets = [];
+
+  // Show real data as a solid bar (always first element)
+  chart.data.datasets[0] = {
+    label: 'Votes',
+    borderWidth: 1,
+    borderColor: "#3C4750",
+    data: dataReal
   };
 
-  const chartOptions = {
-    responsive: true,
-    aspectRatio: 1.15,
-    legend: {
-      display: true,
-      position: 'bottom'
-    },
-
-    scales: {
-      yAxes: [{
-        ticks: {
-          beginAtZero: true
-        }
-      }]
-    }
-  }
-  const ctx = document.getElementById('canvas').getContext('2d');
-  const chart = new Chart(ctx, {
-      type: "bar",
-      data: barChartData,
-      options: chartOptions
-    });
-  return chart;
+  // Update the prediction data with the current index
+  updatePredictions(predictIndex);
 }
 
-// load data from .csv file
-// the following code probably won't be in the final application
-async function getData() {
-  //fetch data from file
-  const response = await fetch('src/test.csv');
-  //save data as text
-  const data = await response.text();
+export async function updatePredictions(index) {
+  predictIndex = index;
 
-  //parse in the parties and seats won for each
-  const rows = data.split('\n').slice(1);
-  //parse in the years
-  const years = data.split('\n').slice(0, 1);
+  // Show prediction data as an outline only bar to differentiate
+  chart.data.datasets[1] = {
+    label: 'Prediction',
+    backgroundColor: '#FFF',
+    borderWidth: 1,
+    borderColor: "#3C4750",
+    data: predictions[index]
+  };
 
-  //create a local array an parse in each year as a separate element
-  years.forEach(year => year.split(',').slice(1));
-
-  const party = [];
-
-  rows.forEach(row => {
-    const columns = row.split(',');
-    party.push(columns[0]);
-
-    results2019.push(columns[1]);
-    results2017.push(columns[2]);
-
-  });
-
-  //results for 2019 appear by default
-  for (const i of results2019) {
-    actual.push(i);
-  }
-  //add parties as labels for x axis
-  for(const i of party) {
-    xlabels.push(i);
-  }
+  chart.update();
 }
-
- //updates arrays with new data
-function updateData(oldArray, dataArray) {
-  for (const i of dataArray) {
-    oldArray.push(i);
-  }
-}
-
- //a lot of hard-coding going on atm, to be improved (if this approach will even be used)
- //more just exploring the potential ways of the functionality between the dropdowns and the graph could be tied together
-export async function setSelectedYear(selectedYear, graph) {
-  actual = [];
-  switch(selectedYear) {
-    case "2019":
-      await updateData(actual, results2019)
-      console.log(actual);
-      break;
-
-    case "2017":
-      await updateData(actual, results2017);
-      console.log(actual);
-      break;
-  }
-  //haven't figured out why this one isn't working yet
-  //throws unhandled promise exception
-  graph.update();
-}
-
-// to be changed
-async function setOption(option) {
-  if (option === "BBC") {
-    predicted = predicted1;
-  } else if (option === "CNN") {
-    predicted = predicted2;
-  }
-}
-
-
