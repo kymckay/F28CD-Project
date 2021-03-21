@@ -50,5 +50,5 @@ export async function newYear(year) {
   populateLegend(data.parties);
   populateList(data.candidates);
   populateGraph(data.parties);
-  populateCandidate(data.candidates);
+  populateCandidate(data);
 }

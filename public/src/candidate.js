@@ -4,7 +4,7 @@
 let chart;
 
 // Data will be stored for future updates
-let candidates;
+let cached;
 
 export function initCandidate() {
   const ctx = document.getElementById('candGraph').getContext('2d');
@@ -32,19 +32,19 @@ export function initCandidate() {
 }
 
 export function populateCandidate(data) {
-  candidates = data;
+  cached = data;
 
   // For now default to first in the list
   updateCandidate(0);
 }
 
 export function updateCandidate(index) {
-  const chosen = candidates[index];
+  const chosen = cached.candidates[index];
 
   updateChart(chosen);
 
   document.getElementById('candName').innerHTML = chosen.name;
-  document.getElementById('candParty').innerHTML = chosen.party_ec_id; // TODO get name
+  document.getElementById('candParty').innerHTML = cached.parties.find(p => p.party_ec_id === chosen.party_ec_id).party_name;
   document.getElementById('candConst').innerHTML = chosen.gss_code; // TODO get name
   document.getElementById('candCamps').innerHTML = 1; // TODO get number of runs
   document.getElementById('candElect').innerHTML = 1; // TODO get this
@@ -52,7 +52,7 @@ export function updateCandidate(index) {
 
 function updateChart(chosen) {
   // Compare to candidates in same constituency
-  const competitors = candidates.filter(c => (c.gss_code === chosen.gss_code) && (c.party_ec_id !== chosen.party_ec_id));
+  const competitors = cached.candidates.filter(c => (c.gss_code === chosen.gss_code) && (c.party_ec_id !== chosen.party_ec_id));
 
   // Sort competitors by votes
   competitors.sort((a, b) => b.votes - a.votes);
