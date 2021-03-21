@@ -14,13 +14,13 @@
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 
-th, td {
+#candidate-list th, #candidate-list td {
   padding: 5px;
   text-align: left;
   width: 200px;
 }
 
-thead tr {
+#candidate-list thead tr {
   background-color: #3c4750;
   color: white;
   text-align: left;
@@ -28,39 +28,39 @@ thead tr {
 }
 
 /* default for other parties is a light grey */
-tbody tr {
+#candidate-list tbody tr {
   background-color: #f1f1f0;
   border-bottom: 2px solid #FFFFFF;
 }
 
 /* rows classed with party Electoral Commission ID for colouring */
-tbody .PP52, tbody .PP51 {
+#candidate-list tbody .PP52, #candidate-list tbody .PP51 {
   background-color: #0087DC;
 }
-tbody .PP53 {
+#candidate-list tbody .PP53 {
   background-color: #E4003B;
 }
-tbody .PP102 {
+#candidate-list tbody .PP102 {
   background-color: #FDF38E;
 }
-tbody .PP90 {
+#candidate-list tbody .PP90 {
   background-color: #FAA61A;
 }
-tbody .PP70 {
+#candidate-list tbody .PP70 {
   background-color: #D46A4C;
 }
-tbody .PP39 {
+#candidate-list tbody .PP39 {
   background-color: #326760;
 }
-tbody .PP77 {
+#candidate-list tbody .PP77 {
   background-color: #008142;
 }
-tbody .PP55 {
+#candidate-list tbody .PP55 {
   background-color: #2AA82C;
 }
-tbody .PP63, tbody .PP130, tbody .PP305 {
+#candidate-list tbody .PP63, #candidate-list tbody .PP130, #candidate-list tbody .PP305 {
   background-color: #528D6B;
 }
-tbody .PP103 {
+#candidate-list tbody .PP103 {
   background-color: #F6CB2F;
 }
