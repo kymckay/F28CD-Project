@@ -62,8 +62,8 @@ export async function populateLegend(data) {
 
     name.innerHTML = party.party_name;
 
-    // Can style the rows by their party ID
-    row.classList.add(party.party_ec_id);
+    // Can style the rows by their party colours
+    row.style.backgroundColor = party.colour;
 
     row.appendChild(name);
     newRows.appendChild(row);
