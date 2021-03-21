@@ -2,6 +2,15 @@
 const fs = require('fs');
 const csv = require('@fast-csv/parse');
 
+// By-elections are indistinguishable from general in the dataset
+// We want to skip over them to prevent duplicate candidate records
+const byElections = {
+  '2017-02-23': true, // Copeland & Stoke-on-Trent Central
+  '2019-04-04': true, // Newport West
+  '2019-06-06': true, // Peterborough
+  '2019-08-01': true, // Brecon and Radnorshire
+};
+
 exports.readFile = async (filename, years, sources) => {
   console.log("Extracting candidate data...");
   // Data from file will be stored in these objects
@@ -12,9 +21,12 @@ exports.readFile = async (filename, years, sources) => {
     // Filter for only parliamentary candidates
     if (data.election.startsWith("parl")) {
       const { name, election_date, gss_code, party_ec_id, party_name, elected } = data;
-      const year = election_date.substr(0, 4);
+
+      // Prevent duplicate records from by-elections in the same year
+      if (election_date in byElections) return;
 
       // Don't care about candidates in unrequested years
+      const year = election_date.substr(0, 4);
       if (years.every(y => y !== year)) return;
 
       // Store each party once per year they had a candidate (by electoral commision ID)
