@@ -54,15 +54,12 @@ export async function populateLegend(data) {
   const [llist] = document.getElementById('legend').getElementsByTagName('tbody');
   llist.innerHTML = '';
 
-  // Update the stylesheet to colour party classed elements
-  const css = document.getElementById('party-styling');
-  css.innerHTML = data.filter(p => p.colour).map(p => `tbody .${p.party_ec_id} { background-color: ${p.colour}; }`).join("\n");
-
-  // Sort parties by popularity
-  data.sort((a, b) => b.votes - a.votes);
-
   // Legend only needed for parties with colours
   const significant = data.filter(p => p.colour);
+
+  // Update the stylesheet to colour party classed elements
+  const css = document.getElementById('party-styling');
+  css.innerHTML = significant.map(p => `tbody .${p.party_ec_id} { background-color: ${p.colour}; }`).join("\n");
 
   // Sort by name for legend display
   significant.sort((a, b) => a.party_name.localeCompare(b.party_name));
