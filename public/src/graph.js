@@ -59,7 +59,7 @@ export async function populateGraph(data) {
   const dataReal = top6.map(p => p.votes);
   dataReal.push(rest.reduce((acc, cur) => acc + cur.votes, 0));
 
-  const partyColours = top6.map(p => p.colour);
+  const partyColours = top6.map(p => p.colour ? p.colour : '#3C4750');
   partyColours.push('#3C4750'); // "Other" gets neutral styling
 
   // Updates prediction data for easy access when dropdown changes
