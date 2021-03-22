@@ -22,10 +22,26 @@ export async function initMap(apiKey) {
     maxBounds: ukBounds
   });
 
-  const geocoder = new MapboxGeocoder({
+  // const areaGeocoder = new MapboxGeocoder({
+  //   accessToken: apiKey,
+  //   mapboxgl: mapboxgl,
+  //   zoom: 18,
+  //   placeholder: 'Search UK Places',
+  //   bbox: ukSearchBounds,
+  //   proximity: {
+  //     longitude: long,
+  //     latitude: lat
+  //   },
+  //   marker: false
+  // });
+  
+  const constituencyGeocoder = new MapboxGeocoder({
     accessToken: apiKey,
+    localGeocoder: dummy,
+    externalGeocoder: localSearch,
     mapboxgl: mapboxgl,
-    placeholder: 'Search for places in United Kingdom',
+    zoom: 8,
+    placeholder: 'Search Constituency',
     bbox: ukSearchBounds,
     proximity: {
       longitude: long,
@@ -35,7 +51,36 @@ export async function initMap(apiKey) {
   });
 
   // Add the geocoder to the map
-  map.addControl(geocoder);
+  // map.addControl(areaGeocoder);
+  map.addControl(constituencyGeocoder);
+
+  function dummy() {
+    console.log('dummy');
+    return [];
+  }
+  
+  function localSearch(query) {
+    const matchingFeatures = [];
+    return fetch('https://opendata.arcgis.com/datasets/937997590f724a398ccc0100dbd9feee_0.geojson')
+      .then(res => res.json())
+      .then((data) => {
+          console.log(data);
+          data.features.forEach(feature => {
+              if (
+                feature.properties.pcon19nm
+                  .toLowerCase()
+                  .search(query.toLowerCase()) !== -1
+              ) {
+                feature.properties.geometry = [feature.properties.long, feature.properties.lat];
+                feature['place_name'] = `📍 ${feature.properties.pcon19nm}`;
+                feature['center'] = [feature.properties.long, feature.properties.lat];
+                matchingFeatures.push(feature);
+              }
+          });
+          return Promise.resolve(matchingFeatures);
+        }
+      );
+  }
 
   const popup = new mapboxgl.Popup({
     closeButton: false
@@ -123,8 +168,28 @@ export async function initMap(apiKey) {
       map.setFilter('constituency-highlighted', ['in', 'pcon19nm', '']);
     });
 
+    // // Add source fo search pin
+    // map.addSource('single-point', {
+    //   type: 'geojson',
+    //   data: {
+    //     type: 'FeatureCollection',
+    //     features: []
+    //   }
+    // });
+
+    // // add the search pin
+    // map.addLayer({
+    //   id: 'point',
+    //   source: 'single-point',
+    //   type: 'circle',
+    //   paint: {
+    //     'circle-radius': 6,
+    //     'circle-color': '#448ee4'
+    //   }
+    // });
+
     // Add source fo search pin
-    map.addSource('single-point', {
+    map.addSource('single-point-2', {
       type: 'geojson',
       data: {
         type: 'FeatureCollection',
@@ -134,20 +199,24 @@ export async function initMap(apiKey) {
 
     // add the search pin
     map.addLayer({
-      id: 'point',
-      source: 'single-point',
-      type: 'circle',
-      paint: {
-        'circle-radius': 10,
-        'circle-color': '#448ee4'
-      }
+      id: 'point-2',
+      source: 'single-point-2',
+      type: 'fill',
+      'paint': {
+        'fill-outline-color': '#484896',
+        'fill-color': '#3c4750',
+        'fill-opacity': 0.2
+      },
     });
 
     // Listen for the `result` event from the Geocoder
     // `result` event is triggered when a user makes a selection
     //  Add a marker at the result's coordinates
-    geocoder.on('result', function (e) {
-      map.getSource('single-point').setData(e.result.geometry);
+    // areaGeocoder.on('result', function (e) {
+    //   map.getSource('single-point').setData(e.result.geometry);
+    // });
+    constituencyGeocoder.on('result', function (e) {
+      map.getSource('single-point-2').setData(e.result.geometry);
     });
   });
 }
