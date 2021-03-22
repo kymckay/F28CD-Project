@@ -40,8 +40,9 @@ export async function initMap(apiKey) {
     localGeocoder: dummy,
     externalGeocoder: localSearch,
     mapboxgl: mapboxgl,
-    zoom: 8,
-    placeholder: 'Search Constituency',
+    zoom: 9.5,
+    speed: 100,
+    placeholder: 'Search UK Places',
     bbox: ukSearchBounds,
     proximity: {
       longitude: long,
