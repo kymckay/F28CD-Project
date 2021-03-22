@@ -173,7 +173,7 @@ function updateColours() {
     colourMap[colour].push(c.gss_code);
   });
 
-  // Match expression expected alternating cases (can be array of values) and then output
+  // Match expression expects alternating cases (can be array of values) and then output
   // https://docs.mapbox.com/mapbox-gl-js/style-spec/expressions/#match
   const colourings = [];
   for (const k in colourMap) {
