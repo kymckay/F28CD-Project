@@ -1,5 +1,5 @@
-import { newYear } from './requests.js';
 import { updatePredictions } from './graph.js';
+import { newYear } from './requests.js';
 
 // Populates a dropdown (identified by ID in HTML) with array of values
 async function populateDropdown(id, options, index = false) {

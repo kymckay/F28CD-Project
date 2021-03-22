@@ -1,9 +1,9 @@
-import { getOptions, newYear } from './requests.js';
-import { initMap } from './map.js';
-import { initDropdowns, populateDropdowns } from './dropdowns.js';
-import { initSearch, initSort } from './list.js';
-import { initGraph } from './graph.js';
 import { initCandidate } from './candidate.js';
+import { initDropdowns, populateDropdowns } from './dropdowns.js';
+import { initGraph } from './graph.js';
+import { initSearch, initSort } from './list.js';
+import { initMap } from './map.js';
+import { getOptions, newYear } from './requests.js';
 
 // Leave this blank, value injected during build (see contributing guidelines)
 const MAPBOX_KEY = '';
