@@ -23,22 +23,13 @@ async function main() {
   ]);
 
   // Unpack the data
-  const { parties, candidates } = candidateData;
+  const { parties, candidates, constituencies } = candidateData;
 
-  // Constituency records will be built (one for each constitency each year)
-  let constituencies = Object.keys(electionData).map(y => {
-    const yearData = electionData[y];
-    return Object.keys(yearData).map(k => {
-      return {
-        gss_code: k,
-        electorate: yearData[k].electorate,
-        year: y
-      };
-    });
-  });
-
-  // The year-seperated structure has to be flat before insertion
-  constituencies = [].concat(...constituencies);
+  // Inject electorate into constituency records (one exists per year)
+  for (const k in constituencies) {
+    const c = constituencies[k];
+    c.electorate = electionData[c.year][c.gss_code].electorate;
+  }
 
   // Join the election voting data to the candidate records before insertion
   candidates.forEach(c => {
@@ -72,7 +63,7 @@ async function main() {
     await addCollection("sources", sources.map(s => ({name: s})))
     await addCollection("parties", Object.values(parties));
     await addCollection("candidates", candidates);
-    await addCollection("constituencies", constituencies);
+    await addCollection("constituencies", Object.values(constituencies));
   } catch (error) {
     console.dir(error);
   } finally {

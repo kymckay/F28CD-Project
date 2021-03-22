@@ -67,7 +67,14 @@ function getConstituencies(year) {
 
   // Want to minimise to only data client needs (reduce data sent)
   return db.db().collection('constituencies')
-    .find({ year }, { projection: {_id: 0, gss_code: 1, electorate: 1} })
+    .find({ year }, {
+      projection: {
+        _id: 0,
+        name: 1,
+        gss_code: 1,
+        electorate: 1
+      }
+    })
     .toArray();
 }
 

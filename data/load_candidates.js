@@ -15,12 +15,13 @@ exports.readFile = async (filename, years, sources) => {
   console.log("Extracting candidate data...");
   // Data from file will be stored in these objects
   const parties = {}; // Political party
+  const constituencies = {};
   const candidates = []; // Candidate represents a particular campaign
 
   function processRow(data) {
     // Filter for only parliamentary candidates
     if (data.election.startsWith("parl")) {
-      const { name, election_date, gss_code, party_ec_id, party_name, elected } = data;
+      const { name, election_date, gss_code, post_label, party_ec_id, party_name, elected } = data;
 
       // Prevent duplicate records from by-elections in the same year
       if (election_date in byElections) return;
@@ -42,6 +43,16 @@ exports.readFile = async (filename, years, sources) => {
         };
       }
 
+      // Store each constituency once per year (for the names)
+      const constKey = `${gss_code}${year}`;
+      if (!constituencies[constKey]) {
+        constituencies[constKey] = {
+          name: post_label,
+          gss_code,
+          year
+        };
+      }
+
       candidates.push({
         name,
         party_ec_id,
@@ -59,9 +70,10 @@ exports.readFile = async (filename, years, sources) => {
       .on('error', error => reject(error))
       .on('data', processRow)
       .on('end', () => {
-        console.log(`Extracted ${parties.length} party records`);
+        console.log(`Extracted ${Object.keys(parties).length} party records`);
         console.log(`Extracted ${candidates.length} candidate records`);
-        resolve({parties, candidates});
+        console.log(`Extracted ${Object.keys(constituencies).length} constituency records`);
+        resolve({ parties, candidates, constituencies });
       });
   });
 }
