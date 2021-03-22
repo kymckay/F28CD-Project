@@ -86,6 +86,7 @@ function getParties(year) {
         _id: 0,
         party_ec_id: 1,
         party_name: 1,
+        colour: 1,
         votes: 1,
         predictions: 1,
       }

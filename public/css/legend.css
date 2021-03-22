@@ -32,35 +32,3 @@ tbody tr {
   background-color: #f1f1f0;
   border-bottom: 2px solid #FFFFFF;
 }
-
-/* rows classed with party Electoral Commission ID for colouring */
-tbody .PP52, tbody .PP51 {
-  background-color: #0087DC;
-}
-tbody .PP53 {
-  background-color: #E4003B;
-}
-tbody .PP102 {
-  background-color: #FDF38E;
-}
-tbody .PP90 {
-  background-color: #FAA61A;
-}
-tbody .PP70 {
-  background-color: #D46A4C;
-}
-tbody .PP39 {
-  background-color: #326760;
-}
-tbody .PP77 {
-  background-color: #008142;
-}
-tbody .PP55 {
-  background-color: #2AA82C;
-}
-tbody .PP63, tbody .PP130, tbody .PP305 {
-  background-color: #528D6B;
-}
-tbody .PP103 {
-  background-color: #F6CB2F;
-}
