@@ -41,6 +41,13 @@ async function main() {
       // Update the remaining votes available
       votes = votes.map((v,i) => v - ca.predictions[i]);
     });
+
+    // Tally predicted party seats for predicted winners
+    const winners = sources.map((_,i) => cands.sort((a,b) => b.predictions[i] - a.predictions[i])[0]);
+    winners.forEach((w, i) => {
+      // Increment predicted wins for relevant source
+      parties[`${w.party_ec_id}${w.year}`].predictions[i] += 1;
+    });
   }
 
   // Join the election voting data to the candidate records before insertion
@@ -66,7 +73,6 @@ async function main() {
 
     // Each constituency won is a seat
     p.seats = cands.filter(c => c.elected).length;
-    p.predictions = sources.map(() => p.seats); // TODO
   }
 
   console.log(`Inserting data into MongoDB...`);

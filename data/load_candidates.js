@@ -58,7 +58,8 @@ exports.readFile = async (filename, years, sources) => {
           party_ec_id,
           party_name,
           year,
-          colour: colours[party_ec_id]
+          colour: colours[party_ec_id],
+          predictions: sources.map(() => 0) // Populated when data joined later
         };
       }
 
