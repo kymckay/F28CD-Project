@@ -49,7 +49,7 @@ export async function populateGraph() {
   const parties = getData().parties.filter(p => p.party_ec_id.startsWith('PP'));
 
   // Get the most popular 6 parties
-  parties.sort((a, b) => b.votes - a.votes);
+  parties.sort((a, b) => b.seats - a.seats);
   const top6 = parties.slice(0,6);
 
   // Sort by name for graph display
@@ -62,8 +62,8 @@ export async function populateGraph() {
   chart.data.labels.push('Other');
 
   // Cumulate remaining party votes under "Other" entry
-  const data = top6.map(p => p.votes);
-  data.push(rest.reduce((acc, cur) => acc + cur.votes, 0));
+  const data = top6.map(p => p.seats);
+  data.push(rest.reduce((acc, cur) => acc + cur.seats, 0));
 
   const partyColours = top6.map(p => p.colour ? p.colour : '#3C4750');
   partyColours.push('#3C4750'); // "Other" gets neutral styling
@@ -76,7 +76,7 @@ export async function populateGraph() {
 
   // Show real data as a solid bar (always first element)
   chart.data.datasets[0] = {
-    label: 'Votes',
+    label: 'Seats',
     borderWidth: 1,
     backgroundColor: partyColours,
     borderColor: "#3C4750",

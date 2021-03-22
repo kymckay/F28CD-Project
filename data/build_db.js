@@ -29,31 +29,51 @@ async function main() {
   for (const k in constituencies) {
     const c = constituencies[k];
     c.electorate = electionData[c.year][c.gss_code].electorate;
+
+    // Generate random prediction data for the candidates running here the same year
+    const cands = candidates.filter(ca => (ca.year === c.year) && (ca.gss_code === c.gss_code));
+
+    // Randomly distribute the electorate for each source
+    let votes = sources.map(() => c.electorate);
+    cands.forEach(ca => {
+      ca.predictions = votes.map(v => Math.floor(Math.random() * v));
+
+      // Update the remaining votes available
+      votes = votes.map((v,i) => v - ca.predictions[i]);
+    });
+
+    // Tally predicted party seats for predicted winners
+    const winners = sources.map((_,i) => cands.sort((a,b) => b.predictions[i] - a.predictions[i])[0]);
+    winners.forEach((w, i) => {
+      // Increment predicted wins for relevant source
+      parties[`${w.party_ec_id}${w.year}`].predictions[i] += 1;
+    });
   }
 
   // Join the election voting data to the candidate records before insertion
   candidates.forEach(c => {
     const { parties: partyVotes } = electionData[c.year][c.gss_code];
 
-    // If candidate party is not recognised, they fall under other
-    // TODO: Independent candidate votes are all bundled under "Other" in the data and can't be seperated
-    c.votes = partyVotes[c.party_ec_id] ? partyVotes[c.party_ec_id] : partyVotes.Other;
+    // All leser known parties are all bundled under "Other" in the data and can't be seperated
+    c.votes = partyVotes[c.party_ec_id] ? partyVotes[c.party_ec_id] : partyVotes.Other; // TODO: Distribute instead of duplicating votes
 
     // If Other has no voting data for the region then the candidate's party is not reflected in the voting data
     if (!c.votes) {
       c.votes = Math.floor(Math.random() * 20);
       console.log(`Warning: No voting data for party "${c.party_ec_id}" in region "${c.gss_code}" of year ${c.year}`);
     }
-
-    // Generate some prediction data for the candidate (with decreasing accuracy)
-    // (to demonstrate functionality, real data is hard to find in a convenient format)
-    c.predictions = sources.map((_, i) => Math.max(0, c.votes - (i * 100) + Math.floor(Math.random() * i * 200)));
-
-    // Count towards party's overall votes and predictions that year
-    const partyKey = `${c.party_ec_id}${c.year}`;
-    parties[partyKey].votes += c.votes;
-    parties[partyKey].predictions = parties[partyKey].predictions.map((v, i) => v + c.predictions[i]);
   });
+
+  // Determine seats won for each year and predicted seats won
+  for (const k in parties) {
+    const p = parties[k];
+
+    // Count party candidates in same year
+    const cands = candidates.filter(c => (c.year === p.year) && (c.party_ec_id === p.party_ec_id));
+
+    // Each constituency won is a seat
+    p.seats = cands.filter(c => c.elected).length;
+  }
 
   console.log(`Inserting data into MongoDB...`);
   try {

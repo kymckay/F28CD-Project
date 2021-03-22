@@ -59,8 +59,7 @@ exports.readFile = async (filename, years, sources) => {
           party_name,
           year,
           colour: colours[party_ec_id],
-          votes: 0, // Party votes will be tallied elsewhere
-          predictions: sources.map(() => 0), // Party predictions will be tallied elsewhere
+          predictions: sources.map(() => 0) // Populated when data joined later
         };
       }
 

@@ -83,7 +83,8 @@ function getParties(year) {
   if (!db) return [{
     party_ec_id: 'TestEcId',
     party_name: 'TestParty',
-    votes: 100,
+    colour: '#FFFC0CB',
+    seats: 100,
     predictions: [50],
   }];
 
@@ -94,7 +95,7 @@ function getParties(year) {
         party_ec_id: 1,
         party_name: 1,
         colour: 1,
-        votes: 1,
+        seats: 1,
         predictions: 1,
       }
     })

@@ -5,7 +5,7 @@ export const cache = {};
 export let curYear;
 
 // Source context tracked for element updates (map toggle and graph)
-export let curSource;
+export let curSource = 0; // Always starts as first
 
 export function setYear(year) {
   curYear = year;
