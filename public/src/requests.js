@@ -5,6 +5,9 @@ import { populateCandidate } from './candidate.js';
 // Data will be stored here to prevent repeated requests
 const cache = {};
 
+// Year context tracked for element update data requests
+let curYear;
+
 export function getOptions() {
   return new Promise((resolve, reject) => {
     const xhttp = new XMLHttpRequest();
@@ -51,10 +54,15 @@ function getYear(year) {
 
 // TODO: make spinners for the unpopulated elements while waiting
 export async function newYear(year) {
+  curYear = year;
   const data = await getYear(year);
 
-  populateLegend(data.parties);
-  populateList(data.candidates);
-  populateGraph(data.parties);
-  populateCandidate(data);
+  // Asynchronous code means a new year could be requested before the data resolves
+  // No need to update elements if the desired year now differs
+  if (curYear === year) {
+    populateLegend(data.parties);
+    populateList(data.candidates);
+    populateGraph(data.parties);
+    populateCandidate(data);
+  }
 }
