@@ -48,12 +48,19 @@ async function main() {
     // Generate some prediction data for the candidate (with decreasing accuracy)
     // (to demonstrate functionality, real data is hard to find in a convenient format)
     c.predictions = sources.map((_, i) => Math.max(0, c.votes - (i * 100) + Math.floor(Math.random() * i * 200)));
-
-    // Count towards party's overall votes and predictions that year
-    const partyKey = `${c.party_ec_id}${c.year}`;
-    parties[partyKey].votes += c.votes;
-    parties[partyKey].predictions = parties[partyKey].predictions.map((v, i) => v + c.predictions[i]);
   });
+
+  // Determine seats won for each year and predicted seats won
+  for (const k in parties) {
+    const p = parties[k];
+
+    // Count party candidates in same year
+    const cands = candidates.filter(c => (c.year === p.year) && (c.party_ec_id === p.party_ec_id));
+
+    // Each constituency won is a seat
+    p.seats = cands.filter(c => c.elected).length;
+    p.predictions = sources.map(() => p.seats); // TODO
+  }
 
   console.log(`Inserting data into MongoDB...`);
   try {
