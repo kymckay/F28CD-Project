@@ -1,5 +1,9 @@
 /* global mapboxgl, MapboxGeocoder */ // Defined by Mapbox GL JS
 
+import { getData } from "./data";
+
+let mapbox;
+
 export async function initMap(apiKey) {
   // If key wasn't set (or failed to inject) don't initalise the map section
   if (!apiKey) {
@@ -14,7 +18,7 @@ export async function initMap(apiKey) {
   const ukBounds = [[-12.696671, 49.064075],[6.237475, 60.917070]];
   mapboxgl.accessToken = apiKey;
 
-  const map = new mapboxgl.Map({
+  mapbox = new mapboxgl.Map({
     container: 'map', // ID in the HTML
     style: 'mapbox://styles/mapbox/light-v10',
     center: ukCentre,
@@ -35,7 +39,7 @@ export async function initMap(apiKey) {
   });
 
   // Add the geocoder to the map
-  map.addControl(geocoder);
+  mapbox.addControl(geocoder);
 
   const popup = new mapboxgl.Popup({
     closeButton: false
@@ -43,17 +47,17 @@ export async function initMap(apiKey) {
 
   // After the map style has loaded on the page,
   // add a source layer and default styling for a single point
-  map.on('load', function () {
-    
+  mapbox.on('load', function () {
+
     // polygon GeoJson
-    map.addSource('constituency', {
+    mapbox.addSource('constituency', {
       type: 'geojson',
       data: 'https://opendata.arcgis.com/datasets/937997590f724a398ccc0100dbd9feee_0.geojson'
       // data: '..public/assets/constituencies.geojson'
     });
 
     // add polygon fill
-    map.addLayer(
+    mapbox.addLayer(
       {
         'id': 'constituency-fill',
         'type': 'fill',
@@ -61,23 +65,23 @@ export async function initMap(apiKey) {
         'layout': {},
         'paint': {
           'fill-outline-color': '#0d324d',
-          'fill-color': '#7f5a83',
-          'fill-opacity': 0.2         
+          'fill-color': '#F1F1F0',
+          'fill-opacity': 0.2
         }
-      }, 
+      },
        'settlement-label' // place constituency beneath label
     );
 
     // Add filled constituency constituency
     // for highlighted display.
-    map.addLayer(
+    mapbox.addLayer(
       {
         'id': 'constituency-highlighted',
         'type': 'fill',
         'source': 'constituency',
         'paint': {
           'fill-outline-color': '#484896',
-          'fill-color': '#6e599f',
+          'fill-color': '#F1F1F0',
           'fill-opacity': 0.75
         },
         // Display none by adding a
@@ -85,15 +89,15 @@ export async function initMap(apiKey) {
         'filter': ['in', 'pcon19nm', '']
       },
         'settlement-label' // Place constituency under labels.
-    ); 
+    );
 
-    map.on('mousemove', 'constituency-fill', function (e) {
+    mapbox.on('mousemove', 'constituency-fill', function (e) {
       // Change the cursor style as a UI indicator.
-      map.getCanvas().style.cursor = 'pointer';
-       
+      mapbox.getCanvas().style.cursor = 'pointer';
+
       // Use the first found feature.
       const feature = e.features[0];
-       
+
       // Query the constituencies layer visible in the map.
       // Use filter to collect only results with the same constituency name.
       // TODO: To be used with Colouring of map - not really used on this branch
@@ -101,30 +105,30 @@ export async function initMap(apiKey) {
       //   sourceLayer: 'original',
       //   filter: ['in', 'pcon19nm', feature.properties.pcon19nm]
       // });
-       
+
       // Add features with the same constituency name
       // to the highlighted layer.
-      map.setFilter('constituency-highlighted', [
+      mapbox.setFilter('constituency-highlighted', [
         'in',
         'pcon19nm',
         feature.properties.pcon19nm
       ]);
-       
+
       // Display a popup with the name of the constituency.
       popup
       .setLngLat([feature.properties.long, feature.properties.lat])
-      .setText(`${feature.properties.pcon19nm} (Reigning Party: )`)
-      .addTo(map);
+      .setText(`${feature.properties.pcon19nm}`)
+      .addTo(mapbox);
     });
-       
-    map.on('mouseleave', 'constituency-fill', function () {
-      map.getCanvas().style.cursor = '';
+
+    mapbox.on('mouseleave', 'constituency-fill', function () {
+      mapbox.getCanvas().style.cursor = '';
       popup.remove();
-      map.setFilter('constituency-highlighted', ['in', 'pcon19nm', '']);
+      mapbox.setFilter('constituency-highlighted', ['in', 'pcon19nm', '']);
     });
 
     // Add source fo search pin
-    map.addSource('single-point', {
+    mapbox.addSource('single-point', {
       type: 'geojson',
       data: {
         type: 'FeatureCollection',
@@ -133,7 +137,7 @@ export async function initMap(apiKey) {
     });
 
     // add the search pin
-    map.addLayer({
+    mapbox.addLayer({
       id: 'point',
       source: 'single-point',
       type: 'circle',
@@ -147,7 +151,50 @@ export async function initMap(apiKey) {
     // `result` event is triggered when a user makes a selection
     //  Add a marker at the result's coordinates
     geocoder.on('result', function (e) {
-      map.getSource('single-point').setData(e.result.geometry);
+      mapbox.getSource('single-point').setData(e.result.geometry);
     });
   });
+}
+
+function updateColours() {
+  const data = getData();
+
+  const colourMap = {};
+
+  // Find winner of constituency and map it to their party colour
+  data.constituencies.forEach(c => {
+    // Find party colour of candidate with most votes in the constituency
+    const cands = data.candidates.filter(ca => ca.gss_code === c.gss_code);
+    cands.sort((a, b) => b.votes - a.votes);
+    const colour = data.parties.find(p => p.party_ec_id === cands[0].party_ec_id).colour;
+
+    // Skip over parties with no colour
+    if (!colour) return;
+
+    // Add the constituency to the group for this colour
+    if (!(colour in colourMap)) { colourMap[colour] = []; }
+    colourMap[colour].push(c.gss_code);
+  });
+
+  // Match expression expected alternating cases (can be array of values) and then output
+  // https://docs.mapbox.com/mapbox-gl-js/style-spec/expressions/#match
+  const colourings = [];
+  for (const k in colourMap) {
+    colourings.push(colourMap[k]);
+    colourings.push(k);
+  }
+  colourings.push('#F1F1F0'); // Default case at end is grey
+
+  const dataRules = [
+    'match',
+    ['get', 'pcon19cd'], // The GSS code
+    ...colourings
+  ];
+
+  mapbox.setPaintProperty('constituency-fill', 'fill-color', dataRules);
+  mapbox.setPaintProperty('constituency-highlighted', 'fill-color', dataRules);
+}
+
+export function updateMap() {
+  updateColours();
 }
