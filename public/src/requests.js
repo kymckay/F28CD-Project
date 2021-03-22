@@ -2,6 +2,7 @@ import { populateCandidate } from './candidate.js';
 import { cache, curYear, setYear } from './data.js';
 import { populateGraph } from './graph.js';
 import { populateLegend, populateList } from './list.js';
+import { updateMap } from './map.js';
 
 export function getOptions() {
   return new Promise((resolve, reject) => {
@@ -55,6 +56,7 @@ export async function newYear(year) {
   // Asynchronous code means a new year could be requested before the data resolves
   // No need to update elements if the desired year now differs
   if (curYear === year) {
+    updateMap();
     populateLegend();
     populateList();
     populateGraph();
