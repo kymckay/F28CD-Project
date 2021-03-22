@@ -1,12 +1,7 @@
-import { populateList, populateLegend } from './list.js';
-import { populateGraph } from './graph.js';
 import { populateCandidate } from './candidate.js';
-
-// Data will be stored here to prevent repeated requests
-const cache = {};
-
-// Year context tracked for element update data requests
-let curYear;
+import { cache, curYear, setYear } from './data.js';
+import { populateGraph } from './graph.js';
+import { populateLegend, populateList } from './list.js';
 
 export function getOptions() {
   return new Promise((resolve, reject) => {
@@ -28,17 +23,13 @@ export function getOptions() {
 }
 
 function getYear(year) {
-  // No need to repeat requests
-  if (year in cache) return cache[year];
-
   return new Promise((resolve, reject) => {
     const xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
       if (this.readyState === 4) {
         // Successful request
         if (this.status === 200) {
-          cache[year] = JSON.parse(this.responseText);
-          resolve(cache[year]);
+          resolve(JSON.parse(this.responseText));
         } else {
           reject(this.status);
         }
@@ -54,8 +45,14 @@ function getYear(year) {
 
 // TODO: make spinners for the unpopulated elements while waiting
 export async function newYear(year) {
-  curYear = year;
-  const data = await getYear(year);
+  setYear(year);
+
+  // Use data cache to prevent repeated requests to the server for the same thing
+  if (!(year in cache)) {
+    cache[year] = await getYear(year);
+  }
+
+  const data = cache[year];
 
   // Asynchronous code means a new year could be requested before the data resolves
   // No need to update elements if the desired year now differs
