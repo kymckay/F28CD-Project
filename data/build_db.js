@@ -29,25 +29,32 @@ async function main() {
   for (const k in constituencies) {
     const c = constituencies[k];
     c.electorate = electionData[c.year][c.gss_code].electorate;
+
+    // Generate random prediction data for the candidates running here the same year
+    const cands = candidates.filter(ca => (ca.year === c.year) && (ca.gss_code === c.gss_code));
+
+    // Randomly distribute the electorate for each source
+    let votes = sources.map(() => c.electorate);
+    cands.forEach(ca => {
+      ca.predictions = votes.map(v => Math.floor(Math.random() * v));
+
+      // Update the remaining votes available
+      votes = votes.map((v,i) => v - ca.predictions[i]);
+    });
   }
 
   // Join the election voting data to the candidate records before insertion
   candidates.forEach(c => {
     const { parties: partyVotes } = electionData[c.year][c.gss_code];
 
-    // If candidate party is not recognised, they fall under other
-    // TODO: Independent candidate votes are all bundled under "Other" in the data and can't be seperated
-    c.votes = partyVotes[c.party_ec_id] ? partyVotes[c.party_ec_id] : partyVotes.Other;
+    // All leser known parties are all bundled under "Other" in the data and can't be seperated
+    c.votes = partyVotes[c.party_ec_id] ? partyVotes[c.party_ec_id] : partyVotes.Other; // TODO: Distribute instead of duplicating votes
 
     // If Other has no voting data for the region then the candidate's party is not reflected in the voting data
     if (!c.votes) {
       c.votes = Math.floor(Math.random() * 20);
       console.log(`Warning: No voting data for party "${c.party_ec_id}" in region "${c.gss_code}" of year ${c.year}`);
     }
-
-    // Generate some prediction data for the candidate (with decreasing accuracy)
-    // (to demonstrate functionality, real data is hard to find in a convenient format)
-    c.predictions = sources.map((_, i) => Math.max(0, c.votes - (i * 100) + Math.floor(Math.random() * i * 200)));
   });
 
   // Determine seats won for each year and predicted seats won
