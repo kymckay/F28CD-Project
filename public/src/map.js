@@ -69,11 +69,10 @@ export async function initMap(apiKey) {
           'fill-opacity': 0.2
         }
       },
-       'settlement-label' // place constituency beneath label
+      'settlement-label' // Place layer under labels
     );
 
-    // Add filled constituency constituency
-    // for highlighted display.
+    // Add filled constituencys for highlighted display
     mapbox.addLayer(
       {
         'id': 'constituency-highlighted',
@@ -88,8 +87,11 @@ export async function initMap(apiKey) {
         // filter with an empty string.
         'filter': ['in', 'pcon19nm', '']
       },
-        'settlement-label' // Place constituency under labels.
+      'settlement-label' // Place layer under labels
     );
+
+    // Set layer styling after they exist
+    updateColours();
 
     mapbox.on('mousemove', 'constituency-fill', function (e) {
       // Change the cursor style as a UI indicator.
@@ -97,14 +99,6 @@ export async function initMap(apiKey) {
 
       // Use the first found feature.
       const feature = e.features[0];
-
-      // Query the constituencies layer visible in the map.
-      // Use filter to collect only results with the same constituency name.
-      // TODO: To be used with Colouring of map - not really used on this branch
-      // const relatedFeatures = map.querySourceFeatures('constituency-fill', {
-      //   sourceLayer: 'original',
-      //   filter: ['in', 'pcon19nm', feature.properties.pcon19nm]
-      // });
 
       // Add features with the same constituency name
       // to the highlighted layer.
@@ -157,6 +151,9 @@ export async function initMap(apiKey) {
 }
 
 function updateColours() {
+  // Do nothing if the layers don't exist yet
+  if (!mapbox.getLayer('constituency-fill')) return;
+
   const data = getData();
 
   const colourMap = {};
