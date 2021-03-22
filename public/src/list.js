@@ -54,11 +54,12 @@ export async function populateLegend(data) {
   const [llist] = document.getElementById('legend').getElementsByTagName('tbody');
   llist.innerHTML = '';
 
-  // Sort parties by popularity
-  data.sort((a, b) => b.votes - a.votes);
+  // Legend only needed for parties with colours
+  const significant = data.filter(p => p.colour);
 
-  // Take most popular (ignoring "independent" non-party entry)
-  const significant = data.filter(p => p.party_ec_id !== 'ynmp-party:2').slice(0, 9);
+  // Update the stylesheet to colour party classed elements
+  const css = document.getElementById('party-styling');
+  css.innerHTML = significant.map(p => `tbody .${p.party_ec_id} { background-color: ${p.colour} !important; }`).join("\n");
 
   // Sort by name for legend display
   significant.sort((a, b) => a.party_name.localeCompare(b.party_name));

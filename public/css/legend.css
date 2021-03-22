@@ -32,35 +32,3 @@
   background-color: #f1f1f0;
   border-bottom: 2px solid #FFFFFF;
 }
-
-/* rows classed with party Electoral Commission ID for colouring */
-#candidate-list tbody .PP52, #candidate-list tbody .PP51 {
-  background-color: #0087DC;
-}
-#candidate-list tbody .PP53 {
-  background-color: #E4003B;
-}
-#candidate-list tbody .PP102 {
-  background-color: #FDF38E;
-}
-#candidate-list tbody .PP90 {
-  background-color: #FAA61A;
-}
-#candidate-list tbody .PP70 {
-  background-color: #D46A4C;
-}
-#candidate-list tbody .PP39 {
-  background-color: #326760;
-}
-#candidate-list tbody .PP77 {
-  background-color: #008142;
-}
-#candidate-list tbody .PP55 {
-  background-color: #2AA82C;
-}
-#candidate-list tbody .PP63, #candidate-list tbody .PP130, #candidate-list tbody .PP305 {
-  background-color: #528D6B;
-}
-#candidate-list tbody .PP103 {
-  background-color: #F6CB2F;
-}

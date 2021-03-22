@@ -93,6 +93,7 @@ function getParties(year) {
         _id: 0,
         party_ec_id: 1,
         party_name: 1,
+        colour: 1,
         votes: 1,
         predictions: 1,
       }
@@ -101,6 +102,9 @@ function getParties(year) {
 }
 
 exports.getData = async function(year) {
+  // Avoid NoSQL injection by enforcing year to be a string
+  if (typeof year !== 'string') return;
+
   // Check year exists in the DB before any extensive querying
   if (!(await db.db().collection('candidates').findOne({ year }))) return;
 
