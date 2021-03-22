@@ -52,14 +52,12 @@ export async function newYear(year) {
     cache[year] = await getYear(year);
   }
 
-  const data = cache[year];
-
   // Asynchronous code means a new year could be requested before the data resolves
   // No need to update elements if the desired year now differs
   if (curYear === year) {
-    populateLegend(data.parties);
-    populateList(data.candidates);
-    populateGraph(data.parties);
-    populateCandidate(data);
+    populateLegend();
+    populateList();
+    populateGraph();
+    populateCandidate();
   }
 }

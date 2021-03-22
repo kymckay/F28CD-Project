@@ -1,10 +1,9 @@
 /* global Chart */ // Defined by Chart.js
 
+import { getData } from './data.js';
+
 // Chart will be updated later
 let chart;
-
-// Data will be stored for future updates
-let cached;
 
 export function initCandidate() {
   const ctx = document.getElementById('candGraph').getContext('2d');
@@ -31,28 +30,27 @@ export function initCandidate() {
   });
 }
 
-export function populateCandidate(data) {
-  cached = data;
-
+export function populateCandidate() {
   // For now default to first in the list
   updateCandidate(0);
 }
 
 export function updateCandidate(index) {
-  const chosen = cached.candidates[index];
+  const data = getData();
+  const chosen = data.candidates[index];
 
   updateChart(chosen);
 
   document.getElementById('candName').innerHTML = chosen.name;
-  document.getElementById('candParty').innerHTML = cached.parties.find(p => p.party_ec_id === chosen.party_ec_id).party_name;
-  document.getElementById('candConst').innerHTML = cached.constituencies.find(c => c.gss_code === chosen.gss_code).name;
+  document.getElementById('candParty').innerHTML = data.parties.find(p => p.party_ec_id === chosen.party_ec_id).party_name;
+  document.getElementById('candConst').innerHTML = data.constituencies.find(c => c.gss_code === chosen.gss_code).name;
   document.getElementById('candCamps').innerHTML = 1; // TODO get number of runs
   document.getElementById('candElect').innerHTML = 1; // TODO get this
 }
 
 function updateChart(chosen) {
   // Compare to candidates in same constituency
-  const competitors = cached.candidates.filter(c => (c.gss_code === chosen.gss_code) && (c.party_ec_id !== chosen.party_ec_id));
+  const competitors = getData().candidates.filter(c => (c.gss_code === chosen.gss_code) && (c.party_ec_id !== chosen.party_ec_id));
 
   // Sort competitors by votes
   competitors.sort((a, b) => b.votes - a.votes);
