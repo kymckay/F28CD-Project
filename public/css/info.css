@@ -1,5 +1,5 @@
 /* Reference: https://www.w3schools.com/css/css_tooltip.asp */
-.info {
+#info {
   position: absolute;
   color: white;
   right: 29px;
@@ -8,7 +8,7 @@
   cursor: pointer;
 }
 
-.info .infotext {
+#info .infotext {
   visibility: hidden;
   width: 552px;
   background-color: #fff;
@@ -23,7 +23,7 @@
   margin-left: -60px;
 }
 
-.info .infotext::after {
+#info .infotext::after {
   content: "";
   position: absolute;
   bottom: 100%;
@@ -34,14 +34,14 @@
   border-color: transparent transparent #fff transparent;
 }
 
-.info:hover .infotext {
+#info:hover .infotext {
   visibility: visible;
   -webkit-animation: fadeIn 0.6s;
   animation: fadeIn 0.6s;
 }
 
 /* Add animation (fade in the popup) */
-@-webkit-keyframes fadeIn {
+@keyframes fadeIn {
   from {opacity: 0;}
   to {opacity: 1;}
 }

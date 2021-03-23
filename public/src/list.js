@@ -1,3 +1,5 @@
+import { getData } from "./data";
+
 function search() {
   const input = document.getElementById("search");
   const filter = input.value.toUpperCase();
@@ -23,14 +25,14 @@ export async function initSearch() {
 }
 
 // Clears and populates the list with the data passed in
-export async function populateList(data) {
+export async function populateList() {
   // Clear existing rows first
   const [clist] = document.getElementById('candList').getElementsByTagName('tbody');
   clist.innerHTML = '';
 
   // Document fragment will trigger reflow only once when attached
   const newRows = document.createDocumentFragment();
-  data.forEach(cand => {
+  getData().candidates.forEach(cand => {
     const row = document.createElement("tr");
     const name = document.createElement("td");
     const votes = document.createElement("td");
@@ -50,16 +52,16 @@ export async function populateList(data) {
   clist.appendChild(newRows);
 }
 
-export async function populateLegend(data) {
+export async function populateLegend() {
   const [llist] = document.getElementById('legend').getElementsByTagName('tbody');
   llist.innerHTML = '';
 
   // Legend only needed for parties with colours
-  const significant = data.filter(p => p.colour);
+  const significant = getData().parties.filter(p => p.colour);
 
   // Update the stylesheet to colour party classed elements
   const css = document.getElementById('party-styling');
-  css.innerHTML = significant.map(p => `tbody .${p.party_ec_id} { background-color: ${p.colour}; }`).join("\n");
+  css.innerHTML = significant.map(p => `tbody .${p.party_ec_id} { background-color: ${p.colour} !important; }`).join("\n");
 
   // Sort by name for legend display
   significant.sort((a, b) => a.party_name.localeCompare(b.party_name));

@@ -1,11 +1,12 @@
 /* global Chart */ // Defined by Chart.js
 
+import { curSource, getData, setSource } from "./data";
+
 // Chart will be updated later
 let chart;
 
 // Prediction data can be switched between after load
 const predictions = [];
-let predictIndex = 0; // Index should persist when year changes
 
 // Reference: https://www.chartjs.org/docs/latest/
 export async function initGraph() {
@@ -43,21 +44,26 @@ function populatePredictions(top6, rest) {
   }
 }
 
-export async function populateGraph(data) {
-  // Get the most popular 6 parties
-  data.sort((a, b) => b.votes - a.votes);
+export async function populateGraph() {
+  // Ignore the independent entry (not a true party)
+  const parties = getData().parties.filter(p => p.party_ec_id.startsWith('PP'));
 
-  const top6 = data.slice(0,6);
+  // Get the most popular 6 parties
+  parties.sort((a, b) => b.seats - a.seats);
+  const top6 = parties.slice(0,6);
+
+  // Sort by name for graph display
   top6.sort((a, b) => a.party_name.localeCompare(b.party_name));
 
-  const rest = data.slice(6);
+  // All the rest will be grouped under "Other"
+  const rest = parties.slice(6);
 
   chart.data.labels = top6.map(p => p.party_name);
   chart.data.labels.push('Other');
 
   // Cumulate remaining party votes under "Other" entry
-  const dataReal = top6.map(p => p.votes);
-  dataReal.push(rest.reduce((acc, cur) => acc + cur.votes, 0));
+  const data = top6.map(p => p.seats);
+  data.push(rest.reduce((acc, cur) => acc + cur.seats, 0));
 
   const partyColours = top6.map(p => p.colour ? p.colour : '#3C4750');
   partyColours.push('#3C4750'); // "Other" gets neutral styling
@@ -70,19 +76,19 @@ export async function populateGraph(data) {
 
   // Show real data as a solid bar (always first element)
   chart.data.datasets[0] = {
-    label: 'Votes',
+    label: 'Seats',
     borderWidth: 1,
     backgroundColor: partyColours,
     borderColor: "#3C4750",
-    data: dataReal
+    data
   };
 
   // Update displayed predictions, preserving current index
-  updatePredictions(predictIndex);
+  updatePredictions(curSource);
 }
 
 export async function updatePredictions(index) {
-  predictIndex = index;
+  setSource(index);
 
   // Show prediction data as an outline only bar to differentiate
   chart.data.datasets[1] = {

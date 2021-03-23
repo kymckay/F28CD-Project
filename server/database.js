@@ -67,7 +67,14 @@ function getConstituencies(year) {
 
   // Want to minimise to only data client needs (reduce data sent)
   return db.db().collection('constituencies')
-    .find({ year }, { projection: {_id: 0, gss_code: 1, electorate: 1} })
+    .find({ year }, {
+      projection: {
+        _id: 0,
+        name: 1,
+        gss_code: 1,
+        electorate: 1
+      }
+    })
     .toArray();
 }
 
@@ -76,7 +83,8 @@ function getParties(year) {
   if (!db) return [{
     party_ec_id: 'TestEcId',
     party_name: 'TestParty',
-    votes: 100,
+    colour: '#FFFC0CB',
+    seats: 100,
     predictions: [50],
   }];
 
@@ -87,7 +95,7 @@ function getParties(year) {
         party_ec_id: 1,
         party_name: 1,
         colour: 1,
-        votes: 1,
+        seats: 1,
         predictions: 1,
       }
     })

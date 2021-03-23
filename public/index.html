@@ -26,7 +26,7 @@
   <script src="dist/main.js"></script>
 </head>
 <body>
-<header class="header">
+<header id="header">
   <a href="index.html">
     <img src="assets/logo.png" alt="logo" class="logo">
   </a>
@@ -35,7 +35,7 @@
   <select id="dropdown-year"></select>
 
   <!-- Info button -->
-  <div class="info">
+  <div id="info">
     <i class="fa fa-info-circle" style="font-size:30px;"></i>
     <div class="infotext">This website provides a visual overview of historical UK General Election results and predictions,
       and interactive elements to explore the data in more detail.<br>
@@ -48,11 +48,11 @@
     </div>
   </div>
 </header>
-<main class="main-flex">
+<main>
   <section id="map"></section>
 
-  <section class="middle-section">
-    <div class="graph" >
+  <section id="middle-section">
+    <div id="graph" >
       <!--how will the title change with different datasets?
         Easy way would be to enable title in the chart but that looses the font-->
       <h4>Seats per Party: Actual vs Predicted</h4>
@@ -61,22 +61,20 @@
     </div>
 
     <!-- Prediction data dropdown menu -->
-    <div class="dropdown-section">
+    <div id="dropdown-section">
       <select id="dropdown-data"></select>
     </div>
 
     <!-- Politician Profile Section -->
-    <div class="politician-section" >
-      <h4>Winning Margin: Actual v.s. Predicted</h4>
-      <div id="candSect">
-        <img src="assets/cand1.jpg" alt="Candidate Picture" id="candAlign">
-        <ul id="candSectList">
-          <li>Name:</li>
-          <li>Age:</li>
-          <li>Party:</li>
-          <li>Spouse:</li>
-        </ul>
-      </div>
+    <div id="candidate-section" >
+      <h4>Candidate Details</h4>
+      <table>
+        <tr><td>Name:</td><td id="candName"></td></tr>
+        <tr><td>Party:</td><td id="candParty"></td></tr>
+        <tr><td>Constituency:</td><td id="candConst"></td></tr>
+        <tr><td>Campaigns:</td><td id="candCamps"></td></tr>
+        <tr><td>Times Elected:</td><td id="candElect"></td></tr>
+      </table>
       <div id="candSectBox">
         <canvas id="candGraph"></canvas>
       </div>
@@ -84,7 +82,7 @@
   </section>
 
 
-  <section class="table">
+  <section id="candidate-list">
 
      <!------search bar--------->
     <div class="search-section">
@@ -122,7 +120,7 @@
     </div>
   </section>
 </main>
-<footer class="footer">
+<footer id="footer">
   <p>DISCLAIMER: Prediction data are not real and only intended to demonstrate the functionality of the page.
     <br>Data Sources &copy; Democracy Club (Licensed under CC BY 4.0), &copy; 2021 House of Commons Library (Licensed under Open Parliament License), Office for National Statistics (Licensed under OGLv3.0) contains &copy; Crown copyright and database right 2021.
   </p>

@@ -14,13 +14,13 @@
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 
-th, td {
+#candidate-list th, #candidate-list td {
   padding: 5px;
   text-align: left;
   width: 200px;
 }
 
-thead tr {
+#candidate-list thead tr {
   background-color: #3c4750;
   color: white;
   text-align: left;
@@ -28,7 +28,7 @@ thead tr {
 }
 
 /* default for other parties is a light grey */
-tbody tr {
+#candidate-list tbody tr {
   background-color: #f1f1f0;
   border-bottom: 2px solid #FFFFFF;
 }
