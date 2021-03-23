@@ -61,7 +61,7 @@ export async function updateList(post_id) {
   // Document fragment will trigger reflow only once when attached
   const newRows = document.createDocumentFragment();
   getData().candidates.forEach(cand => {
-    if (cand.gss_code == post_id) {
+    if (cand.gss_code === post_id) {
       const row = document.createElement("tr");
       const name = document.createElement("td");
       const votes = document.createElement("td");
