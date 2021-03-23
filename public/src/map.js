@@ -147,6 +147,10 @@ export async function initMap(apiKey) {
     geocoder.on('result', function (e) {
       mapbox.getSource('single-point').setData(e.result.geometry);
     });
+
+    mapbox.on('click', 'constituency-highlighted', function (e) {
+      mapbox.flyTo({center: [e.features[0].properties.long, e.features[0].properties.lat], zoom: 8});
+    });
   });
 }
 
