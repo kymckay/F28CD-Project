@@ -62,7 +62,7 @@ export async function initMap(apiKey) {
   
   function localSearch(query) {
     const matchingFeatures = [];
-    return fetch('https://opendata.arcgis.com/datasets/937997590f724a398ccc0100dbd9feee_0.geojson')
+    return fetch('/assets/constituencies.geojson')
       .then(res => res.json())
       .then((data) => {
           console.log(data);
@@ -94,8 +94,8 @@ export async function initMap(apiKey) {
     // polygon GeoJson
     map.addSource('constituency', {
       type: 'geojson',
-      data: 'https://opendata.arcgis.com/datasets/937997590f724a398ccc0100dbd9feee_0.geojson'
-      // data: '..public/assets/constituencies.geojson'
+      // data: 'https://opendata.arcgis.com/datasets/937997590f724a398ccc0100dbd9feee_0.geojson'
+      data: '/assets/constituencies.geojson'
     });
 
     // add polygon fill
