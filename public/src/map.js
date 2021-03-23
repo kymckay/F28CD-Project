@@ -155,7 +155,7 @@ export async function initMap(apiKey) {
         .addTo(mapbox);
     });
 
-    // define popup closing action - on mouse leave
+    // define popup closing action, on mouse leave
     mapbox.on('mouseleave', 'constituency-fill', function () {
       mapbox.getCanvas().style.cursor = '';
       popup.remove();
