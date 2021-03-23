@@ -19,6 +19,9 @@ export async function initMap(apiKey) {
   const ukBounds = [[-12.696671, 49.064075],[6.237475, 60.917070]];
   mapboxgl.accessToken = apiKey;
 
+  const jsonData = '/assets/constituencies.geojson';
+  const jsonFeature = fetch(jsonData).then(res => res.json());
+
   // Init. the map
   mapbox = new mapboxgl.Map({
     container: 'map', // ID in the HTML
@@ -34,6 +37,7 @@ export async function initMap(apiKey) {
     // hence the use of an externalGeocoder
     localGeocoder: dummy,
     externalGeocoder: localSearch,
+    // localGeocoder: localSearch,
     mapboxgl: mapboxgl,
     zoom: 9.5,
     speed: 100,
@@ -51,33 +55,33 @@ export async function initMap(apiKey) {
     return [];
   }
   
+  // Defining the search function
   function localSearch(query) {
     const matchingFeatures = [];
-    return fetch('/assets/constituencies.geojson')
-      .then(res => res.json())
-      .then((data) => {
-          console.log(data);
-          data.features.forEach(feature => {
-              if (
-                feature.properties.pcon19nm
-                  .toLowerCase()
-                  .search(query.toLowerCase()) !== -1
-              ) {
-                feature.properties.geometry = [feature.properties.long, feature.properties.lat];
-                feature['place_name'] = `📍 ${feature.properties.pcon19nm}`;
-                feature['center'] = [feature.properties.long, feature.properties.lat];
-                matchingFeatures.push(feature);
-              }
-          });
-          return Promise.resolve(matchingFeatures);
+    return jsonFeature.then((data) => {
+      console.log(data);
+      data.features.forEach(feature => {
+        if (
+          feature.properties.pcon19nm
+            .toLowerCase()
+            .search(query.toLowerCase()) !== -1
+        ) {
+          // If search succeeded, overide geometry data with single point coordinates
+          // // polygon data
+          feature.properties.geometry = [feature.properties.long, feature.properties.lat];
+          feature['place_name'] = `📍 ${feature.properties.pcon19nm}`;
+          feature['center'] = feature.properties.geometry;
+          matchingFeatures.push(feature);
         }
-      );
+      });
+      return matchingFeatures;
+    });
   }
 
   // Add the geocoder to the map
-  // map.addControl(areaGeocoder);
   mapbox.addControl(constituencyGeocoder);
 
+  // Define popup to be used on mouse hover
   const popup = new mapboxgl.Popup({
     closeButton: false
   });
@@ -90,7 +94,8 @@ export async function initMap(apiKey) {
     mapbox.addSource('constituency', {
       type: 'geojson',
       // data: 'https://opendata.arcgis.com/datasets/937997590f724a398ccc0100dbd9feee_0.geojson'
-      data: '/assets/constituencies.geojson'
+      // data: '/assets/constituencies.geojson'
+      data: jsonData
     });
 
     // add polygon fill
