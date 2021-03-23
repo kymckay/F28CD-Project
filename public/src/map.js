@@ -19,6 +19,7 @@ export async function initMap(apiKey) {
   const ukBounds = [[-12.696671, 49.064075],[6.237475, 60.917070]];
   mapboxgl.accessToken = apiKey;
 
+  // Init. the map
   mapbox = new mapboxgl.Map({
     container: 'map', // ID in the HTML
     style: 'mapbox://styles/mapbox/light-v10',
@@ -29,13 +30,14 @@ export async function initMap(apiKey) {
   
   const constituencyGeocoder = new MapboxGeocoder({
     accessToken: apiKey,
+    // localGeocoder does not work with injected searches
+    // hence the use of an externalGeocoder
     localGeocoder: dummy,
     externalGeocoder: localSearch,
     mapboxgl: mapboxgl,
     zoom: 9.5,
     speed: 100,
     placeholder: 'Search UK Places',
-    // bbox: ukSearchBounds,
     countries: 'gb',
     proximity: {
       longitude: long,
