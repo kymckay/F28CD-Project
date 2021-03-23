@@ -11,14 +11,11 @@ export async function initMap(apiKey) {
     return;
   }
 
-  // Setting a few constants to be use to initilise the mapbox
   // Finding the centre of UK
   const long = -2.821868;
   const lat = 55.612226;
   const ukCentre = [long, lat];
-  // setting the search bounds of the UK – to be used tfor searching areas
-  const ukSearchBounds = [-8.196671, 50.064075, 1.737475, 60.917070];
-  // ukBounds to be used only for 
+  // ukBounds to be used only for setting the border of the view
   const ukBounds = [[-12.696671, 49.064075],[6.237475, 60.917070]];
   mapboxgl.accessToken = apiKey;
 
@@ -38,7 +35,8 @@ export async function initMap(apiKey) {
     zoom: 9.5,
     speed: 100,
     placeholder: 'Search UK Places',
-    bbox: ukSearchBounds,
+    // bbox: ukSearchBounds,
+    countries: 'gb',
     proximity: {
       longitude: long,
       latitude: lat
