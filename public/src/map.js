@@ -1,6 +1,7 @@
 /* global mapboxgl, MapboxGeocoder */ // Defined by Mapbox GL JS
 
 import { getData } from "./data";
+import { updateList } from './list.js';
 
 let mapbox;
 
@@ -155,7 +156,8 @@ export async function initMap(apiKey) {
       } else {
         mapbox.flyTo({center: [e.features[0].properties.long, e.features[0].properties.lat], zoom: 10});
       }
-      
+      const gss_id = e.features[0].properties.pcon19cd;
+      updateList(gss_id);
     });
   });
 }
