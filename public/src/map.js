@@ -39,7 +39,7 @@ export async function initMap(apiKey) {
     externalGeocoder: localSearch,
     // localGeocoder: localSearch,
     mapboxgl: mapboxgl,
-    zoom: 9.5,
+    zoom: 11,
     speed: 100,
     placeholder: 'Search UK Places',
     countries: 'gb',
@@ -90,15 +90,13 @@ export async function initMap(apiKey) {
   // add a source layer and default styling for a single point
   mapbox.on('load', function () {
 
-    // polygon GeoJson
+    // Add a source
     mapbox.addSource('constituency', {
       type: 'geojson',
-      // data: 'https://opendata.arcgis.com/datasets/937997590f724a398ccc0100dbd9feee_0.geojson'
-      // data: '/assets/constituencies.geojson'
       data: jsonData
     });
 
-    // add polygon fill
+    // add polygon fill, based on source 'constituency'
     mapbox.addLayer(
       {
         'id': 'constituency-fill',
@@ -152,18 +150,19 @@ export async function initMap(apiKey) {
 
       // Display a popup with the name of the constituency.
       popup
-      .setLngLat([feature.properties.long, feature.properties.lat])
-      .setText(`${feature.properties.pcon19nm}`)
-      .addTo(mapbox);
+        .setLngLat([feature.properties.long, feature.properties.lat])
+        .setText(`${feature.properties.pcon19nm}`)
+        .addTo(mapbox);
     });
 
+    // define popup closing action – on mouse leave
     mapbox.on('mouseleave', 'constituency-fill', function () {
       mapbox.getCanvas().style.cursor = '';
       popup.remove();
       mapbox.setFilter('constituency-highlighted', ['in', 'pcon19nm', '']);
     });
 
-    // Add source fo search pin
+    // Add source for search area
     mapbox.addSource('single-point', {
       type: 'geojson',
       data: {
@@ -172,7 +171,7 @@ export async function initMap(apiKey) {
       }
     });
 
-    // add the search pin
+    // add the search area
     mapbox.addLayer({
       id: 'point-2',
       source: 'single-point',
@@ -187,9 +186,6 @@ export async function initMap(apiKey) {
     // Listen for the `result` event from the Geocoder
     // `result` event is triggered when a user makes a selection
     //  Add a marker at the result's coordinates
-    // areaGeocoder.on('result', function (e) {
-    //   map.getSource('single-point').setData(e.result.geometry);
-    // });
     constituencyGeocoder.on('result', function (e) {
       mapbox.getSource('single-point').setData(e.result.geometry);
     });
