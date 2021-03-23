@@ -58,7 +58,28 @@ export async function updateList(post_id) {
   const [clist] = document.getElementById('candList').getElementsByTagName('tbody');
   clist.innerHTML = '';
 
-  
+  // Document fragment will trigger reflow only once when attached
+  const newRows = document.createDocumentFragment();
+  getData().candidates.forEach(cand => {
+    if (cand.gss_code == post_id) {
+      const row = document.createElement("tr");
+      const name = document.createElement("td");
+      const votes = document.createElement("td");
+
+      name.innerHTML = cand.name;
+      votes.innerHTML = cand.votes;
+
+      // Can style the rows by their party ID
+      row.classList.add(cand.party_ec_id);
+
+      row.appendChild(name);
+      row.appendChild(votes);
+      newRows.appendChild(row);
+    }
+  });
+
+  // Populate the table with the new data
+  clist.appendChild(newRows);
 } 
 
 export async function populateLegend() {
