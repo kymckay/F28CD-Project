@@ -149,7 +149,13 @@ export async function initMap(apiKey) {
     });
 
     mapbox.on('click', 'constituency-highlighted', function (e) {
-      mapbox.flyTo({center: [e.features[0].properties.long, e.features[0].properties.lat], zoom: 8});
+      const constArea = e.features[0].properties.st_areashape;
+      if (constArea > 500000000) {
+        mapbox.flyTo({center: [e.features[0].properties.long, e.features[0].properties.lat], zoom: 7});
+      } else {
+        mapbox.flyTo({center: [e.features[0].properties.long, e.features[0].properties.lat], zoom: 10});
+      }
+      
     });
   });
 }
