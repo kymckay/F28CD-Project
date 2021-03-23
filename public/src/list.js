@@ -54,6 +54,10 @@ export async function populateList() {
 
 // Clears and populates list upon map click
 export async function updateList(post_id) {
+  // Clear existing rows first
+  const [clist] = document.getElementById('candList').getElementsByTagName('tbody');
+  clist.innerHTML = '';
+
   
 } 
 
