@@ -52,6 +52,11 @@ export async function populateList() {
   clist.appendChild(newRows);
 }
 
+// Clears and populates list upon map click
+export async function updateList(post_id) {
+  
+} 
+
 export async function populateLegend() {
   const [llist] = document.getElementById('legend').getElementsByTagName('tbody');
   llist.innerHTML = '';
