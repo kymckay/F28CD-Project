@@ -11,10 +11,14 @@ export async function initMap(apiKey) {
     return;
   }
 
+  // Setting a few constants to be use to initilise the mapbox
+  // Finding the centre of UK
   const long = -2.821868;
   const lat = 55.612226;
   const ukCentre = [long, lat];
+  // setting the search bounds of the UK – to be used tfor searching areas
   const ukSearchBounds = [-8.196671, 50.064075, 1.737475, 60.917070];
+  // ukBounds to be used only for 
   const ukBounds = [[-12.696671, 49.064075],[6.237475, 60.917070]];
   mapboxgl.accessToken = apiKey;
 
@@ -25,19 +29,6 @@ export async function initMap(apiKey) {
     zoom: 4.9,
     maxBounds: ukBounds
   });
-
-  // const areaGeocoder = new MapboxGeocoder({
-  //   accessToken: apiKey,
-  //   mapboxgl: mapboxgl,
-  //   zoom: 18,
-  //   placeholder: 'Search UK Places',
-  //   bbox: ukSearchBounds,
-  //   proximity: {
-  //     longitude: long,
-  //     latitude: lat
-  //   },
-  //   marker: false
-  // });
   
   const constituencyGeocoder = new MapboxGeocoder({
     accessToken: apiKey,
@@ -54,10 +45,6 @@ export async function initMap(apiKey) {
     },
     marker: false
   });
-
-  // Add the geocoder to the map
-  // map.addControl(areaGeocoder);
-  mapbox.addControl(constituencyGeocoder);
 
   function dummy() {
     console.log('dummy');
@@ -86,6 +73,10 @@ export async function initMap(apiKey) {
         }
       );
   }
+
+  // Add the geocoder to the map
+  // map.addControl(areaGeocoder);
+  mapbox.addControl(constituencyGeocoder);
 
   const popup = new mapboxgl.Popup({
     closeButton: false
@@ -166,26 +157,6 @@ export async function initMap(apiKey) {
       popup.remove();
       mapbox.setFilter('constituency-highlighted', ['in', 'pcon19nm', '']);
     });
-
-    // // Add source fo search pin
-    // map.addSource('single-point', {
-    //   type: 'geojson',
-    //   data: {
-    //     type: 'FeatureCollection',
-    //     features: []
-    //   }
-    // });
-
-    // // add the search pin
-    // map.addLayer({
-    //   id: 'point',
-    //   source: 'single-point',
-    //   type: 'circle',
-    //   paint: {
-    //     'circle-radius': 6,
-    //     'circle-color': '#448ee4'
-    //   }
-    // });
 
     // Add source fo search pin
     mapbox.addSource('single-point', {
