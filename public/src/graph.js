@@ -48,8 +48,7 @@ export async function populateGraph() {
   // Ignore the independent entry (not a true party)
   const parties = getData().parties.filter(p => p.party_ec_id.startsWith('PP'));
 
-  // Get the most popular 6 parties
-  parties.sort((a, b) => b.seats - a.seats);
+  // Get the most popular 6 parties (sorted by seats by default)
   const top6 = parties.slice(0,6);
 
   // Sort by name for graph display
@@ -91,10 +90,7 @@ export async function updateGraph(gss) {
   // Filter candidates and make sure they are from the same constituency
   const candidates = getData().candidates.filter(c => c.gss_code === gss);
 
-  // Sort candidates by vote count
-  candidates.sort((a,b) => b.votes - a.votes);
-  
-  // return top few candidates, but not more than top 6
+  // Candidates are sorted by votes by default
   const top6 = candidates.slice(0,6);
   // the rest will be grouped "other"
   const rest = candidates.slice(6);
@@ -109,7 +105,7 @@ export async function updateGraph(gss) {
   const data = top6.map(p => p.votes);
   data.push(rest.reduce((acc, cur) => acc + cur.votes, 0));
 
-  // map party colour to 
+  // map party colour to
   const partyColours = parties.map(p => p.colour ? p.colour : '#3C4750');
   partyColours.push('#3C4750'); // "Other" gets neutral styling
 

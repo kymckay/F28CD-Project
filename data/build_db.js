@@ -80,9 +80,10 @@ async function main() {
     await client.connect();
 
     // Must insert records sequentially to avoid DB write conflicts
+    // Sort candidates and parties by popularity now to save time at runtime
     await addCollection("sources", sources.map(s => ({name: s})))
-    await addCollection("parties", Object.values(parties));
-    await addCollection("candidates", candidates);
+    await addCollection("parties", Object.values(parties).sort((a,b) => b.seats - a.seats));
+    await addCollection("candidates", candidates.sort((a,b) => b.votes - a.votes));
     await addCollection("constituencies", Object.values(constituencies));
   } catch (error) {
     console.dir(error);
