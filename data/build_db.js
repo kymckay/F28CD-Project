@@ -54,6 +54,10 @@ async function main() {
   candidates.forEach(c => {
     const { parties: partyVotes } = electionData[c.year][c.gss_code];
 
+    const repeates = candidates.filter(o => c.gss_code === o.gss_code && c.party_ec_id === o.party_ec_id);
+    c.campaigns = repeates.length;
+    c.wins = repeates.filter(o => o.elected).length;
+
     // All leser known parties are all bundled under "Other" in the data and can't be seperated
     c.votes = partyVotes[c.party_ec_id] ? partyVotes[c.party_ec_id] : partyVotes.Other; // TODO: Distribute instead of duplicating votes
 

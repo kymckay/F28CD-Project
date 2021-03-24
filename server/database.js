@@ -42,6 +42,8 @@ function getCandidates(year) {
     elected: true,
     votes: 100,
     predictions: [50],
+    campaigns: 2,
+    wins: 1,
   }];
 
   // Want to minimise to only data client needs (reduce data sent)
@@ -55,6 +57,8 @@ function getCandidates(year) {
         elected: 1,
         votes: 1,
         predictions: 1,
+        campaigns: 1,
+        wins: 1
       }
     })
     .toArray();

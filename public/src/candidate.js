@@ -45,8 +45,8 @@ export function updateCandidate(index) {
   document.getElementById('candName').innerHTML = chosen.name;
   document.getElementById('candParty').innerHTML = data.parties.find(p => p.party_ec_id === chosen.party_ec_id).party_name;
   document.getElementById('candConst').innerHTML = data.constituencies.find(c => c.gss_code === chosen.gss_code).name;
-  document.getElementById('candCamps').innerHTML = 1; // TODO get number of runs
-  document.getElementById('candElect').innerHTML = 1; // TODO get this
+  document.getElementById('candCamps').innerHTML = chosen.campaigns;
+  document.getElementById('candElect').innerHTML = chosen.wins;
 }
 
 function updateChart(chosen) {
