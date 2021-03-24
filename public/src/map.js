@@ -189,7 +189,6 @@ export async function initMap(apiKey) {
       const gss_id = e.features[0].properties.pcon19cd;
       updateList(gss_id);
       updateGraph(gss_id);
-      document.getElementById('graph-title').innerHTML = "Votes per Party: Actual vs Predicted";
     });
   });
 }
