@@ -194,7 +194,7 @@ export async function initMap(apiKey) {
   });
 }
 
-function updateColours(boolean) {
+function updateColours(useReal) {
   // Do nothing if the layers don't exist yet
   if (!mapbox.getLayer('constituency-fill')) return;
 
@@ -206,16 +206,14 @@ function updateColours(boolean) {
   data.constituencies.forEach(c => {
     // Find party colour of candidate with most votes in the constituency
     // (candidates sorted by votes by default)
-    const winner = [];
-
-    if (boolean === true) {
-      winner.push(data.candidates.filter(ca => ca.gss_code === c.gss_code)[0]);
+    let winner;
+    const cands = data.candidates.filter(ca => ca.gss_code === c.gss_code);
+    if (useReal) {
+      winner = cands[0];
     } else {
-      const winnerArray = data.candidates.filter(ca => ca.gss_code === c.gss_code);
-      const winnerSort = winnerArray.sort((a,b) => parseFloat(a.predictions[curSource]) - parseFloat(b.predictions[curSource]));
-      winner.push(winnerSort[0]);
-    };
-    
+      winner = cands.sort((a, b) => b.predictions[curSource] - a.predictions[curSource])[0];
+    }
+
     const colour = data.parties.find(p => p.party_ec_id === winner.party_ec_id).colour;
 
     // Skip over parties with no colour
