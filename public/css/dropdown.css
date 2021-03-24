@@ -1,20 +1,31 @@
-/* Reference: https://www.w3schools.com/howto/howto_custom_select.asp */
 
-/* common dropdown styling */
-.dropdown {
-  font-family: Fjalla One;
+select {
+  background-color: transparent;
+  position: relative;
+  font-family: inherit;
+  font-size: 100%;
+  border: 0;
+  outline: 0;
 }
 
-/*formatting for year dropdown*/
 #dropdown-year {
+  color: white;
+  font-size: 40px;
   position: relative;
-  font-size: 20px;
-  width: 140px;
+  font-family: 'Montserrat';
 }
 
-/*formatting for prediction data dropdown*/
 #dropdown-data {
-  position: relative;
+  max-width: 220px;
+  margin-bottom: 10px;
+  position: absolute;
+  right: 25%;
+  left: 36%;
+  padding: 4px;
   font-size: 17px;
-  width: 100%;
+}
+
+option {
+  color: black;
+  background: white;
 }

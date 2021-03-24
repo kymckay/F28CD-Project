@@ -2,51 +2,54 @@
 <html lang="en" xml:lang="en">
 <head>
   <meta content="text/html" charset="utf-8" />
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
   <title>UK Election Data</title>
+  <style type="text/css" id="party-styling"></style>
   <link rel="stylesheet" type="text/css" href="css/main.css">
   <link rel="stylesheet" type="text/css" href="css/info.css">
   <link rel="stylesheet" type="text/css" href="css/dropdown.css">
   <link rel="stylesheet" type="text/css" href="css/legend.css">
   <link rel="stylesheet" type="text/css" href="css/search.css">
   <link rel="stylesheet" type="text/css" href="css/table.css">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-    crossorigin="" />
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link href='https://fonts.googleapis.com/css?family=Fjalla One' rel='stylesheet'>
+  <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Fjalla One'>
+  <link rel='stylesheet' type='text/css' href='https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css'>
+  <link rel='stylesheet' type='text/css' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.css'>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
-  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-    crossorigin=""></script>
+  <script src='https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js'></script>
+  <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.min.js'></script>
   <script src="dist/main.js"></script>
 </head>
 <body>
-<header class="header">
+<header id="header">
   <a href="index.html">
     <img src="assets/logo.png" alt="logo" class="logo">
   </a>
+
   <!-- dropdown menu for election year selection -->
-
-  <div id="dropdown-year"></div>
-
+  <select id="dropdown-year"></select>
 
   <!-- Info button -->
-  <div class="info">
+  <div id="info">
     <i class="fa fa-info-circle" style="font-size:30px;"></i>
-    <span class="infotext">Add website instructions here:
-      <br> 1. Instruction, Instruction, Instruction, Instruction, Instruction
-      <br> 1. Instruction, Instruction, Instruction, Instruction, Instruction
-      <br> 1. Instruction, Instruction, Instruction, Instruction, Instruction
-      <br> 1. Instruction, Instruction, Instruction, Instruction, Instruction
-      <br> 1. Instruction, Instruction, Instruction, Instruction, Instruction</span>
+    <div class="infotext">This website provides a visual overview of historical UK General Election results and predictions,
+      and interactive elements to explore the data in more detail.<br>
+      <ul>
+        <li>Use selection menus to choose the election year and the prediction data source.</li>
+        <li>Use search bars to look up a location by name or postcode and search for a candidate.</li>
+        <li>View candidate’s profile by selecting a candidate from the table.</li>
+        <li>Use the toggle to switch between actual and predicted results on the map.</li>
+      </ul>
+    </div>
   </div>
 </header>
-<main class="main-flex">
+<main>
   <section id="map"></section>
 
-  <section class="middle-section">
-    <div class="graph" >
+  <section id="middle-section">
+    <div id="graph" >
       <!--how will the title change with different datasets?
         Easy way would be to enable title in the chart but that looses the font-->
       <h4>Seats per Party: Actual vs Predicted</h4>
@@ -55,133 +58,69 @@
     </div>
 
     <!-- Prediction data dropdown menu -->
-    <div class="dropdown, dropdown-section" id="dropdown-data"></div>
+    <div id="dropdown-section">
+      <select id="dropdown-data"></select>
+    </div>
 
     <!-- Politician Profile Section -->
-    <div class="politician-section" >
-      <h4>Winning Margin: Actual v.s. Predicted</h4>
-      <div id="candSect">
-        <img src="assets/cand1.jpg" alt="Candidate Picture" id="candAlign">
-        <ul id="candSectList">
-          <li>Name:</li>
-          <li>Age:</li>
-          <li>Party:</li>
-          <li>Spouse:</li>
-        </ul>
-      </div>
+    <div id="candidate-section" >
+      <h4>Candidate Details</h4>
+      <table>
+        <tr><td>Name:</td><td id="candName"></td></tr>
+        <tr><td>Party:</td><td id="candParty"></td></tr>
+        <tr><td>Constituency:</td><td id="candConst"></td></tr>
+        <tr><td>Campaigns:</td><td id="candCamps"></td></tr>
+        <tr><td>Times Elected:</td><td id="candElect"></td></tr>
+      </table>
       <div id="candSectBox">
         <canvas id="candGraph"></canvas>
       </div>
-
     </div>
   </section>
 
 
-  <section class="table">
+  <section id="candidate-list">
 
      <!------search bar--------->
-    <div class="search">
-        <input type="text" id="search" class="search" spellcheck="false" placeholder="Search candidate...">
-        <span class="material-icons search_icon">search</span>
+    <div class="search-section">
+      <span class="material-icons search_icon" style="color: gray; margin: 5px;">search</span>
+      <input type="text" id="search" class="search" spellcheck="false" placeholder="Search candidate...">
+
     </div>
 
     <!------candidate table------->
-    <table id="candid" class="candid">
-      <thead>
-        <tr>
-          <th>Candidate</th>
-          <th>Votes</th>
-        </tr>
-      </thead>
+    <div id="listContainer">
+      <table id="candList" aria-label="list of candidates">
+        <thead>
+          <tr>
+            <th>Candidate</th>
+            <th>Votes</th>
+          </tr>
+        </thead>
 
-      <tbody>
-        <tr>
-          <td>Boris Johnson</td>
-          <td>12345</td>
-        </tr>
-        <tr>
-          <td>Nicola Sturgeon</td>
-          <td>02222</td>
-        </tr>
-        <tr>
-          <td>Caroline Lucas</td>
-          <td>23532</td>
-        </tr>
-        <tr>
-          <td>Keir Starmer</td>
-          <td>13536</td>
-        </tr>
-        <tr>
-          <td>Stephen Farry</td>
-          <td>02421</td>
-        </tr>
-        <tr>
-          <td>Chris Hazzard</td>
-          <td>13567</td>
-        </tr>
-        <tr>
-          <td>Ben Lake</td>
-          <td>75423</td>
-        </tr>
-        <tr>
-          <td>Paula Barker</td>
-          <td>46324</td>
-        </tr>
-        <tr>
-          <td>Hannah Bardell</td>
-          <td>35232</td>
-        </tr>
-        <tr>
-          <td>Nia Griffith</td>
-          <td>65332</td>
-      </tbody>
-    </table>
-    <script src="src/click.js"></script>
-
-
-    <!--------legend-------->
-    <table class="legend">
-    <thead>
-        <tr>
-          <th>Party Legend</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Conservatives</td>
-        </tr>
-        <tr>
-          <td>Labour</td>
-        </tr>
-        <tr>
-          <td>SNP</td>
-        </tr>
-        <tr>
-          <td>Lib Dem</td>
-        </tr>
-        <tr>
-          <td>DUP</td>
-        </tr>
-        <tr>
-          <td>Sinn Fienn</td>
-        </tr>
-        <tr>
-          <td>Plaid Cymru</td>
-        </tr>
-        <tr>
-          <td>SDLP</td>
-        </tr>
-        <tr>
-          <td>Green</td>
-        </tr>
-        <tr>
-          <td>Alliance</td>
-        </tr>
+        <tbody>
+        </tbody>
       </table>
+    </div>
+
+    <!--------legend--------->
+    <div id="legendContainer">
+      <table id="legend" aria-label="party colouring legend">
+        <thead>
+          <tr>
+            <th>Party Legend</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
   </section>
 </main>
-<footer class="footer">
-  <article>Data Sources:</article>
+<footer id="footer">
+  <p>DISCLAIMER: Prediction data are not real and only intended to demonstrate the functionality of the page.
+    <br>Data Sources &copy; Democracy Club (Licensed under CC BY 4.0), &copy; 2021 House of Commons Library (Licensed under Open Parliament License), Office for National Statistics (Licensed under OGLv3.0) contains &copy; Crown copyright and database right 2021.
+  </p>
 </footer>
 </body>
 </html>

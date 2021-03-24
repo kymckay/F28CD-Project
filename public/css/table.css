@@ -1,65 +1,52 @@
-.candid {
-    flex: 3;
-    border-collapse: collapse;
-    margin: 15px 0;
-    font-size: 0.9em;
-    font-family: Fjalla One;
-    min-width: 100%;
-
+#listContainer {
+  flex: 3;
+  overflow-y: scroll;
+  border-radius: 5px;
+  margin: 10px 0 30px 0;
+  min-width: 100%;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 
-/* style header */
-.candid thead tr {
-    background-color: grey;
-    text-align: left;
-    display: block;
-}
-
-/* style table cells */
-.candid th, .candid td {
-    padding: 5px;
-    text-align: left;
-    width: 200px;
-}
-
-/* style table rows */
-.candid tbody tr {
-    border-bottom: 1px solid #dddddd;
+#candList {
+  border-collapse: collapse;
+  font-size: 0.9em;
+  min-width: 100%;
 }
 
 /* overflow: auto used so scrollbar only appears when content overflows*/
-.candid tbody {
-    min-height: 580px;
+#candList tbody {
+    min-height: 520px;
     overflow: auto;
     display: block;
 }
 
 /* sorting table*/
-.candid th {
+#candList th {
     cursor: pointer;
 }
-.candid .th-sort-asc::after {
+#candList .th-sort-asc::after {
     content: "\25b4";
 }
-.candid .th-sort-desc::after {
+#candList .th-sort-desc::after {
     content: "\25be";
 }
-.candid .th-sort-asc::after,
-.candid .th-sort-desc::after {
+#candList .th-sort-asc::after,
+#candList .th-sort-desc::after {
     margin-left: 5px;
 }
 /* font style italic for column selected ascending */
-.candid .th-sort-asc,
-.candid .th.sort.desc {
+#candList .th-sort-asc,
+#candList .th.sort.desc {
     font-style: italic;
 }
 
 
 /* table rows clickable */
-tbody > tr {
-    cursor: pointer;
-    user-select: none;
+#candList tr {
+  cursor: pointer;
+  user-select: none;
 }
-tr.selected {
-    font-style: italic;
+#candList tr.selected {
+  font-weight: bold;
+  font-style: italic;
 }

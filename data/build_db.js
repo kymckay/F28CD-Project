@@ -12,58 +12,78 @@ const elections_file = path.resolve(__dirname, 'election-results.xlsx');
 
 // Only go back to 2010 as voting data constituency IDs change then
 const years = ["2010", "2015", "2017", "2019"];
+// Used to generate prediction data
+const sources = ["Electoral Calculus", "Politico", "Opinium", "YouGov", "Ipsos MORI"];
 
 async function main() {
   // Get relevant candidate and election data in parallel for efficiency
   const [ electionData, candidateData ] = await Promise.all([
     elections_in.readFile(elections_file, years),
-    candidates_in.readFile(candidates_file, years)
+    candidates_in.readFile(candidates_file, years, sources)
   ]);
 
   // Unpack the data
-  const { parties, people, candidates } = candidateData;
+  const { parties, candidates, constituencies } = candidateData;
 
-  // Constituency records will be built (one for each constitency each year)
-  let constituencies = Object.keys(electionData).map(y => {
-    const yearData = electionData[y];
-    return Object.keys(yearData).map(k => {
-      return {
-        gss_code: k,
-        electorate: yearData[k].electorate,
-        year: y
-      };
+  // Inject electorate into constituency records (one exists per year)
+  for (const k in constituencies) {
+    const c = constituencies[k];
+    c.electorate = electionData[c.year][c.gss_code].electorate;
+
+    // Generate random prediction data for the candidates running here the same year
+    const cands = candidates.filter(ca => (ca.year === c.year) && (ca.gss_code === c.gss_code));
+
+    // Randomly distribute the electorate for each source
+    let votes = sources.map(() => c.electorate);
+    cands.forEach(ca => {
+      ca.predictions = votes.map(v => Math.floor(Math.random() * v));
+
+      // Update the remaining votes available
+      votes = votes.map((v,i) => v - ca.predictions[i]);
     });
-  });
 
-  // The year-seperated structure has to be flat before insertion
-  constituencies = [].concat(...constituencies);
+    // Tally predicted party seats for predicted winners
+    const winners = sources.map((_,i) => cands.sort((a,b) => b.predictions[i] - a.predictions[i])[0]);
+    winners.forEach((w, i) => {
+      // Increment predicted wins for relevant source
+      parties[`${w.party_ec_id}${w.year}`].predictions[i] += 1;
+    });
+  }
 
   // Join the election voting data to the candidate records before insertion
   candidates.forEach(c => {
     const { parties: partyVotes } = electionData[c.year][c.gss_code];
 
-    // If candidate party is not recognised, they fall under other
-    // TODO: Independent candidate votes are all bundled under "Other" in the data and can't be seperated
-    c.votes = partyVotes[c.party_ec_id] ? partyVotes[c.party_ec_id] : partyVotes.Other;
+    // All leser known parties are all bundled under "Other" in the data and can't be seperated
+    c.votes = partyVotes[c.party_ec_id] ? partyVotes[c.party_ec_id] : partyVotes.Other; // TODO: Distribute instead of duplicating votes
 
     // If Other has no voting data for the region then the candidate's party is not reflected in the voting data
     if (!c.votes) {
-      c.votes = -1;
+      c.votes = Math.floor(Math.random() * 20);
       console.log(`Warning: No voting data for party "${c.party_ec_id}" in region "${c.gss_code}" of year ${c.year}`);
     }
-
-    // TODO: generate prediction data too (try to make consistent with electorate of region)
   });
+
+  // Determine seats won for each year and predicted seats won
+  for (const k in parties) {
+    const p = parties[k];
+
+    // Count party candidates in same year
+    const cands = candidates.filter(c => (c.year === p.year) && (c.party_ec_id === p.party_ec_id));
+
+    // Each constituency won is a seat
+    p.seats = cands.filter(c => c.elected).length;
+  }
 
   console.log(`Inserting data into MongoDB...`);
   try {
     await client.connect();
 
     // Must insert records sequentially to avoid DB write conflicts
-    await addCollection("parties", parties);
-    await addCollection("people", people);
+    await addCollection("sources", sources.map(s => ({name: s})))
+    await addCollection("parties", Object.values(parties));
     await addCollection("candidates", candidates);
-    await addCollection("constituencies", constituencies);
+    await addCollection("constituencies", Object.values(constituencies));
   } catch (error) {
     console.dir(error);
   } finally {
@@ -86,15 +106,3 @@ async function addCollection(name, documents) {
 }
 
 main().catch(console.dir);
-
-// async function test() {
-//   await client.connect();
-//   const database = client.db('f28cd');
-
-//   const collection = database.collection("candidates");
-
-//   await collection.find({ year: '2010' }).forEach((d) => console.log(d));
-
-//   await client.close();
-// }
-// test();
