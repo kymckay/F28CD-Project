@@ -145,19 +145,19 @@ export async function initMap(apiKey) {
     // Listen for the `result` event from the Geocoder
     // `result` event is triggered when a user makes a selection
     //  Add a marker at the result's coordinates
-    geocoder.on('result', function (e) {
+    geocoder.on('result', e => {
       mapbox.getSource('single-point').setData(e.result.geometry);
     });
 
-    mapbox.on('click', 'constituency-highlighted', function (e) {
+    mapbox.on('click', 'constituency-highlighted', e => {
       const constArea = e.features[0].properties.st_areashape;
       if (constArea > 500000000) {
         mapbox.flyTo({center: [e.features[0].properties.long, e.features[0].properties.lat], zoom: 7});
       } else {
         mapbox.flyTo({center: [e.features[0].properties.long, e.features[0].properties.lat], zoom: 10});
       }
-      const gss_id = e.features[0].properties.pcon19cd;
-      updateList(gss_id);
+
+      updateList(e.features[0].properties.pcon19cd);
     });
   });
 }
