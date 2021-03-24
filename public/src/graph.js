@@ -1,6 +1,7 @@
 /* global Chart */ // Defined by Chart.js
 
 import { curSource, getData, setSource } from "./data";
+import { populateList } from "./list";
 
 // Chart will be updated later
 let chart;
@@ -88,7 +89,13 @@ export async function populateGraph() {
 }
 
 export async function updateGraph(gss) {
+  // Filter candidates and make sure they are from the same constituency
   const candidates = getData().candidates.filter(c => c.gss_code === gss);
+
+  // Sort candidates by vote count
+  candidates.sort((a,b) => b.votes - a.votes);
+  
+
 }
 
 export async function updatePredictions(index) {

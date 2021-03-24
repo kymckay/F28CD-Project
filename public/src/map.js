@@ -2,6 +2,7 @@
 
 import { getData } from "./data";
 import { updateList } from './list.js';
+import { updateGraph } from "./graph";
 
 let mapbox;
 
@@ -158,6 +159,7 @@ export async function initMap(apiKey) {
       }
       const gss_id = e.features[0].properties.pcon19cd;
       updateList(gss_id);
+      updateGraph(gss_id);
     });
   });
 }
