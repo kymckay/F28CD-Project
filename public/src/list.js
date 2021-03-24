@@ -98,7 +98,7 @@ export async function populateLegend() {
 
   // Update the stylesheet to colour party classed elements
   const css = document.getElementById('party-styling');
-  css.innerHTML = significant.map(p => `tbody .${p.party_ec_id} { background-color: ${p.colour} !important; }`).join("\n");
+  css.innerHTML = significant.map(p => `tbody .${p.party_ec_id} { background-color: ${p.colour} !important; color: ${p.font} !important;} `).join("\n");
 
   // Sort by name for legend display
   significant.sort((a, b) => a.party_name.localeCompare(b.party_name));
