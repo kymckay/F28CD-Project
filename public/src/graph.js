@@ -95,27 +95,23 @@ export async function updateGraph(gss) {
   // Sort candidates by vote count
   candidates.sort((a,b) => b.votes - a.votes);
   
-  const candCount = Object.keys(candidates).length;
   // return top few candidates, but not more than top 6
   const top6 = candidates.slice(0,6);
-
   // the rest will be grouped "other"
   const rest = candidates.slice(6);
 
-  function getPartyName(x) {
-    getData().parties.forEach(p => {
-      if (p.party_ec_id == x) {
-        return p.party_name
-      }
-    });
-  }
-  chart.data.labels = top6.map(c => getPartyName(c.party_ec_id));
+  // Map parties to an object. Parties have same ec_id with candidate
+  const parties = top6.map(c => getData().parties.find(p => c.party_ec_id === p.party_ec_id));
+
+  // Map party name to label
+  chart.data.labels = parties.map(p => p.party_name);
 
   // Cumulate remaining party votes under "Other" entry
   const data = top6.map(p => p.votes);
   data.push(rest.reduce((acc, cur) => acc + cur.votes, 0));
 
-  const partyColours = top6.map(p => p.colour ? p.colour : '#3C4750');
+  // map party colour to 
+  const partyColours = parties.map(p => p.colour ? p.colour : '#3C4750');
   partyColours.push('#3C4750'); // "Other" gets neutral styling
 
   populatePredictions(top6, rest);
