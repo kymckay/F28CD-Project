@@ -1,4 +1,5 @@
 import { getData } from "./data";
+import { updateCandidate } from "./candidate.js";
 
 function search() {
   const input = document.getElementById("search");
@@ -51,6 +52,9 @@ export async function populateList() {
       const prev = document.querySelector('tr.selected');
       if (prev) prev.classList.remove('selected');
       e.currentTarget.classList.add('selected');
+
+      // Update candidate section with selected candidate from list
+      updateCandidate(parseInt(e.currentTarget.getAttribute('data-index')));
     });
 
     row.appendChild(name);
