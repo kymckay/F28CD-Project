@@ -113,10 +113,13 @@ main {
   display: flex;
   flex-direction: column;
   max-height: 300px;
+  align-items: center;
 }
 
 #candidate-section table {
-  margin-bottom: 7px;
+  width: 50%;
+  font-size: 80%;
+  margin: 10px 0 30px 0;
 }
 
 /* politician section graph formatting */
