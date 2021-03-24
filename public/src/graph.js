@@ -109,6 +109,17 @@ export async function updateGraph(gss) {
       }
     });
   }
+  chart.data.labels = top6.map(c => getPartyName(c.party_ec_id));
+
+  // Cumulate remaining party votes under "Other" entry
+  const data = top6.map(p => p.votes);
+  data.push(rest.reduce((acc, cur) => acc + cur.votes, 0));
+
+  const partyColours = top6.map(p => p.colour ? p.colour : '#3C4750');
+  partyColours.push('#3C4750'); // "Other" gets neutral styling
+
+  populatePredictions(top6, rest);
+
   
 }
 
