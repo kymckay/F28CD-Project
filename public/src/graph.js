@@ -87,6 +87,10 @@ export async function populateGraph() {
   updatePredictions(curSource);
 }
 
+export async function updateGraph(gss) {
+  const candidates = getData().candidates.filter(c => c.gss_code === gss);
+}
+
 export async function updatePredictions(index) {
   setSource(index);
 
