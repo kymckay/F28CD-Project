@@ -21,7 +21,6 @@ export async function initMap(apiKey) {
   mapboxgl.accessToken = apiKey;
 
   const jsonData = '/assets/constituencies.geojson';
-  const jsonFeature = fetch(jsonData).then(res => res.json());
 
   // Init. the map
   mapbox = new mapboxgl.Map({
@@ -31,14 +30,30 @@ export async function initMap(apiKey) {
     zoom: 4.9,
     maxBounds: ukBounds
   });
-  
+
+  // Search function to supplements geocoded results with constituencies
+  // https://docs.mapbox.com/mapbox-gl-js/example/forward-geocode-custom-data/
+  function localSearch(query) {
+    // Do nothing if the source doesn't exist yet
+    if (!mapbox.getSource('constituency')) return;
+
+    // Perform case insensitive search against constituency name property
+    const features = mapbox.querySourceFeatures('constituency').filter(f => {
+      return (f.properties.pcon19nm.search(new RegExp(query, 'i')) !== -1);
+    });
+
+    // Return objects used by the map
+    return features.map(f => ({
+      ...f,
+      'place_name': `📍 ${f.properties.pcon19nm}`,
+      center: [f.properties.long, f.properties.lat],
+      'place_type': ['constituency']
+    }));
+  }
+
   const constituencyGeocoder = new MapboxGeocoder({
     accessToken: apiKey,
-    // localGeocoder does not work with injected searches
-    // hence the use of an externalGeocoder
-    localGeocoder: dummy,
-    externalGeocoder: localSearch,
-    // localGeocoder: localSearch,
+    localGeocoder: localSearch,
     mapboxgl: mapboxgl,
     zoom: 11,
     speed: 100,
@@ -50,34 +65,6 @@ export async function initMap(apiKey) {
     },
     marker: false
   });
-
-  function dummy() {
-    console.log('dummy');
-    return [];
-  }
-  
-  // Defining the search function
-  function localSearch(query) {
-    const matchingFeatures = [];
-    return jsonFeature.then((data) => {
-      console.log(data);
-      data.features.forEach(feature => {
-        if (
-          feature.properties.pcon19nm
-            .toLowerCase()
-            .search(query.toLowerCase()) !== -1
-        ) {
-          // If search succeeded, overide geometry data with single point coordinates
-          // // polygon data
-          feature.properties.geometry = [feature.properties.long, feature.properties.lat];
-          feature['place_name'] = `📍 ${feature.properties.pcon19nm}`;
-          feature['center'] = feature.properties.geometry;
-          matchingFeatures.push(feature);
-        }
-      });
-      return matchingFeatures;
-    });
-  }
 
   // Add the geocoder to the map
   mapbox.addControl(constituencyGeocoder);
