@@ -1,6 +1,6 @@
 /* global mapboxgl, MapboxGeocoder */ // Defined by Mapbox GL JS
 
-import { getData } from "./data";
+import { curSource, getData } from "./data";
 import { updateList } from './list.js';
 import { updateGraph } from "./graph";
 
@@ -194,7 +194,7 @@ export async function initMap(apiKey) {
   });
 }
 
-function updateColours() {
+function updateColours(boolean) {
   // Do nothing if the layers don't exist yet
   if (!mapbox.getLayer('constituency-fill')) return;
 
@@ -206,7 +206,16 @@ function updateColours() {
   data.constituencies.forEach(c => {
     // Find party colour of candidate with most votes in the constituency
     // (candidates sorted by votes by default)
-    const winner = data.candidates.filter(ca => ca.gss_code === c.gss_code)[0];
+    if (boolean == true) {
+      const winner = data.candidates.filter(ca => ca.gss_code === c.gss_code)[0];
+      return winner;
+    } else {
+      const winnerArray = data.candidates.filter(ca => ca.gss_code === c.gss_code);
+      const winnerSort = winnerArray.sort((a,b) => parseFloat(a.predictions[curSource]) - parseFloat(b.predictions[curSource]));
+      const winner = winnerSort[0];
+      return winner;
+    };
+    
     const colour = data.parties.find(p => p.party_ec_id === winner.party_ec_id).colour;
 
     // Skip over parties with no colour
