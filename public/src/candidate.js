@@ -53,12 +53,10 @@ function updateChart(chosen) {
   // Compare to candidates in same constituency
   const competitors = getData().candidates.filter(c => (c.gss_code === chosen.gss_code) && (c.party_ec_id !== chosen.party_ec_id));
 
-  // Sort competitors by votes
-  competitors.sort((a, b) => b.votes - a.votes);
-
   // Need total votes cast in constituency for MOV (or MOL)
   const total = competitors.reduce((acc, cur) => acc + cur.votes, chosen.votes);
 
+  // Candidates sorted by votes by default (slice gets top 3)
   // MOV will compare up to top 3 below (may not be 3 in region)
   // MOL will compare up to top 3 above (may not be 3 above)
   const compare = competitors.filter(c => chosen.elected ? true : c.votes > chosen.votes).slice(0, 3);

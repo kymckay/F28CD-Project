@@ -205,9 +205,9 @@ function updateColours() {
   // Find winner of constituency and map it to their party colour
   data.constituencies.forEach(c => {
     // Find party colour of candidate with most votes in the constituency
-    const cands = data.candidates.filter(ca => ca.gss_code === c.gss_code);
-    cands.sort((a, b) => b.votes - a.votes);
-    const colour = data.parties.find(p => p.party_ec_id === cands[0].party_ec_id).colour;
+    // (candidates sorted by votes by default)
+    const winner = data.candidates.filter(ca => ca.gss_code === c.gss_code)[0];
+    const colour = data.parties.find(p => p.party_ec_id === winner.party_ec_id).colour;
 
     // Skip over parties with no colour
     if (!colour) return;
