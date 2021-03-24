@@ -1,6 +1,6 @@
 /* global Chart */ // Defined by Chart.js
 
-import { curSource, getData, setSource } from "./data";
+import { curSource, getData } from "./data";
 
 // Chart will be updated later
 let chart;
