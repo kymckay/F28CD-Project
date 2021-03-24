@@ -126,7 +126,7 @@ export async function updateGraph(gss) {
 
   // Show real data as a solid bar (always first element)
   chart.data.datasets[0] = {
-    label: 'votes',
+    label: 'Votes',
     borderWidth: 1,
     backgroundColor: partyColours,
     borderColor: "#3C4750",
