@@ -95,7 +95,11 @@ export async function updateGraph(gss) {
   // Sort candidates by vote count
   candidates.sort((a,b) => b.votes - a.votes);
   
+  const candCount = Object.keys(candidates).length;
+  // return top few candidates, but not more than top 6
+  const top6 = candidates.slice(0,6);
 
+  
 }
 
 export async function updatePredictions(index) {
