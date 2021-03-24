@@ -9,7 +9,7 @@ function search() {
   for (const i in tr) {
     const td = tr[i].getElementsByTagName("td")[0];
     if (td) {
-      const txtValue = td.innerText;
+      const txtValue = td.innerHTML;
       if (txtValue.toUpperCase().indexOf(filter) > -1) {
         tr[i].style.display = "";
       } else {
