@@ -2,6 +2,7 @@
 
 import { getData } from "./data";
 import { updateList } from './list.js';
+import { updateGraph } from "./graph";
 
 let mapbox;
 
@@ -12,13 +13,17 @@ export async function initMap(apiKey) {
     return;
   }
 
+  // Finding the centre of UK
   const long = -2.821868;
   const lat = 55.612226;
   const ukCentre = [long, lat];
-  const ukSearchBounds = [-8.196671, 50.064075, 1.737475, 60.917070];
+  // ukBounds to be used only for setting the border of the view
   const ukBounds = [[-12.696671, 49.064075],[6.237475, 60.917070]];
   mapboxgl.accessToken = apiKey;
 
+  const jsonData = '/assets/constituencies.geojson';
+
+  // Init. the map
   mapbox = new mapboxgl.Map({
     container: 'map', // ID in the HTML
     style: 'mapbox://styles/mapbox/light-v10',
@@ -27,11 +32,34 @@ export async function initMap(apiKey) {
     maxBounds: ukBounds
   });
 
+  // Search function to supplements geocoded results with constituencies
+  // https://docs.mapbox.com/mapbox-gl-js/example/forward-geocode-custom-data/
+  function localSearch(query) {
+    // Do nothing if the source doesn't exist yet
+    if (!mapbox.getSource('constituency')) return;
+
+    // Perform case insensitive search against constituency name property
+    const features = mapbox.querySourceFeatures('constituency').filter(f => {
+      return (f.properties.pcon19nm.search(new RegExp(query, 'i')) !== -1);
+    });
+
+    // Return objects used by the map
+    return features.map(f => ({
+      ...f,
+      'place_name': `📍 ${f.properties.pcon19nm}`,
+      center: [f.properties.long, f.properties.lat],
+      'place_type': ['constituency']
+    }));
+  }
+
   const geocoder = new MapboxGeocoder({
     accessToken: apiKey,
+    localGeocoder: localSearch,
     mapboxgl: mapboxgl,
-    placeholder: 'Search for places in United Kingdom',
-    bbox: ukSearchBounds,
+    zoom: 11,
+    speed: 100,
+    placeholder: 'Search UK Places',
+    countries: 'gb',
     proximity: {
       longitude: long,
       latitude: lat
@@ -42,6 +70,7 @@ export async function initMap(apiKey) {
   // Add the geocoder to the map
   mapbox.addControl(geocoder);
 
+  // Define popup to be used on mouse hover
   const popup = new mapboxgl.Popup({
     closeButton: false
   });
@@ -50,14 +79,13 @@ export async function initMap(apiKey) {
   // add a source layer and default styling for a single point
   mapbox.on('load', function () {
 
-    // polygon GeoJson
+    // Add a source
     mapbox.addSource('constituency', {
       type: 'geojson',
-      data: 'https://opendata.arcgis.com/datasets/937997590f724a398ccc0100dbd9feee_0.geojson'
-      // data: '..public/assets/constituencies.geojson'
+      data: jsonData
     });
 
-    // add polygon fill
+    // add polygon fill, based on source 'constituency'
     mapbox.addLayer(
       {
         'id': 'constituency-fill',
@@ -111,18 +139,19 @@ export async function initMap(apiKey) {
 
       // Display a popup with the name of the constituency.
       popup
-      .setLngLat([feature.properties.long, feature.properties.lat])
-      .setText(`${feature.properties.pcon19nm}`)
-      .addTo(mapbox);
+        .setLngLat([feature.properties.long, feature.properties.lat])
+        .setText(`${feature.properties.pcon19nm}`)
+        .addTo(mapbox);
     });
 
+    // define popup closing action on mouse leave
     mapbox.on('mouseleave', 'constituency-fill', function () {
       mapbox.getCanvas().style.cursor = '';
       popup.remove();
       mapbox.setFilter('constituency-highlighted', ['in', 'pcon19nm', '']);
     });
 
-    // Add source fo search pin
+    // Add source for search area
     mapbox.addSource('single-point', {
       type: 'geojson',
       data: {
@@ -131,25 +160,26 @@ export async function initMap(apiKey) {
       }
     });
 
-    // add the search pin
+    // add the search area
     mapbox.addLayer({
-      id: 'point',
+      id: 'point-2',
       source: 'single-point',
-      type: 'circle',
-      paint: {
-        'circle-radius': 10,
-        'circle-color': '#448ee4'
-      }
+      type: 'fill',
+      'paint': {
+        'fill-outline-color': '#484896',
+        'fill-color': '#3c4750',
+        'fill-opacity': 0.2
+      },
     });
 
     // Listen for the `result` event from the Geocoder
     // `result` event is triggered when a user makes a selection
     //  Add a marker at the result's coordinates
-    geocoder.on('result', function (e) {
+    geocoder.on('result', e => {
       mapbox.getSource('single-point').setData(e.result.geometry);
     });
 
-    mapbox.on('click', 'constituency-highlighted', function (e) {
+    mapbox.on('click', 'constituency-highlighted', e => {
       const constArea = e.features[0].properties.st_areashape;
       if (constArea > 500000000) {
         mapbox.flyTo({center: [e.features[0].properties.long, e.features[0].properties.lat], zoom: 7});
@@ -158,6 +188,8 @@ export async function initMap(apiKey) {
       }
       const gss_id = e.features[0].properties.pcon19cd;
       updateList(gss_id);
+      updateGraph(gss_id);
+      document.getElementById('graph-title').innerHTML = "Votes per Party: Actual vs Predicted";
     });
   });
 }
