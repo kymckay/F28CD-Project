@@ -120,7 +120,20 @@ export async function updateGraph(gss) {
 
   populatePredictions(top6, rest);
 
-  
+  // Clear existing data
+  chart.data.datasets = [];
+
+  // Show real data as a solid bar (always first element)
+  chart.data.datasets[0] = {
+    label: 'votes',
+    borderWidth: 1,
+    backgroundColor: partyColours,
+    borderColor: "#3C4750",
+    data
+  };
+
+  // Update displayed predictions, preserving current index
+  updatePredictions(curSource);
 }
 
 export async function updatePredictions(index) {
