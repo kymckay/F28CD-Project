@@ -43,9 +43,46 @@ export async function populateList() {
     // Can style the rows by their party ID
     row.classList.add(cand.party_ec_id);
 
+    row.addEventListener('click', e => {
+      // Style the row as selected (and unstyle previous)
+      const prev = document.querySelector('tr.selected');
+      if (prev) prev.classList.remove('selected');
+      e.currentTarget.classList.add('selected');
+    });
+
     row.appendChild(name);
     row.appendChild(votes);
     newRows.appendChild(row);
+  });
+
+  // Populate the table with the new data
+  clist.appendChild(newRows);
+}
+
+// Clears and populates list upon map click
+export async function updateList(post_id) {
+  // Clear existing rows first
+  const [clist] = document.getElementById('candList').getElementsByTagName('tbody');
+  clist.innerHTML = '';
+
+  // Document fragment will trigger reflow only once when attached
+  const newRows = document.createDocumentFragment();
+  getData().candidates.forEach(cand => {
+    if (cand.gss_code === post_id) {
+      const row = document.createElement("tr");
+      const name = document.createElement("td");
+      const votes = document.createElement("td");
+
+      name.innerHTML = cand.name;
+      votes.innerHTML = cand.votes;
+
+      // Can style the rows by their party ID
+      row.classList.add(cand.party_ec_id);
+
+      row.appendChild(name);
+      row.appendChild(votes);
+      newRows.appendChild(row);
+    }
   });
 
   // Populate the table with the new data
@@ -88,17 +125,20 @@ export async function populateLegend() {
   llist.appendChild(newRows);
 }
 
-function sortTableByColumn(table, column, asc = true) {
+function sortTableByColumn(table, column, asc = true, numeric = false) {
   const dirModifier = asc ? 1 : -1;
   const tBody = table.tBodies[0];
   const rows = Array.from(tBody.querySelectorAll("tr"));
 
-  //sort each row
-  const sortedRows = rows.sort((a, b) => {
+  // Sort rows in place
+  rows.sort((a, b) => {
     const aColText = a.querySelector(`td:nth-child(${column + 1})`).textContent.trim();
     const bColText = b.querySelector(`td:nth-child(${column + 1})`).textContent.trim();
 
-    return aColText > bColText ? (1 * dirModifier) : (-1 * dirModifier);
+    const compA = numeric ? parseInt(aColText) : aColText;
+    const compB = numeric ? parseInt(bColText) : bColText;
+
+    return compA > compB ? (1 * dirModifier) : (-1 * dirModifier);
   });
 
   //remove all existing trs from table
@@ -106,25 +146,26 @@ function sortTableByColumn(table, column, asc = true) {
     tBody.removeChild(tBody.firstChild);
   }
 
-  //readd newly sorted rows
-  tBody.append(...sortedRows);
+  // Re-add newly sorted rows
+  tBody.append(...rows);
 
-  //remember how column is currently sorted
+  // Remember how column is currently sorted
   table.querySelectorAll("th").forEach(th => th.classList.remove("th-sort-asc", "th-sort-desc"));
   table.querySelector(`th:nth-child(${column + 1})`).classList.toggle("th-sort-asc", asc);
   table.querySelector(`th:nth-child(${column + 1})`).classList.toggle("th-sort-desc", !asc);
-
 }
 
 // Enables the sorting functionality of the table headings
 export async function initSort() {
-  document.querySelectorAll("#candList th").forEach(headerCell => {
-    headerCell.addEventListener("click", () => {
-      const tableElement = headerCell.parentElement.parentElement.parentElement;
-      const headerIndex = Array.prototype.indexOf.call(headerCell.parentElement.children, headerCell);
-      const currentIsAscending = headerCell.classList.contains("th-sort-asc");
+  const list = document.getElementById('candList');
 
-      sortTableByColumn(tableElement, headerIndex, !currentIsAscending);
+  list.querySelectorAll('th').forEach((headerCell, i) => {
+    headerCell.addEventListener('click', () => {
+      const columnIndex = i;
+      const isNumeric = i === 1; // Votes column is second
+      const isAscending = headerCell.classList.contains("th-sort-asc");
+
+      sortTableByColumn(list, columnIndex, !isAscending, isNumeric);
     });
   });
 }
