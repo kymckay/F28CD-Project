@@ -4,6 +4,7 @@ import { initGraph } from './graph.js';
 import { initSearch, initSort } from './list.js';
 import { initMap } from './map.js';
 import { getOptions, newYear } from './requests.js';
+import { initToggle } from './toggle';
 
 // Leave this blank, value injected during build (see contributing guidelines)
 const MAPBOX_KEY = '';
@@ -16,6 +17,7 @@ function initPage() {
   initSearch();
   initGraph();
   initCandidate();
+  initToggle();
 }
 
 document.addEventListener('DOMContentLoaded', initPage);

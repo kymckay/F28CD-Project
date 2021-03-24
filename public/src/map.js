@@ -1,8 +1,9 @@
 /* global mapboxgl, MapboxGeocoder */ // Defined by Mapbox GL JS
 
-import { getData } from "./data";
+import { curSource, getData } from "./data";
 import { updateList } from './list.js';
 import { updateGraph } from "./graph";
+import { state as toggleState } from "./toggle";
 
 let mapbox;
 
@@ -125,7 +126,7 @@ export async function initMap(apiKey) {
     );
 
     // Set layer styling after they exist
-    updateColours();
+    updateColours(true);
 
     mapbox.on('mousemove', 'constituency-fill', function (e) {
       // Change the cursor style as a UI indicator.
@@ -202,6 +203,8 @@ function updateColours() {
   // Do nothing if the layers don't exist yet
   if (!mapbox.getLayer('constituency-fill')) return;
 
+  // Always respect the toggle state when coulouring map
+  const useReal = !toggleState;
   const data = getData();
 
   const colourMap = {};
@@ -210,7 +213,14 @@ function updateColours() {
   data.constituencies.forEach(c => {
     // Find party colour of candidate with most votes in the constituency
     // (candidates sorted by votes by default)
-    const winner = data.candidates.filter(ca => ca.gss_code === c.gss_code)[0];
+    let winner;
+    const cands = data.candidates.filter(ca => ca.gss_code === c.gss_code);
+    if (useReal) {
+      winner = cands[0]
+    } else {
+      winner = cands.sort((a, b) => b.predictions[curSource] - a.predictions[curSource])[0];
+    }
+
     const colour = data.parties.find(p => p.party_ec_id === winner.party_ec_id).colour;
 
     // Skip over parties with no colour
@@ -241,5 +251,5 @@ function updateColours() {
 }
 
 export function updateMap() {
-  updateColours();
+  updateColours(true);
 }

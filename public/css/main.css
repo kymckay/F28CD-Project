@@ -95,6 +95,9 @@ main {
   align-self: center;
   max-width: 450px;
 }
+#middle-low {
+  display: inline-block;
+}
 
 /* prediction data dropdown menu section formatting */
 #dropdown-section {

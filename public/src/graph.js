@@ -1,6 +1,6 @@
 /* global Chart */ // Defined by Chart.js
 
-import { curSource, getData, setSource } from "./data";
+import { curSource, getData } from "./data";
 
 // Chart will be updated later
 let chart;
@@ -143,16 +143,14 @@ export async function updateGraph(gss) {
   document.getElementById('graph-title').innerHTML = "Votes per Party";
 }
 
-export async function updatePredictions(index) {
-  setSource(index);
-
+export async function updatePredictions() {
   // Show prediction data as an outline only bar to differentiate
   chart.data.datasets[1] = {
     label: 'Prediction',
     backgroundColor: '#FFF',
     borderWidth: 1,
     borderColor: "#3C4750",
-    data: predictions[index]
+    data: predictions[curSource]
   };
 
   chart.update();
