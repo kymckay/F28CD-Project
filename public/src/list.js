@@ -84,6 +84,7 @@ export async function updateList(gss_code) {
   rows.forEach(row => {
     row.style.display = indexes.includes(row.getAttribute('data-index')) ? '' : 'none';
   });
+  updateCandidate([indexes[0]]);
 }
 
 export async function populateLegend() {
@@ -95,7 +96,7 @@ export async function populateLegend() {
 
   // Update the stylesheet to colour party classed elements
   const css = document.getElementById('party-styling');
-  css.innerHTML = significant.map(p => `tbody .${p.party_ec_id} { background-color: ${p.colour} !important; }`).join("\n");
+  css.innerHTML = significant.map(p => `tbody .${p.party_ec_id} { background-color: ${p.colour} !important;} `).join("\n");
 
   // Sort by name for legend display
   significant.sort((a, b) => a.party_name.localeCompare(b.party_name));

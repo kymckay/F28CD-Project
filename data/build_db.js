@@ -54,6 +54,10 @@ async function main() {
   candidates.forEach(c => {
     const { parties: partyVotes } = electionData[c.year][c.gss_code];
 
+    const repeates = candidates.filter(o => c.gss_code === o.gss_code && c.party_ec_id === o.party_ec_id);
+    c.campaigns = repeates.length;
+    c.wins = repeates.filter(o => o.elected).length;
+
     // All leser known parties are all bundled under "Other" in the data and can't be seperated
     c.votes = partyVotes[c.party_ec_id] ? partyVotes[c.party_ec_id] : partyVotes.Other; // TODO: Distribute instead of duplicating votes
 
@@ -80,9 +84,10 @@ async function main() {
     await client.connect();
 
     // Must insert records sequentially to avoid DB write conflicts
+    // Sort candidates and parties by popularity now to save time at runtime
     await addCollection("sources", sources.map(s => ({name: s})))
-    await addCollection("parties", Object.values(parties));
-    await addCollection("candidates", candidates);
+    await addCollection("parties", Object.values(parties).sort((a,b) => b.seats - a.seats));
+    await addCollection("candidates", candidates.sort((a,b) => b.votes - a.votes));
     await addCollection("constituencies", Object.values(constituencies));
   } catch (error) {
     console.dir(error);
