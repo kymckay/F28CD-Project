@@ -40,7 +40,10 @@ function populatePredictions(top6, rest) {
   // The rest are grouped under "Other" at index 6
   for (let i = 0; i < numSources; i++) {
     predictions[i] = top6.map(p => p.predictions[i]);
-    predictions[i].push(rest.reduce((acc, cur) => acc + cur.predictions[i], 0));
+
+    if (rest) {
+      predictions[i].push(rest.reduce((acc, cur) => acc + cur.predictions[i], 0));
+    }
   }
 }
 
@@ -90,26 +93,33 @@ export async function updateGraph(gss) {
   // Filter candidates and make sure they are from the same constituency
   const candidates = getData().candidates.filter(c => c.gss_code === gss);
 
-  // Candidates are sorted by votes by default
-  const top6 = candidates.slice(0,6);
-  // the rest will be grouped "other"
-  const rest = candidates.slice(6);
+  // If there are only 7 candidates or less here no need to use "other"
+  let top;
+  let rest;
+  if (candidates.length > 7) {
+    // Candidates are sorted by votes by default
+    top = candidates.slice(0, 6);
+    rest = candidates.slice(6);
+  } else {
+    top = candidates;
+  }
 
   // Map parties to an object. Parties have same ec_id with candidate
-  const parties = top6.map(c => getData().parties.find(p => c.party_ec_id === p.party_ec_id));
+  const parties = top.map(c => getData().parties.find(p => c.party_ec_id === p.party_ec_id));
 
-  // Map party name to label
+  // Map party attributes for the constituency
   chart.data.labels = parties.map(p => p.party_name);
-
-  // Cumulate remaining party votes under "Other" entry
-  const data = top6.map(p => p.votes);
-  data.push(rest.reduce((acc, cur) => acc + cur.votes, 0));
-
-  // map party colour to
+  const data = top.map(p => p.votes);
   const partyColours = parties.map(p => p.colour ? p.colour : '#3C4750');
-  partyColours.push('#3C4750'); // "Other" gets neutral styling
 
-  populatePredictions(top6, rest);
+  // Any more will be grouped "other" if relevant
+  if (rest) {
+    chart.data.labels.push('Other');
+    data.push(rest.reduce((acc, cur) => acc + cur.votes, 0));
+    partyColours.push('#3C4750'); // "Other" gets neutral styling
+  }
+
+  populatePredictions(top, rest);
 
   // Clear existing data
   chart.data.datasets = [];
