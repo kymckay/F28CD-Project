@@ -1,5 +1,7 @@
 import { updatePredictions } from './graph.js';
+import { updateMap } from './map.js';
 import { newYear } from './requests.js';
+import { setSource } from './data.js';
 
 // Populates a dropdown (identified by ID in HTML) with array of values
 async function populateDropdown(id, options, index = false) {
@@ -29,5 +31,9 @@ export async function initDropdowns() {
   document.getElementById("dropdown-year").addEventListener("change", e => newYear(e.target.value));
 
   // Handle updates on source change
-  document.getElementById("dropdown-data").addEventListener("change", e => updatePredictions(e.target.value))
+  document.getElementById("dropdown-data").addEventListener("change", e => {
+    setSource(e.target.value); // Source should be respected by other events
+    updatePredictions(); // Graph predictions will change
+    updateMap(); // Colours may change if toggle active
+  });
 }

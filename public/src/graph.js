@@ -83,7 +83,7 @@ export async function populateGraph() {
   };
 
   // Update displayed predictions, preserving current index
-  updatePredictions(curSource);
+  updatePredictions();
 }
 
 export async function updateGraph(gss) {
@@ -124,19 +124,17 @@ export async function updateGraph(gss) {
   };
 
   // Update displayed predictions, preserving current index
-  updatePredictions(curSource);
+  updatePredictions();
 }
 
-export async function updatePredictions(index) {
-  setSource(index);
-
+export async function updatePredictions() {
   // Show prediction data as an outline only bar to differentiate
   chart.data.datasets[1] = {
     label: 'Prediction',
     backgroundColor: '#FFF',
     borderWidth: 1,
     borderColor: "#3C4750",
-    data: predictions[index]
+    data: predictions[curSource]
   };
 
   chart.update();
