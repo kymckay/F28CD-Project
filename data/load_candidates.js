@@ -31,6 +31,13 @@ const colours = {
   'PP3960': '#00008B',
 }
 
+const fontColour = {
+  'PP53': '#FFFFFF',
+  'PP77': '#FFFFFF',
+  'PP85': '#FFFFFF',
+  'PP3960': '#FFFFFF'
+}
+
 exports.readFile = async (filename, years, sources) => {
   console.log("Extracting candidate data...");
   // Data from file will be stored in these objects
