@@ -1,6 +1,7 @@
 /* global mapboxgl, MapboxGeocoder */ // Defined by Mapbox GL JS
 
 import { getData } from "./data";
+import { updateList } from './list.js';
 
 let mapbox;
 
@@ -146,6 +147,17 @@ export async function initMap(apiKey) {
     //  Add a marker at the result's coordinates
     geocoder.on('result', function (e) {
       mapbox.getSource('single-point').setData(e.result.geometry);
+    });
+
+    mapbox.on('click', 'constituency-highlighted', function (e) {
+      const constArea = e.features[0].properties.st_areashape;
+      if (constArea > 500000000) {
+        mapbox.flyTo({center: [e.features[0].properties.long, e.features[0].properties.lat], zoom: 7});
+      } else {
+        mapbox.flyTo({center: [e.features[0].properties.long, e.features[0].properties.lat], zoom: 10});
+      }
+      const gss_id = e.features[0].properties.pcon19cd;
+      updateList(gss_id);
     });
   });
 }
