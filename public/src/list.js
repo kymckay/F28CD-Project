@@ -9,7 +9,7 @@ function search() {
   for (const i in tr) {
     const td = tr[i].getElementsByTagName("td")[0];
     if (td) {
-      const txtValue = td.textContent || td.innerText;
+      const txtValue = td.innerText;
       if (txtValue.toUpperCase().indexOf(filter) > -1) {
         tr[i].style.display = "";
       } else {
@@ -32,7 +32,7 @@ export async function populateList() {
 
   // Document fragment will trigger reflow only once when attached
   const newRows = document.createDocumentFragment();
-  getData().candidates.forEach(cand => {
+  getData().candidates.forEach((cand, i) => {
     const row = document.createElement("tr");
     const name = document.createElement("td");
     const votes = document.createElement("td");
@@ -42,6 +42,9 @@ export async function populateList() {
 
     // Can style the rows by their party ID
     row.classList.add(cand.party_ec_id);
+
+    // Store data index in HTML for easy element updates
+    row.setAttribute('data-index', i);
 
     row.addEventListener('click', e => {
       // Style the row as selected (and unstyle previous)
