@@ -22,6 +22,7 @@ export function initCandidate() {
             yAxes: [{
               ticks: {
                 beginAtZero: true,
+                stepSize: 20,
                 callback: value => `${value}%`
               }
             }]
