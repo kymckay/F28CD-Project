@@ -76,9 +76,8 @@ input:checked + .slider:before {
 }
   
 #predictionLabel {
-    position: relative;
+    position: absolute;
     padding-left: 5pt;
-    /* padding-top: 5pt; */
     align-self: right;
     font-size: small;
 }
