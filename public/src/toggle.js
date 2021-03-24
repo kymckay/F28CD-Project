@@ -7,7 +7,7 @@ export async function initToggle() {
     state = this.checked;
 
     if (this.checked) {
-      document.getElementById('predictionLabel').innerHTML = "Predicted";
+      document.getElementById('predictionLabel').innerHTML = "Predicted"
     } else {
       document.getElementById('predictionLabel').innerHTML = "Actual"
     }

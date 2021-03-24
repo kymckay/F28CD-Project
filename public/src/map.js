@@ -212,7 +212,7 @@ function updateColours() {
     let winner;
     const cands = data.candidates.filter(ca => ca.gss_code === c.gss_code);
     if (useReal) {
-      winner = cands[0];
+      winner = cands[0]
     } else {
       winner = cands.sort((a, b) => b.predictions[curSource] - a.predictions[curSource])[0];
     }
