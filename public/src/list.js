@@ -62,34 +62,24 @@ export async function populateList() {
   clist.appendChild(newRows);
 }
 
-// Clears and populates list upon map click
-export async function updateList(post_id) {
-  // Clear existing rows first
-  const [clist] = document.getElementById('candList').getElementsByTagName('tbody');
-  clist.innerHTML = '';
-
-  // Document fragment will trigger reflow only once when attached
-  const newRows = document.createDocumentFragment();
-  getData().candidates.forEach(cand => {
-    if (cand.gss_code === post_id) {
-      const row = document.createElement("tr");
-      const name = document.createElement("td");
-      const votes = document.createElement("td");
-
-      name.innerHTML = cand.name;
-      votes.innerHTML = cand.votes;
-
-      // Can style the rows by their party ID
-      row.classList.add(cand.party_ec_id);
-
-      row.appendChild(name);
-      row.appendChild(votes);
-      newRows.appendChild(row);
+// Hides candidates from other constituencies on map click
+export async function updateList(gss_code) {
+  // Need candidates in the constituency by their index in the overall data structure
+  const indexes = [];
+  getData().candidates.forEach((cand, i) => {
+    if (cand.gss_code === gss_code) {
+      // DOM attributes are strings
+      indexes.push(i.toString());
     }
   });
 
-  // Populate the table with the new data
-  clist.appendChild(newRows);
+  const [clist] = document.getElementById('candList').getElementsByTagName('tbody');
+  const rows = clist.getElementsByTagName('tr');
+
+  // Simply hide all the rows for candidates not in this constituency
+  rows.forEach(row => {
+    row.style.display = indexes.includes(row.getAttribute('data-index')) ? '' : 'none';
+  });
 }
 
 export async function populateLegend() {
