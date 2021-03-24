@@ -99,6 +99,9 @@ export async function updateGraph(gss) {
   // return top few candidates, but not more than top 6
   const top6 = candidates.slice(0,6);
 
+  // the rest will be grouped "other"
+  const rest = candidates.slice(6);
+
   
 }
 
