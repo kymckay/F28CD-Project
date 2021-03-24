@@ -2,6 +2,7 @@
 
 import { getData } from "./data";
 import { updateList } from './list.js';
+import { updateGraph } from "./graph";
 
 let mapbox;
 
@@ -185,8 +186,10 @@ export async function initMap(apiKey) {
       } else {
         mapbox.flyTo({center: [e.features[0].properties.long, e.features[0].properties.lat], zoom: 10});
       }
-
-      updateList(e.features[0].properties.pcon19cd);
+      const gss_id = e.features[0].properties.pcon19cd;
+      updateList(gss_id);
+      updateGraph(gss_id);
+      document.getElementById('graph-title').innerHTML = "Votes per Party: Actual vs Predicted";
     });
   });
 }

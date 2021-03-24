@@ -87,6 +87,50 @@ export async function populateGraph() {
   updatePredictions(curSource);
 }
 
+export async function updateGraph(gss) {
+  // Filter candidates and make sure they are from the same constituency
+  const candidates = getData().candidates.filter(c => c.gss_code === gss);
+
+  // Sort candidates by vote count
+  candidates.sort((a,b) => b.votes - a.votes);
+  
+  // return top few candidates, but not more than top 6
+  const top6 = candidates.slice(0,6);
+  // the rest will be grouped "other"
+  const rest = candidates.slice(6);
+
+  // Map parties to an object. Parties have same ec_id with candidate
+  const parties = top6.map(c => getData().parties.find(p => c.party_ec_id === p.party_ec_id));
+
+  // Map party name to label
+  chart.data.labels = parties.map(p => p.party_name);
+
+  // Cumulate remaining party votes under "Other" entry
+  const data = top6.map(p => p.votes);
+  data.push(rest.reduce((acc, cur) => acc + cur.votes, 0));
+
+  // map party colour to 
+  const partyColours = parties.map(p => p.colour ? p.colour : '#3C4750');
+  partyColours.push('#3C4750'); // "Other" gets neutral styling
+
+  populatePredictions(top6, rest);
+
+  // Clear existing data
+  chart.data.datasets = [];
+
+  // Show real data as a solid bar (always first element)
+  chart.data.datasets[0] = {
+    label: 'votes',
+    borderWidth: 1,
+    backgroundColor: partyColours,
+    borderColor: "#3C4750",
+    data
+  };
+
+  // Update displayed predictions, preserving current index
+  updatePredictions(curSource);
+}
+
 export async function updatePredictions(index) {
   setSource(index);
 
