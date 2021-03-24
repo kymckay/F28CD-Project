@@ -6,13 +6,8 @@ export async function initToggle() {
   document.getElementById('check-box').addEventListener('change', function() {
     state = this.checked;
 
-    if (this.checked) {
-      document.getElementById('predictionLabel').innerHTML = "Predicted Data"
-    } else {
-      document.getElementById('predictionLabel').innerHTML = "Actual Data"
-    }
+    document.getElementById('predictionLabel').innerHTML = this.checked ? "Colour Map: Predicted" : "Colour Map: Actual";
 
     updateMap();
-  })
-
+  });
 }
