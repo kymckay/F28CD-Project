@@ -31,11 +31,12 @@ const colours = {
   'PP3960': '#00008B',
 }
 
-const fontColour = {
+const fonts = {
+  'PP52': '#FFFFFF',
   'PP53': '#FFFFFF',
   'PP77': '#FFFFFF',
   'PP85': '#FFFFFF',
-  'PP3960': '#FFFFFF'
+  'PP3960': '#FFFFFF',
 }
 
 exports.readFile = async (filename, years, sources) => {
@@ -66,6 +67,7 @@ exports.readFile = async (filename, years, sources) => {
           party_name,
           year,
           colour: colours[party_ec_id],
+          font: fonts[party_ec_id],
           predictions: sources.map(() => 0) // Populated when data joined later
         };
       }
