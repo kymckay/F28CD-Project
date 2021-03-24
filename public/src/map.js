@@ -3,6 +3,7 @@
 import { curSource, getData } from "./data";
 import { updateList } from './list.js';
 import { updateGraph } from "./graph";
+import { state as toggleState } from "./toggle";
 
 let mapbox;
 
@@ -194,10 +195,12 @@ export async function initMap(apiKey) {
   });
 }
 
-function updateColours(useReal) {
+function updateColours() {
   // Do nothing if the layers don't exist yet
   if (!mapbox.getLayer('constituency-fill')) return;
 
+  // Always respect the toggle state when coulouring map
+  const useReal = !toggleState;
   const data = getData();
 
   const colourMap = {};
