@@ -39,3 +39,14 @@
 #candList .th.sort.desc {
     font-style: italic;
 }
+
+
+/* table rows clickable */
+#candList tr {
+  cursor: pointer;
+  user-select: none;
+}
+#candList tr.selected {
+  font-weight: bold;
+  font-style: italic;
+}
