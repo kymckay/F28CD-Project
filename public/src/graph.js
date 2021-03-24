@@ -78,7 +78,7 @@ export async function populateGraph() {
 
   // Show real data as a solid bar (always first element)
   chart.data.datasets[0] = {
-    label: 'Seats',
+    label: 'Actual',
     borderWidth: 1,
     backgroundColor: partyColours,
     borderColor: "#3C4750",
@@ -87,6 +87,9 @@ export async function populateGraph() {
 
   // Update displayed predictions, preserving current index
   updatePredictions(curSource);
+
+  // Title graph accordingly
+  document.getElementById('graph-title').innerHTML = "Seats per Party";
 }
 
 export async function updateGraph(gss) {
@@ -126,7 +129,7 @@ export async function updateGraph(gss) {
 
   // Show real data as a solid bar (always first element)
   chart.data.datasets[0] = {
-    label: 'Votes',
+    label: 'Actual',
     borderWidth: 1,
     backgroundColor: partyColours,
     borderColor: "#3C4750",
@@ -135,6 +138,9 @@ export async function updateGraph(gss) {
 
   // Update displayed predictions, preserving current index
   updatePredictions(curSource);
+
+  // Title graph accordingly
+  document.getElementById('graph-title').innerHTML = "Votes per Party";
 }
 
 export async function updatePredictions(index) {
