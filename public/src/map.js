@@ -39,12 +39,17 @@ export async function initMap(apiKey) {
     if (!mapbox.getSource('constituency')) return;
 
     // Perform case insensitive search against constituency name property
-    const features = mapbox.querySourceFeatures('constituency').filter(f => {
-      return (f.properties.pcon19nm.search(new RegExp(query, 'i')) !== -1);
+    const features = {};
+    mapbox.querySourceFeatures('constituency').forEach(f => {
+      if (f.properties.pcon19nm.search(new RegExp(query, 'i')) !== -1) {
+        // Using an object ensures only one result of each name
+        // (features split across tiles return multiple)
+        features[f.properties.pcon19nm] = f;
+      }
     });
 
     // Return objects used by the map
-    return features.map(f => ({
+    return Object.values(features).map(f => ({
       ...f,
       'place_name': `📍 ${f.properties.pcon19nm}`,
       center: [f.properties.long, f.properties.lat],
