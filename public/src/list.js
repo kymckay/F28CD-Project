@@ -84,6 +84,7 @@ export async function updateList(gss_code) {
   rows.forEach(row => {
     row.style.display = indexes.includes(row.getAttribute('data-index')) ? '' : 'none';
   });
+  updateCandidate([indexes[0]]);
 }
 
 export async function populateLegend() {
