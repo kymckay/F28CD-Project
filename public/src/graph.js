@@ -102,6 +102,13 @@ export async function updateGraph(gss) {
   // the rest will be grouped "other"
   const rest = candidates.slice(6);
 
+  function getPartyName(x) {
+    getData().parties.forEach(p => {
+      if (p.party_ec_id == x) {
+        return p.party_name
+      }
+    });
+  }
   
 }
 
