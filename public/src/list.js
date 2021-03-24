@@ -1,6 +1,9 @@
 import { getData } from "./data";
 import { updateCandidate } from "./candidate.js";
 
+// Sorted by votes by default
+const state = [1, false, true];
+
 function search() {
   const input = document.getElementById("search");
   const filter = input.value.toUpperCase();
@@ -64,6 +67,9 @@ export async function populateList() {
 
   // Populate the table with the new data
   clist.appendChild(newRows);
+
+  // Re-apply any existing sorting
+  sortTableByColumn(...state);
 }
 
 // Hides candidates from other constituencies on map click
@@ -123,7 +129,8 @@ export async function populateLegend() {
   llist.appendChild(newRows);
 }
 
-function sortTableByColumn(table, column, asc = true, numeric = false) {
+function sortTableByColumn(column, asc = true, numeric = false) {
+  const table = document.getElementById('candList');
   const dirModifier = asc ? 1 : -1;
   const tBody = table.tBodies[0];
   const rows = Array.from(tBody.querySelectorAll("tr"));
@@ -151,6 +158,10 @@ function sortTableByColumn(table, column, asc = true, numeric = false) {
   table.querySelectorAll("th").forEach(th => th.classList.remove("th-sort-asc", "th-sort-desc"));
   table.querySelector(`th:nth-child(${column + 1})`).classList.toggle("th-sort-asc", asc);
   table.querySelector(`th:nth-child(${column + 1})`).classList.toggle("th-sort-desc", !asc);
+
+  state[0] = column;
+  state[1] = asc;
+  state[2] = numeric;
 }
 
 // Enables the sorting functionality of the table headings
@@ -163,7 +174,7 @@ export async function initSort() {
       const isNumeric = i === 1; // Votes column is second
       const isAscending = headerCell.classList.contains("th-sort-asc");
 
-      sortTableByColumn(list, columnIndex, !isAscending, isNumeric);
+      sortTableByColumn(columnIndex, !isAscending, isNumeric);
     });
   });
 }
