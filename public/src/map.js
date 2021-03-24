@@ -120,7 +120,7 @@ export async function initMap(apiKey) {
     );
 
     // Set layer styling after they exist
-    updateColours();
+    updateColours(true);
 
     mapbox.on('mousemove', 'constituency-fill', function (e) {
       // Change the cursor style as a UI indicator.
@@ -207,14 +207,13 @@ function updateColours(boolean) {
     // Find party colour of candidate with most votes in the constituency
     // (candidates sorted by votes by default)
     const winner = [];
+
     if (boolean === true) {
-      const winner = data.candidates.filter(ca => ca.gss_code === c.gss_code)[0];
-      return winner;
+      winner.push(data.candidates.filter(ca => ca.gss_code === c.gss_code)[0]);
     } else {
       const winnerArray = data.candidates.filter(ca => ca.gss_code === c.gss_code);
       const winnerSort = winnerArray.sort((a,b) => parseFloat(a.predictions[curSource]) - parseFloat(b.predictions[curSource]));
-      const winner = winnerSort[0];
-      return winner;
+      winner.push(winnerSort[0]);
     };
     
     const colour = data.parties.find(p => p.party_ec_id === winner.party_ec_id).colour;
@@ -247,5 +246,5 @@ function updateColours(boolean) {
 }
 
 export function updateMap() {
-  updateColours();
+  updateColours(true);
 }
