@@ -54,3 +54,8 @@
   font-weight: bold;
   font-style: italic;
 }
+
+/* set font colour to white for parties with dark official colour */
+tbody .PP3960, .PP52, .PP77, .PP85, .PP39, .PP53 {
+   color: white;
+}
