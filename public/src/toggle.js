@@ -7,9 +7,9 @@ export async function initToggle() {
     state = this.checked;
 
     if (this.checked) {
-      document.getElementById('predictionLabel').innerHTML = "Predicted"
+      document.getElementById('predictionLabel').innerHTML = "Predicted Data"
     } else {
-      document.getElementById('predictionLabel').innerHTML = "Actual"
+      document.getElementById('predictionLabel').innerHTML = "Actual Data"
     }
 
     updateMap();
