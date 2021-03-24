@@ -84,7 +84,6 @@ function getParties(year) {
     party_ec_id: 'TestEcId',
     party_name: 'TestParty',
     colour: '#FFFC0CB',
-    font: '#FFFC0CB',
     seats: 100,
     predictions: [50],
   }];
@@ -96,7 +95,6 @@ function getParties(year) {
         party_ec_id: 1,
         party_name: 1,
         colour: 1,
-        font: 1,
         seats: 1,
         predictions: 1,
       }
