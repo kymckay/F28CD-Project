@@ -63,3 +63,20 @@ input:checked + .slider:before {
 .slider.round:before {
     border-radius: 50%;
 }
+
+.toggle {
+    position: relative;
+    align-self: right;
+    z-index: 5;
+}
+  
+#check-box {
+    position: right;
+}
+  
+#predictionLabel {
+    position: absolute;
+    padding-left: 5pt;
+    padding-top: 5pt;
+    font-weight: bold;
+}
