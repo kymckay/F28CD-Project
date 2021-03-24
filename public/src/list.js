@@ -43,6 +43,13 @@ export async function populateList() {
     // Can style the rows by their party ID
     row.classList.add(cand.party_ec_id);
 
+    row.addEventListener('click', e => {
+      // Style the row as selected (and unstyle previous)
+      const prev = document.querySelector('tr.selected');
+      if (prev) prev.classList.remove('selected');
+      e.currentTarget.classList.add('selected');
+    });
+
     row.appendChild(name);
     row.appendChild(votes);
     newRows.appendChild(row);
@@ -80,7 +87,7 @@ export async function updateList(post_id) {
 
   // Populate the table with the new data
   clist.appendChild(newRows);
-} 
+}
 
 export async function populateLegend() {
   const [llist] = document.getElementById('legend').getElementsByTagName('tbody');
