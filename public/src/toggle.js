@@ -1,3 +1,9 @@
 export async function initToggle() {
-    document.getElementById
+    
+    document.getElementById('checkbox').addEventListener('click', function() {
+        document.getElementById('Prediction-Label').innerHTML = 'Predicted';
+        
+    })
+    
+
 }
