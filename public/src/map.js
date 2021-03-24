@@ -206,7 +206,8 @@ function updateColours(boolean) {
   data.constituencies.forEach(c => {
     // Find party colour of candidate with most votes in the constituency
     // (candidates sorted by votes by default)
-    if (boolean == true) {
+    const winner = [];
+    if (boolean === true) {
       const winner = data.candidates.filter(ca => ca.gss_code === c.gss_code)[0];
       return winner;
     } else {
