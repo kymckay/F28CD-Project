@@ -35,12 +35,10 @@
   <!-- dropdown menu for election year selection -->
   <select id="dropdown-year"></select>
   
+  
 
   <!-- Rounded switch -->
-  <div class="toggle">
-    <input type="checkbox" id="check-box">
-    <label for="check-box" id="predictionLabel">Actual</label><br>
-  </div>
+  
 
   <!-- Info button -->
   <div id="info">
@@ -57,7 +55,16 @@
   </div>
 </header>
 <main>
-  <section id="map"></section>
+  <section id="map">
+    <div class="toggle">
+      <label class="switch">
+        <input type="checkbox" id="check-box">
+        <span class="slider round"></span>
+      </label>
+      <label for="check-box" id="predictionLabel">Actual Data</label><br>
+    </div>
+  </section>
+  
 
   <section id="middle-section">
     <div id="graph" >
