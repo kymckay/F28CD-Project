@@ -5,7 +5,7 @@ body {
   box-sizing: boarder-box;
   background-color: #3c4750;
   font-family: Helvetica;
-  height: 100vh;
+  height: 99vh; /* 99% viewport's height will solve the issue */
 }
 
 /* removes scrollbar but keeps functionality */
